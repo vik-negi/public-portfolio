@@ -1,0 +1,155 @@
+{
+  "skills": [
+    {
+      "skillCategory": "PROGRAMMING LANGUAGES",
+      "skills": [
+        {
+          "name": "C++"
+        },
+        {
+          "name": "C"
+        },
+        {
+          "name": "Dart"
+        },
+        {
+          "name": "Java"
+        },
+        {
+          "name": "JavaScript"
+        },
+        {
+          "name": "Python"
+        },
+        {
+          "name": "HTML"
+        },
+        {
+          "name": "CSS"
+        }
+      ]
+    },
+    {
+      "skillCategory": "FRAMEWORKS",
+      "skills": [
+        {
+          "name": "Flutter"
+        },
+        {
+          "name": "Django"
+        },
+        {
+          "name": "NodeJs"
+        },
+        {
+          "name": "React Native"
+        }
+      ]
+    },
+    {
+      "skillCategory": "DATABASES",
+      "skills": [
+        {
+          "name": "MySQL"
+        },
+        {
+          "name": "MongoDB"
+        },
+        {
+          "name": "Firebase"
+        }
+      ]
+    },
+    {
+      "skillCategory": "STATE MANAGEMENT",
+      "skills": [
+        {
+          "name": "Getx"
+        },
+        {
+          "name": "Bloc"
+        },
+        {
+          "name": "Mobx"
+        },
+        {
+          "name": "Provider"
+        }
+      ]
+    },
+    {
+      "skillCategory": "ML AND ANALYTICS",
+      "skills": [
+        {
+          "name": "Pandas"
+        },
+        {
+          "name": "Matplotlib"
+        },
+        {
+          "name": "Numpy"
+        },
+        {
+          "name": "Supervised learning"
+        },
+        {
+          "name": "Unsupervised learning"
+        }
+      ]
+    },
+    {
+      "skillCategory": "LIBRARIES",
+      "skills": [
+        {
+          "name": "React Js"
+        },
+        {
+          "name": "Express"
+        }
+      ]
+    },
+    {
+      "skillCategory": "COMPETITIVE CODING",
+      "skills": [
+        {
+          "name": "Leetcode"
+        },
+        {
+          "name": "CodeForces"
+        },
+        {
+          "name": "Codechef"
+        }
+      ]
+    },
+    {
+      "skillCategory": "TOOLS",
+      "skills": [
+        {
+          "name": "docker"
+        },
+        {
+          "name": "Git"
+        },
+        {
+          "name": "GitHub"
+        },
+        {
+          "name": "vercel"
+        },
+        {
+          "name": "Figma"
+        },
+        {
+          "name": "Material UI"
+        },
+        {
+          "name": "Tailwind"
+        },
+        {
+          "name": "Postman"
+        }
+      ]
+    }
+  ]
+}

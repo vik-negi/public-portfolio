@@ -1,0 +1,87 @@
+{
+  "about": {
+    "name": "Vikram Negi",
+    "email": "vikramnegi175@gmail.com",
+    "location": "New Delhi, India",
+    "social_links": {
+      "linkedin": "https://www.linkedin.com/in/vikramnegi1/",
+      "twitter": "https://twitter.com/viki_2024"
+    },
+    "description": "I'm a skilled Software Engineer with expertise in Flutter, web development, databases, and machine learning."
+  },
+  "education": [
+    {
+      "degree": "Bachelor of Information Technology",
+      "institution": "Dr. A.P.J. Abdul Kalam Technical University",
+      "year": "2024"
+    }
+  ],
+  "experience": [
+    {
+      "title": "Flutter Developer",
+      "company": "Koshiqa",
+      "location": "Remote",
+      "from": "2024-01-01T00:00:00.000Z",
+      "current": true,
+      "description": "Focused on Flutter-based app development and feature implementation.",
+      "skills": ["Flutter", "Rest APIs", "Node.js"],
+      "highlights": [
+        "Led the design and implementation of new features based on business requirements."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "skills": [
+        {
+          "skillCategory": "Frontend",
+          "skill": {
+            "name": "React Js"
+          }
+        }
+      ],
+      "category": "Frontend"
+    }
+  ],
+
+  "projects": [
+    {
+      "name": "BookMark",
+      "title": "BookMark - Let's make book non disposable",
+      "description": "BookMark is not just an application; it's a movement to redefine our relationship with books. In a world of disposables, ",
+      "level": "Advanced",
+      "order": 2,
+      "tags": [
+        "Python",
+        "Flutter",
+        "MongoDB",
+        "Node.js",
+        "Express",
+        "Django",
+        "Machine Learning",
+        "sqlite"
+      ],
+      "skillsUsed": [
+        "Python",
+        "Flutter",
+        "MongoDB",
+        "Node.js",
+        "Express",
+        "Machine Learning",
+        "Django",
+        "sqlite"
+      ]
+    }
+  ],
+
+  "achievements": [
+    "Built 5+ cross-platform mobile apps",
+    "Reduced API response time by 40%"
+  ],
+  "responsibilities": [
+    "Lead design",
+    "Implement features",
+    "Debug and resolve software defects"
+  ],
+  "hobbies": ["Coding", "Singing"]
+}
