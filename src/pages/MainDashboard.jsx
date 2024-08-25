@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import create from "../utils/Theme";
 import { Link } from "react-router-dom";
+import logo from "../assets/image/protfoliohub-logo-n.png";
 
 const NavBarTitle = ({ title, toRoute = "" }) => {
   const theme = create();
@@ -36,8 +37,8 @@ const MainDashboard = () => {
                 className="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
               >
                 <img
-                  className="w-auto h-8"
-                  src="https://cdn.rareblocks.xyz/collection/clarity/images/logo.svg"
+                  className="w-auto h-[28px]"
+                  src={logo}
                   color={theme.theme === "light" ? "black" : "white"}
                   alt="Logo"
                 />
@@ -89,7 +90,7 @@ const MainDashboard = () => {
             {/* Desktop menu */}
             <div className="hidden lg:flex lg:ml-16 lg:items-center lg:justify-center lg:space-x-10 xl:space-x-16">
               <NavBarTitle title="Features" />
-              <NavBarTitle title="Pricing" />
+              {/* <NavBarTitle title="Pricing" /> */}
               <NavBarTitle title="Automation" />
             </div>
 
@@ -167,9 +168,9 @@ const MainDashboard = () => {
       {/* Rest of your content */}
       <section className="pt-12 sm:pt-16 mt-10 px-10">
         <div className="px-4 mx-auto sm:px-4 lg:px-5">
-          <div className="max-w-3xl  sm:max-w-full mx-auto text-center">
+          <div className="max-w-full sm:max-w-3xl mx-auto text-center">
             <h1
-              className={`px-6 text-lg ${
+              className={`px-6 text-xl ${
                 theme.theme === "light" ? "text-gray-600" : "text-gray-200"
               } font-inter`}
             >
@@ -223,7 +224,7 @@ const MainDashboard = () => {
               </Link>
             </div>
             <p
-              className={`mt-8 text-base mb-10 ${
+              className={`mt-8 text-lg mb-10 ${
                 theme.theme === "light" ? "text-gray-500" : "text-gray-200"
               }  font-inter`}
             >

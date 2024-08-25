@@ -16,7 +16,7 @@ import { styled } from "styled-components";
 import create, { themes } from "../utils/Theme";
 import { Collapse, Dropdown, initTE } from "tw-elements";
 import NavbarOptionsDropdown from "./NavbarOptionsDropdown";
-import { isAutheticated } from "../pages/admin/utils/auth";
+import { getUsername, isAutheticated } from "../pages/admin/utils/auth";
 import { currentUser } from "../axios/auth";
 import { useQuery } from "react-query";
 // import useStore from "../store";
@@ -72,8 +72,9 @@ export default function Navbar() {
   const { token } = isAutheticated();
 
   const [user, setUser] = useState({});
+  const username = getUsername();
 
-  useQuery("currentUser", () => currentUser(), {
+  useQuery("currentUser", currentUser, {
     retry: 1,
     retryDelay: 1,
     onError: (error) => {},

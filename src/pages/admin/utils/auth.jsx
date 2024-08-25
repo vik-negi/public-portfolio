@@ -30,8 +30,9 @@ export const getUsername = () => {
   if (localStorage.getItem("userAuth")) {
     return JSON.parse(localStorage.getItem("userAuth")).data.username;
   } else {
-    console.log(JSON.parse(localStorage.getItem("userAuth")));
-    return "vikramnegi-9162604468";
+    // console.log(JSON.parse(localStorage.getItem("userAuth")));
+    // return "vikramnegi-9162604468";
+    return null;
   }
 };
 

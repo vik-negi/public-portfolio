@@ -63,62 +63,24 @@ const PDFViewer = ({ pdfURL }) => {
 };
 
 export default function Project({ username }) {
-  // const Projects = [
-  //   {
-  //     img: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-1.jpg",
-  //     title: "Evika - An Event Management Website",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in labore laudantium deserunt fugiat numquam.",
-  //     link: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-1.jpg",
-  //   },
-  //   {
-  //     img: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-2.png",
-  //     title: "Evika - An Event Management Website",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in labore laudantium deserunt fugiat numquam.",
-  //     link: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-3.jpg",
-  //   },
-  //   {
-  //     img: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-3.jpg",
-  //     title: "Evika - An Event Management Website",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in labore laudantium deserunt fugiat numquam.",
-  //     link: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-2.jpg",
-  //   },
-  //   {
-  //     img: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-4.png",
-  //     title: "Evika - An Event Management Website",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in labore laudantium deserunt fugiat numquam.",
-  //     link: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-2.jpg",
-  //   },
-  //   {
-  //     img: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-5.png",
-  //     title: "Evika - An Event Management Website",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in labore laudantium deserunt fugiat numquam.",
-  //     link: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-2.jpg",
-  //   },
-  // ];
-
   const [Projects, setProjects] = useState();
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [selectedProject, setSelectedProject] = useState();
   const [readMore, setRedeMore] = useState(false);
-  if (username == "vikramnegi-9162604468" && isFirstTime) {
-    setIsFirstTime(false);
-    setProjects(MyData.projects);
-  }
-  if (username === undefined) {
-    username = "vikramnegi-9162604468";
-  }
+  // if (username == "vikramnegi-9162604468" && isFirstTime) {
+  //   setIsFirstTime(false);
+  //   setProjects(MyData.projects);
+  // }
+  // if (username === undefined) {
+  //   username = "vikramnegi-9162604468";
+  // }
   useQuery("projects", () => getProjects(username), {
     onSuccess: (data) => {
       console.log(data.data?.data);
       setProjects(data.data?.data);
     },
     onError: (error) => {
-      setProjects(MyData.projects);
+      // setProjects(MyData.projects);
     },
   });
 

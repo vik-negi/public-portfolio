@@ -110,7 +110,7 @@ const Login = () => {
   const store = create();
 
   return (
-    <div className="min-h-screen sm:px-[6rem] bg-[#f2f2f2]  items-center flex justify-center fontCatamaran">
+    <div className="min-h-screen sm:px-[6rem] bg-[#f1f2f3]  items-center flex justify-center fontCatamaran">
       <div
         className="sm:p-[20px] md:p-[65px] rounded-2xl g-6 flex flex-wrap items-center justify-center lg:justify-between bg-white border-[1px] border-neutral-200 
          transition duration-150 ease-in-out
@@ -128,11 +128,12 @@ const Login = () => {
           <form>
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="mb-0 mr-4 font-medium md:text-[28px] text-[20px]">
-                Sign in with
+                Sign in
+                {/* with */}
               </p>
-              <LoginWithSocial svgImage={social.facebook} />
+              {/* <LoginWithSocial svgImage={social.facebook} />
               <LoginWithSocial svgImage={social.twitter} />
-              <LoginWithSocial svgImage={social.linkedin} />
+              <LoginWithSocial svgImage={social.linkedin} /> */}
             </div>
 
             <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300 mb-5">

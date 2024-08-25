@@ -20,25 +20,20 @@ export default function Home(props) {
 
   console.log("home username : ", username);
 
-  const savedUsername = getUsername();
+  // const savedUsername = getUsername();
 
-  if (username === undefined && savedUsername === undefined) {
-    username = "vikramnegi-9162604468";
-  } else if (username != undefined) {
-    username = username;
-  } else if (savedUsername) {
-    username = savedUsername;
-  }
+  // if (username === undefined && savedUsername === undefined) {
+  //   username = "vikramnegi-9162604468";
+  // } else if (username != undefined) {
+  //   username = username;
+  // } else if (savedUsername) {
+  //   username = savedUsername;
+  // }
 
   return (
     <>
-      <MainDashboard />
-      <MainSection
-        name={props.profile.name.split(" ")[0]}
-        profile={props.profile}
-        username={username}
-      />
-      <About id="about" profile={props.profile} username={username} />
+      <MainSection username={username} />
+      <About id="about" username={username} />
       <Skills id="skills" username={username} />
       <Projects id="projects" username={username} />
       <Experiences id="experience" username={username} />

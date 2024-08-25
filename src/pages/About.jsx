@@ -10,14 +10,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { parseStyledText } from "../utils/text_parser.jsx";
+import { mainProfile } from "../data/constants.jsx";
 
-const About = ({ username, profile }) => {
+const About = ({ username }) => {
   const queryClient = useQueryClient();
   console.log("nikjmi", username);
 
-  if (username === undefined) {
-    username = "vikramnegi-9162604468";
-  }
+  // if (username === undefined) {
+  //   username = "vikramnegi-9162604468";
+  // }
   initTE({ Ripple });
   const socialLinks = [
     social.github,
@@ -76,7 +77,7 @@ const About = ({ username, profile }) => {
     <section id="about" className="section about-section" tabIndex="11">
       {!about && (
         <div className="about-ill">
-          <img src={profile.image} alt="VikramNegi" />
+          <img src={mainProfile} alt="VikramNegi" />
         </div>
       )}
 

@@ -6,15 +6,18 @@ import MyData from "../data/MyData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import MainDashboard from "./MainDashboard";
+import { mainProfile } from "../data/constants";
 
-export default function MainSection({ username, profile }) {
+export default function MainSection({ username }) {
   const [userInfo, setUserInfo] = useState();
   const [isFirstTime, setIsFirstTime] = useState(true);
   if (
-    username === undefined ||
-    (username === "vikramnegi-9162604468" && isFirstTime)
+    // username === undefined ||
+    // (username === "vikramnegi-9162604468" &&
+    isFirstTime
+    // )
   ) {
-    setUserInfo(MyData.publicInfo);
+    // setUserInfo(MyData.publicInfo);
     setIsFirstTime(false);
   }
 
@@ -23,7 +26,7 @@ export default function MainSection({ username, profile }) {
       setUserInfo(data.data?.data);
     },
     onError: (error) => {
-      setUserInfo(MyData.publicInfo);
+      // setUserInfo(MyData.publicInfo);
     },
   });
 
@@ -79,7 +82,7 @@ export default function MainSection({ username, profile }) {
       <div className="img_sec">
         <div className={`${"imgDiv"}`}>
           <img
-            src={userInfo?.user?.profilePic ?? profile.image}
+            src={userInfo?.user?.profilePic ?? mainProfile}
             className={`profile-image ${
               userInfo?.user?.profilePic !== null
                 ? "rounded-full w-[200px] h-[200px]"

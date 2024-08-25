@@ -91,17 +91,17 @@ export default function Experiences({ username }) {
   const [isFirstTime, setIsFirstTime] = useState(true);
   if (username === "vikramnegi-9162604468" && isFirstTime) {
     setIsFirstTime(false);
-    setExperiences(MyData.experience.experiences);
+    setExperiences([]);
   }
-  if (username === undefined) {
-    username = "vikramnegi-9162604468";
-  }
+  // if (username === undefined) {
+  //   username = "vikramnegi-9162604468";
+  // }
   const { data } = useQuery(["experience"], () => getExperience(username), {
     onSuccess: (data) => {
       setExperiences(data?.data?.data);
     },
     onError: (error) => {
-      setExperiences(MyData.experience.experiences);
+      // setExperiences(MyData.experience.experiences);
     },
   });
 
@@ -168,9 +168,10 @@ export default function Experiences({ username }) {
             <AddSectionDetailsBtn title={"Add Experience"} />
           ) : (
             <ol class="border-l-2 border-info-100">
-              {experiences.map((experience, index) => {
-                return <ExperienceTimeline experience={experience} />;
-              })}
+              {experiences &&
+                experiences.map((experience, index) => {
+                  return <ExperienceTimeline experience={experience} />;
+                })}
             </ol>
           )
           /*experiences.map((experience, index) => {
