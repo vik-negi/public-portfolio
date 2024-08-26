@@ -71,10 +71,10 @@ export default function Project({ username }) {
   //   setIsFirstTime(false);
   //   setProjects(MyData.projects);
   // }
-  // if (username === undefined) {
-  //   username = "vikramnegi-9162604468";
-  // }
-  useQuery("projects", () => getProjects(username), {
+  if (username === undefined) {
+    username = getUsername();
+  }
+  const { isLoading } = useQuery("projects", () => getProjects(username), {
     onSuccess: (data) => {
       console.log(data.data?.data);
       setProjects(data.data?.data);
@@ -86,6 +86,9 @@ export default function Project({ username }) {
 
   const theme = create();
   const navigate = useNavigate();
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <section className="section main project-section" id="projects">

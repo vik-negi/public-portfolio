@@ -41,6 +41,7 @@ export const signout = () => {
   const answer = window.confirm("Are you sure you want to logout?");
   if (answer) {
     localStorage.removeItem("userAuth");
+    window.location.reload();
   }
   return true;
 };

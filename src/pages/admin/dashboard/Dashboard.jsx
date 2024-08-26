@@ -20,7 +20,7 @@ import { useWindowWide } from "../utils/useWindowWide";
 import { createAbout } from "../../../axios/about";
 import { Axios } from "../../../axios/axios";
 import { getToken } from "../utils/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   setError,
@@ -252,6 +252,7 @@ function Dashboard() {
   const [extractedJson, setExtractedJson] = useState(null);
   const [loading, setLoading] = useState(false);
   const smallScreen = useWindowWide(640);
+  const { error } = useSelector((state) => state.aiResponse);
 
   const handleGetSkills = async (text) => {
     try {
@@ -300,8 +301,7 @@ Here is the resume text: ${text} \n strictly Ensure data is in Proper json forma
       console.log(e);
       dispatch(setError(e.message));
     } finally {
-      setLoading(false);
-      dispatch(setLoading(false));
+      // setLoading(false);
     }
   };
 
@@ -390,19 +390,26 @@ I have provided my resume below. Please extract and format the information as a 
 Here is the resume text: ${text}
 `;
         handleGetSkills(text);
-        const response = await getResponseForGivenPrompt(prompt);
-        if (response) {
-          console.log("Response from GPT-3: ", response);
-          setResumeTextData(response);
-          handleExtractJson(response);
-        }
+        getResponseForGivenPrompt(prompt)
+          .then((response) => {
+            setLoading(false);
+            if (response) {
+              console.log("Response from GPT-3: ", response);
+              setResumeTextData(response);
+              handleExtractJson(response);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            setLoading(false);
+            dispatch(setError(e.message));
+          });
       });
     } catch (e) {
       console.log(e);
       dispatch(setError(e.message));
     } finally {
-      setLoading(false);
-      dispatch(setLoading(false));
+      // dispatch(setLoading(false));
     }
   };
   const dispatch = useDispatch();
@@ -493,6 +500,13 @@ Here is the resume text: ${text}
           </div>
         </div>
       </div>
+      {error && (
+        <div className="flex w-full flex-col justify-center items-center">
+          <p className="text-[14px] text-red-900 text-center font-semibold mt-10">
+            Error while fetching data from resume.
+          </p>
+        </div>
+      )}
       {/* <AddNew
         open={openAddProjectModel}
         cross={() => {

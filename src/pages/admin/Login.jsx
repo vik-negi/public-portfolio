@@ -72,7 +72,7 @@ const Login = () => {
         JSON.stringify({ token: data?.data?.token, data: data?.data?.data })
       );
       setTimeout(() => {
-        navigate("/admin/dashboard");
+        navigate("/");
         window.location.reload();
         setLoader(false);
       }, 1000);

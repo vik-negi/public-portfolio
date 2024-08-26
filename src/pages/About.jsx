@@ -43,7 +43,7 @@ const About = ({ username }) => {
     setAbout(MyData.about);
   }
 
-  const { data } = useQuery("about", () => getAbout(username), {
+  const { data, isLoading } = useQuery("about", () => getAbout(username), {
     onSuccess: (data) => {
       queryClient.invalidateQueries("avatar");
       setAbout(data?.data?.data);
@@ -72,6 +72,9 @@ const About = ({ username }) => {
   // }, []);
 
   const store = create();
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <section id="about" className="section about-section" tabIndex="11">

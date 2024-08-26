@@ -620,24 +620,27 @@ const Skills = () => {
 
   const [skills, setSkills] = useState([]);
 
-  const { data, refetch: refetchskills } = useQuery(
-    "my-skills",
-    getAdminSkills,
-    {
-      retry: 1,
-      retryDelay: 1,
-      refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        setSkills(data?.data?.skills);
-      },
-    }
-  );
+  const {
+    isLoading,
+    data,
+    refetch: refetchskills,
+  } = useQuery("my-skills", getAdminSkills, {
+    retry: 1,
+    retryDelay: 1,
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      setSkills(data?.data?.skills);
+    },
+  });
 
   const tabTitleStyle = "text-5xl font-bold my-5 font-mono text-blue-500 px-10";
 
   const skillCardStyle = `my-5 p-5  bg-[#100F22] rounded-lg shadow-lg flex flex-col  items-start ${
     theme.theme === "light" && "bg-[#E1EBF5]"
   }`;
+  if (isLoading) {
+    return <></>;
+  }
   return (
     <div
       id="Skills"

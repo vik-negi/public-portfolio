@@ -89,7 +89,8 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
               skill: allSkills.find((skill) => {
                 // console.log("item : ", skill, " and ", item);
                 return (
-                  skill?.name?.toLowerCase() == item?.skill.name?.toLowerCase()
+                  skill?.name?.toLowerCase() ==
+                  (item?.skill?.name || item?.name).toLowerCase()
                 );
               }),
               level: item.level,

@@ -20,15 +20,18 @@ export default function Home(props) {
 
   console.log("home username : ", username);
 
-  // const savedUsername = getUsername();
+  const savedUsername = getUsername();
 
   // if (username === undefined && savedUsername === undefined) {
   //   username = "vikramnegi-9162604468";
-  // } else if (username != undefined) {
-  //   username = username;
-  // } else if (savedUsername) {
-  //   username = savedUsername;
-  // }
+  // } else
+  if (username != undefined) {
+    username = username;
+  } else if (savedUsername) {
+    username = savedUsername;
+  }
+
+  console.log("home username : ", username);
 
   return (
     <>

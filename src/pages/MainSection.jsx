@@ -21,7 +21,7 @@ export default function MainSection({ username }) {
     setIsFirstTime(false);
   }
 
-  const { isLoading } = useQuery(["data"], () => publicInfo(username), {
+  const { isLoading } = useQuery("main-section", () => publicInfo(username), {
     onSuccess: (data) => {
       setUserInfo(data.data?.data);
     },
@@ -29,6 +29,38 @@ export default function MainSection({ username }) {
       // setUserInfo(MyData.publicInfo);
     },
   });
+
+  if (isLoading) {
+    return (
+      <section
+        className="section mt-[120px] px-[12rem] only-bg flex flex-row justify-between items-center w-full"
+        id="home"
+        tabIndex="42"
+      >
+        <div class="flex flex-col gap-2 pt-4 w-full ">
+          <h1>
+            <div className=" w-11/12 h-[55px] mb-5 bg-gray-600 rounded-2xl animate-pulse delay-200"></div>
+            <div className="w-2/6 h-[55px] mb-10 bg-gray-600 rounded-2xl animate-pulse delay-[0.25s]"></div>
+            <div className="w-full h-5 mb-2 bg-gray-600 rounded-2xl animate-pulse delay-[0.3s]"></div>
+            <div className="w-4/4 h-5 mb-2 mt-5 bg-gray-600 rounded-2xl animate-pulse delay-[0.35s]"></div>
+            <div className="w-5/6 h-5 mb-2 bg-gray-600 rounded-2xl animate-pulse delay-[0.4s]"></div>
+            <div className="w-3/4 h-5 mb-2 bg-gray-600 rounded-2xl animate-pulse delay-[0.45s]"></div>
+            <div className="w-3/5 h-5 mb-2 bg-gray-600 rounded-2xl animate-pulse delay-[0.5s]"></div>
+            <div className="flex gap-10 mt-10">
+              <div className="w-[150px] h-[45px] bg-gray-600 rounded-2xl animate-pulse delay-[0.5s]"></div>
+              <div className="w-[150px] h-[45px] bg-gray-600 rounded-2xl animate-pulse delay-[0.55s]"></div>
+            </div>
+          </h1>
+        </div>
+        <div className="w-full flex justify-center">
+          <div
+            className=" bg-gray-600  rounded-[200px] animate-pulse"
+            style={{ height: "300px", width: "300px" }}
+          ></div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

@@ -410,6 +410,9 @@ a {
   margin-top: 3rem;
 }
 
+.fullwidth {
+  width: 100%;
+}
 .home-section .img_sec {
   display: flex;
   justify-content: center;

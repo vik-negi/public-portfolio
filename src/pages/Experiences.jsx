@@ -96,14 +96,22 @@ export default function Experiences({ username }) {
   // if (username === undefined) {
   //   username = "vikramnegi-9162604468";
   // }
-  const { data } = useQuery(["experience"], () => getExperience(username), {
-    onSuccess: (data) => {
-      setExperiences(data?.data?.data);
-    },
-    onError: (error) => {
-      // setExperiences(MyData.experience.experiences);
-    },
-  });
+
+  if (username === undefined) {
+    username = getUsername();
+  }
+  const { data, isLoading } = useQuery(
+    ["experience"],
+    () => getExperience(username),
+    {
+      onSuccess: (data) => {
+        setExperiences(data?.data?.data);
+      },
+      onError: (error) => {
+        // setExperiences(MyData.experience.experiences);
+      },
+    }
+  );
 
   // const experiences = [
   //   {
@@ -142,6 +150,9 @@ export default function Experiences({ username }) {
   //   },
   // ];
 
+  if (isLoading) {
+    return <></>;
+  }
   return (
     <section
       className="section experience-section"
