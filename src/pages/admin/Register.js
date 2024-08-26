@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { errorMessage, successMessage } from "../../utils/Toast";
 
 import { useQuery, useQueryClient, useMutation } from "react-query";
+import { TextField } from "./Login";
+import { useWindowWide } from "./utils/useWindowWide";
 
 const LoginWithSocial = ({ svgImage }) => {
   return (
@@ -19,33 +21,6 @@ const LoginWithSocial = ({ svgImage }) => {
     >
       <img src={svgImage} alt="alt" />
     </button>
-  );
-};
-
-const TextField = ({ name, value, onChange, label }) => {
-  const isFilled = value !== "";
-
-  return (
-    <div className="relative mb-10" data-te-input-wrapper-init>
-      <input
-        type="text"
-        className="peer block min-h-[auto] w-full rounded  bg-transparent px-3 py-[0.2rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none  dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 border-[1px] border-[#e8e9fa]"
-        id={`exampleFormControlInput-${name}`}
-        name={name}
-        value={value}
-        placeholder={label}
-        onChange={onChange}
-      />
-      <label
-        htmlFor={`exampleFormControlInput-${name}`}
-        className={`absolute left-3 top-[-0rem] mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out ${
-          isFilled ? "text-primary -translate-y-[2.5rem] scale-[0.8]" : ""
-        }`}
-      >
-        {label}
-        <span className="text-[#ff0000db]">*</span>
-      </label>
-    </div>
   );
 };
 
@@ -109,25 +84,21 @@ const Register = () => {
   };
 
   const store = create();
+  const width425 = useWindowWide(425);
 
   return (
-    <div className="min-h-screen py-10 sm:px-[6rem] bg-[#f1f2f3]  items-center flex justify-center">
+    <div className=" sm:px-[6rem] items-center flex justify-center fontCatamaran">
       <div
-        className="g-6 sm:p-[20px] md:p-[65px] rounded-2xl  flex h-full flex-wrap items-center justify-center lg:justify-between bg-white border-[1px] border-neutral-200 
-         transition duration-150 ease-in-out"
+        className={`my-10 sm:p-[20px] p-[20px] md:p-[52px] rounded-2xl g-6 flex flex-wrap items-center justify-center lg:justify-between  bg-white ${
+          width425 && "border-[1px] border-neutral-200"
+        } 
+         transition duration-150 ease-in-out w-[38rem]
+      `}
       >
-        <div className="shrink-1 mt-10 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-          <img
-            src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-            className="w-full"
-            alt="Sample image"
-          />
-        </div>
-
-        <div className="mb-12 pb-10 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
+        <div className="w-full">
           <form>
             <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="mb-0 mr-4  font-medium md:text-[28px] text-[20px]">
+              <p className="mb-5 mr-4  font-medium md:text-[28px] text-[20px]">
                 Register
                 {/* in with */}
               </p>
@@ -136,11 +107,11 @@ const Register = () => {
               <LoginWithSocial svgImage={social.linkedin} /> */}
             </div>
 
-            <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300 mb-5">
+            {/* <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300 mb-5">
               <p className="mx-4 mb-0 text-center font-semibold dark:text-white">
                 Or
               </p>
-            </div>
+            </div> */}
 
             <TextField
               name="email"
@@ -185,11 +156,11 @@ const Register = () => {
               label="LastName"
             />
 
-            <div className=" flex items-center justify-between mb-10">
-              <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem] flex items-center">
+            <div className=" flex items-center justify-between ">
+              <div className="  min-h-[1.5rem] flex items-center">
                 <input type="checkbox" value="" />
                 <label
-                  className="inline-block md:text-2xl  ml-2 text-[12px] hover:cursor-pointer text-primary font-semibold hover:underline"
+                  className="inline-block text-[12px] ml-[10px] hover:cursor-pointer text-primary font-semibold hover:underline"
                   for="exampleCheck2"
                 >
                   Agree to terms and conditions
@@ -197,13 +168,14 @@ const Register = () => {
               </div>
             </div>
 
-            <div className="text-center lg:text-left mt-[50px]">
+            <div className="text-center lg:text-left mt-[20px]">
               <button
                 type="button"
-                className={`sm:w-[150px] w-full px-4 py-4 rounded-lg text-md font-medium ${
-                  store.theme !== "light"
-                    ? "bg-white text-[#232323]"
-                    : "bg-[#232323] text-white"
+                className={`w-full px-4 py-4 rounded-lg text-[14px] font-medium ${
+                  // store.theme !== "light"
+                  //   ? "bg-white text-[#232323]"
+                  //   :
+                  "bg-[#232323] text-white"
                 }`}
                 data-te-ripple-init
                 data-te-ripple-color="light"

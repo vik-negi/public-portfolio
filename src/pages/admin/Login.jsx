@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { errorMessage, successMessage } from "../../utils/Toast";
 
 import { useQuery, useQueryClient, useMutation } from "react-query";
+import { useWindowWide } from "./utils/useWindowWide";
 
 const LoginWithSocial = ({ svgImage }) => {
   return (
@@ -22,14 +23,20 @@ const LoginWithSocial = ({ svgImage }) => {
   );
 };
 
-const TextField = ({ name, value, onChange, label }) => {
+export const TextField = ({ name, value, onChange, label }) => {
   const isFilled = value !== "";
 
   return (
     <div className="relative mb-6" data-te-input-wrapper-init>
+      <label
+        htmlFor={`exampleFormControlInput-${name}`}
+        className={` left-3 text-[14px] text-[#18181b] mb-1 font-semibold max-w-[90%]  `}
+      >
+        {label}
+      </label>
       <input
         type="text"
-        className="peer block min-h-[auto] w-full rounded  bg-[#f2f2f2] px-3 py-[0rem] leading-[3.5] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none  dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0  border-[1px] border-neutral-300 h-[45px]  
+        className="peer block min-h-[auto] w-full rounded px-[16px] py-[10px] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 dark:placeholder:text-neutral-800 border-neutral-300 h-[45px]  border-[1px] :placeholder-text-neutral-400 text-[14px]
         "
         id={`exampleFormControlInput-${name}`}
         name={name}
@@ -37,14 +44,6 @@ const TextField = ({ name, value, onChange, label }) => {
         placeholder={label}
         onChange={onChange}
       />
-      <label
-        htmlFor={`exampleFormControlInput-${name}`}
-        className={`absolute left-3 top-[-1rem] mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[3.5] text-neutral-500 transition-all duration-200 ease-out ${
-          isFilled ? "text-primary -translate-y-[2.5rem] scale-[0.8]" : ""
-        }`}
-      >
-        {label}
-      </label>
     </div>
   );
 };
@@ -59,6 +58,7 @@ const Login = () => {
   const [loader, setLoader] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const width425 = useWindowWide(425);
 
   const mutation = useMutation((data) => signin(data), {
     onSuccess: (data) => {
@@ -110,37 +110,32 @@ const Login = () => {
   const store = create();
 
   return (
-    <div className="min-h-screen sm:px-[6rem] bg-[#f1f2f3]  items-center flex justify-center fontCatamaran">
+    <div
+      className={`min-h-screen sm:px-[6rem] items-center flex justify-center fontCatamaran`}
+    >
       <div
-        className="sm:p-[20px] md:p-[65px] rounded-2xl g-6 flex flex-wrap items-center justify-center lg:justify-between bg-white border-[1px] border-neutral-200 
-         transition duration-150 ease-in-out
-      "
+        className={`sm:p-[20px] p-[20px] md:p-[52px] rounded-2xl g-6 flex flex-wrap items-center justify-center lg:justify-between  bg-white ${
+          width425 && "border-[1px] border-neutral-200"
+        } 
+         transition duration-150 ease-in-out  w-[38rem]
+      `}
       >
-        <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-          <img
-            src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-            className="w-full"
-            alt="Sample image"
-          />
-        </div>
-
-        <div className="mb-12 pb-10 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
+        <div className="mb-12 pb-10 md:mb-0 w-full ">
           <form>
             <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="mb-0 mr-4 font-medium md:text-[28px] text-[20px]">
-                Sign in
-                {/* with */}
-              </p>
+              <h1 className="text-4xl font-bold text-center">
+                Login to PortfolioHub
+              </h1>
               {/* <LoginWithSocial svgImage={social.facebook} />
               <LoginWithSocial svgImage={social.twitter} />
               <LoginWithSocial svgImage={social.linkedin} /> */}
             </div>
 
-            <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300 mb-5">
+            {/* <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300 mb-5">
               <p className="mx-4 mb-0 text-center font-semibold dark:text-white">
                 Or
               </p>
-            </div>
+            </div> */}
 
             <TextField
               name="email"
@@ -150,7 +145,14 @@ const Login = () => {
               }}
               label="Email address"
             />
-            <div className="h-6"></div>
+            <div className="flex justify-end">
+              <a
+                href="#!"
+                className="text-[#4f4ce5] text-[12px] font-semibold hover:underline text-end"
+              >
+                Forgot password?
+              </a>
+            </div>
             <TextField
               name="password"
               value={loginData.password}
@@ -161,28 +163,21 @@ const Login = () => {
             />
 
             <div className="mb-6 flex items-center justify-between">
-              <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem] flex items-center">
+              <div className="mb-[0.125rem]  min-h-[1.5rem] flex items-center">
                 <input type="checkbox" value="" />
                 <label
-                  className="inline-block md:text-2xl ml-2 text-[12px] hover:cursor-pointer"
+                  className="inline-block text-[#18181b] text-[12px] ml-2 font-semibold hover:cursor-pointer"
                   for="exampleCheck2"
                 >
                   Remember me
                 </label>
               </div>
-
-              <a
-                href="#!"
-                className="text-primary md:text-2xl text-[12px] font-semibold hover:underline"
-              >
-                Forgot password?
-              </a>
             </div>
 
-            <div className="text-center lg:text-left mt-5">
+            <div className="text-center lg:text-left mt-2">
               <button
                 type="button"
-                className={`sm:w-[150px] w-full px-4 mb-5 mt-10 py-4 rounded-lg text-md font-medium ${
+                className={` w-full px-4 mb-5 mt-5 py-[12px] rounded-lg text-[14px] font-medium ${
                   mutation.isLoading ? "bg-gray-300" : "bg-[#232323] text-white"
                 }`}
                 data-te-ripple-init
