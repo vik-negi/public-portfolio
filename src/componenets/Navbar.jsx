@@ -125,13 +125,13 @@ export default function Navbar() {
         />
       </div> */}
       <p className="logo initials" tabIndex="1"></p>
-      <div
+      {/* <div
         style={{
           backgroundColor: `${bgColor}`,
         }}
-        className={` navbar ${smStyle}`}
-      >
-        <ul className={`navbar-list `}>
+        className={`  ${smStyle}`}
+      > */}
+      {/* <ul className={`navbar-list `}>
           <li>
             <Link
               className={`${activeSection === "home" && "active"} navbar-link`}
@@ -157,7 +157,7 @@ export default function Navbar() {
               </div>
             </Link>
           </li>
-          {/* <li><a className={`${""} navbar-link`} name="about" onClick={toggleNav()} tabIndex="5">About</a></li> */}
+        
           <li>
             <Link
               className={`${
@@ -266,15 +266,15 @@ export default function Navbar() {
               </div>
             </Link>
           </li>
-        </ul>
-        {/* <ion-icon
+        </ul> */}
+      {/* <ion-icon
           tabIndex="9"
           name="close-outline"
           className="mobile-nav-icon"
           onClick={() => toggleNav()}
         ></ion-icon> */}
-      </div>
-      <button
+      {/* </div> */}
+      {/* <button
         onClick={() => toggleNav()}
         className="hover:color-[#c2c2c2] z-500"
       >
@@ -282,15 +282,15 @@ export default function Navbar() {
           icon={smStyle === "right-0" ? `bars` : "times"}
           className="mobile-nav-icon"
         />
-      </button>
-      <ul className="extra-navbar-list items-center">
+      </button> */}
+      <div className="extra-navbar-list items-center">
         <i
           onClick={(e) =>
             switchTheme(store.theme === "light" ? "dark" : "light")
           }
           className={`${
-            store.theme == "light" && "fas fa-moon"
-          } text-[25px] cursor-pointer text-white
+            store.theme == "light" ? "fas fa-moon text-black" : "text-white"
+          } text-[25px] cursor-pointer 
          
               `}
         >
@@ -298,29 +298,6 @@ export default function Navbar() {
             <img src={Brightness} color="white" alt="" />
           )}
         </i>
-
-        {/* <li className="li-item">
-          <Link
-            className="contactBtn text-white"
-            name="getInTouch"
-            tabIndex="10"
-            to="/contact"
-          >
-            Contact
-          </Link>
-        </li> */}
-        {/* <li className="li-item">
-          <button
-            className={`${""} navbar-link text-white`}
-            name="about"
-            onClick={() =>
-              navigate(token != null ? "/admin/dashboard" : "/admin/login")
-            }
-            tabIndex="5"
-          >
-            {token != null ? "Dashboard" : "Login"}
-          </button>
-        </li> */}
         <div className="relative flex items-center">
           <div className="relative" data-te-dropdown-ref>
             <a
@@ -366,15 +343,15 @@ export default function Navbar() {
                 title: token != null ? "Dashboard" : "Login",
                 to: token != null ? "/admin/dashboard" : "/admin/login",
               },
-              {
-                title: "Contact",
-                to: "/contact",
-              },
+              // {
+              //   title: "Contact",
+              //   to: "/contact",
+              // },
             ]}
             showLogout={token != null}
           />
         </div>
-      </ul>
+      </div>
     </header>
   );
 }

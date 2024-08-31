@@ -253,16 +253,18 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
       >
         <p className="px-10 text-[20px]">Skills</p>
         <div className="flex gap-5">
-          <div className="border-4px bg-white-500">
-            <button
-              className="flex justify-center sticky z-5 top-5
+          {isFromCreateProtfolio && (
+            <div className="border-4px bg-white-500">
+              <button
+                className="flex justify-center sticky z-5 top-5
            items-center bg-[#1e1e2f] hover:bg-[#e8e9fa] text-[#e8e9fa] hover:text-[#1e1e2f]  font-semiblod text-[12px] py-4 px-4 rounded-[4px]"
-              onClick={handleAddAllSkills}
-            >
-              <FontAwesomeIcon className="mr-2" icon={faPlus} />
-              Add All Skills
-            </button>
-          </div>
+                onClick={handleAddAllSkills}
+              >
+                <FontAwesomeIcon className="mr-2" icon={faPlus} />
+                Add All Skills
+              </button>
+            </div>
+          )}
           <div className="border-4px bg-white-500">
             <button
               className="flex justify-center sticky z-5 top-5

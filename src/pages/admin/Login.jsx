@@ -36,7 +36,7 @@ export const TextField = ({ name, value, onChange, label }) => {
       </label>
       <input
         type="text"
-        className="peer block min-h-[auto] w-full rounded px-[16px] py-[10px] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 dark:placeholder:text-neutral-800 border-neutral-300 h-[45px]  border-[1px] :placeholder-text-neutral-400 text-[14px]
+        className="peer mt-1 block min-h-[auto] w-full rounded-xl px-[16px] py-[10px] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 dark:placeholder:text-neutral-800 border-neutral-300 h-[45px]  border-[1px] placeholder-text-grey text-[14px]
         "
         id={`exampleFormControlInput-${name}`}
         name={name}
@@ -58,7 +58,7 @@ const Login = () => {
   const [loader, setLoader] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const width425 = useWindowWide(425);
+  const width480 = useWindowWide(480);
 
   const mutation = useMutation((data) => signin(data), {
     onSuccess: (data) => {
@@ -114,8 +114,8 @@ const Login = () => {
       className={`min-h-screen sm:px-[6rem] items-center flex justify-center fontCatamaran`}
     >
       <div
-        className={`sm:p-[20px] p-[20px] md:p-[52px] rounded-2xl g-6 flex flex-wrap items-center justify-center lg:justify-between  bg-white ${
-          width425 && "border-[1px] border-neutral-200"
+        className={`sm:p-[20px] p-[20px] md:p-[3rem] rounded-2xl g-6 flex flex-wrap items-center justify-center lg:justify-between  bg-white ${
+          width480 && "border-[1px] border-neutral-200"
         } 
          transition duration-150 ease-in-out  w-[38rem]
       `}

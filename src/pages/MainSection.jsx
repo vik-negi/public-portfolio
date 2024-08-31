@@ -78,10 +78,19 @@ export default function MainSection({ username }) {
                 StringUtils.capitalizeString(userInfo?.user.lastName)}
             </span>
           </h1>
-          <p className="aboutShort">{userInfo?.profileDescription}</p>
-
+          <p
+            style={{
+              letterSpacing: "1.3px",
+              fontFamily: "Poppins",
+              lineHeight: "1.6",
+            }}
+            className="aboutShort text-[13px] sm:text-[18px]"
+          >
+            {userInfo?.profileDescription}
+          </p>
+          {/* bg-[#060a2e94] */}
           <button
-            className="button"
+            className={`text-2xl px-8 py-4 mt-4 bg-[#efcf5e]  rounded-full text-black font-semibold hover:bg-[#f0c14b] hover:text-black cursor-pointer`}
             name="about"
             // onClick="scrollToSection(this)"
             tabIndex="2"
@@ -89,7 +98,7 @@ export default function MainSection({ username }) {
             About Me
             {/* <ion-icon name="chevron-forward-outline"></ion-icon> */}
           </button>
-          <a
+          {/* <a
             // open in another tab
             target="_blank"
             href={MyData.about.resume}
@@ -108,7 +117,7 @@ export default function MainSection({ username }) {
               <FontAwesomeIcon icon={faDownload} />
               Download Resume
             </div>
-          </a>
+          </a> */}
         </div>
       )}
       <div className="img_sec">

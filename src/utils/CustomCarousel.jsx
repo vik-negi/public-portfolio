@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import AddNew from "../pages/admin/utils/AddNew";
 
-const CustomCarousel = ({ images }) => {
+const CustomCarousel = ({ images, height }) => {
   const [outerActiveIndex, setOuterActiveIndex] = useState(0);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
@@ -37,13 +37,16 @@ const CustomCarousel = ({ images }) => {
               key={i}
               src={image}
               width={"100%"}
-              height={"100%"}
+              style={{
+                height: height ?? "100%",
+              }}
+              height={height ?? "100%"}
               alt={`carousel-${i}`}
               onClick={() => {
                 handleOuterActiveIndex(i);
                 setOpenImages(true);
               }}
-              className="object-cover rounded-xl w-full transition-all duration-700 ease-in-out"
+              className="object-fill overflow-hidden rounded-xl w-full transition-all duration-700 ease-in-out"
             />
           )
       )}

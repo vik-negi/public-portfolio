@@ -19,6 +19,8 @@ import { Document, Page, pdfjs } from "react-pdf";
 import LoadingComponent from "../utils/loader.jsx";
 import { getUsername } from "./admin/utils/auth.jsx";
 import AddSectionDetailsBtn from "../utils/AddSectionDetailsBtn.jsx";
+import { useWindowWide } from "./admin/utils/useWindowWide.js";
+import { responsiveText } from "../utils/constants.js";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
 const PDFViewer = ({ pdfURL }) => {
@@ -36,15 +38,23 @@ const PDFViewer = ({ pdfURL }) => {
   const [loading, setLoading] = useState(true);
   return (
     <>
-      <iframe
-        src={driveViewerUrl[0] + "/preview"}
-        onLoad={() => setLoading(false)}
-        width={loading ? "0px" : "100%"}
-        height="500px"
-        allow="autoplay"
-      ></iframe>
+      <div className="min-w-[340px] max-w-[450px] p-2 rounded-2xl flex items-center justify-center">
+        <iframe
+          src={driveViewerUrl[0] + "/preview"}
+          onLoad={() => setLoading(false)}
+          width={loading ? "0px" : "100%"}
+          height="500px"
+          style={{
+            border: "none",
+            borderRadius: "10px",
+            width: "100%",
+            height: "100%",
+          }}
+          allow="autoplay"
+        ></iframe>
+      </div>
       {
-        loading && <LoadingComponent width={50} />
+        loading && <LoadingComponent width={30} />
         // (
         //   <div className="w-full h-96 flex items-center justify-center">
         //     <div
@@ -71,6 +81,7 @@ export default function Project({ username }) {
   //   setIsFirstTime(false);
   //   setProjects(MyData.projects);
   // }
+  const width480 = useWindowWide(480);
   if (username === undefined) {
     username = getUsername();
   }
@@ -108,7 +119,7 @@ export default function Project({ username }) {
             My recent work
             <p className="sectionDesc">
               Here are a few past projects I've worked on. Want to see more?
-              <a href="https://www.gmail.com">Email me </a>
+              <a href="https://www.gmail.com"> Email me </a>
             </p>
           </h1>
         </div>
@@ -124,21 +135,12 @@ export default function Project({ username }) {
               return (
                 <article
                   key={i}
-                  className="max-w-xl mx-auto border-2 rounded-xl overflow-hidden"
+                  className="max-w-xl mx-auto mb-10 rounded-2xl overflow-hidden hover:shadow-2xl transition-all hover:shadow-[#0000008d] duration-500 ease-in-out"
                 >
-                  <div className="flex flex-row gap-2 h-[200px] overflow-hidden">
-                    {/* <img
-                      className="w-full h-full object-cover rounded-md hover:scale-125 transition-all duration-500 ease-in-out hover:shadow-2xl hover:cursor-pointer"
-                      src={
-                        project.image[0]
-                        // "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-2.png"
-                      }
-                      alt="project-1"
-                    /> */}
-
-                    <CustomCarousel images={project.image} />
+                  <div className="flex flex-row gap-2 h-[200px] rounded-xl overflow-hidden">
+                    <CustomCarousel height={"200px"} images={project.image} />
                   </div>
-                  <div className="m-4">
+                  <div className="mt-8">
                     <div className="">
                       <h2
                         className={`text-3xl  mb-2 ${
@@ -165,9 +167,12 @@ export default function Project({ username }) {
                       }}
                       className="flex flex-row gap-2 justify-between "
                     >
-                      <button className="bg-slate-300 px-4 py-2 text-black rounded-md flex items-center justify-center gap-2">
-                        Read more
-                        <FontAwesomeIcon icon={faArrowRight} className="p-2" />
+                      <button className="bg-white px-4 text-black rounded-3xl flex items-center justify-center gap-2 text-sm font-semibold">
+                        Curious
+                        <FontAwesomeIcon
+                          icon={faArrowRight}
+                          className="pl-2 text-sm font-semibold"
+                        />
                       </button>
                       <div className="flex flex-row gap-2 items-center">
                         <img
@@ -195,10 +200,14 @@ export default function Project({ username }) {
           cancel={() => {
             setRedeMore(false);
           }}
-          title={"Add New Project"}
+          title={""}
           body={
-            <article className="mx-auto  border-2 rounded-xl overflow-hidden flex flex-col md:flex-row">
-              <div className="sm:w-[100%] min-w: max-content; max-w-[900px] h-[500px] w-[100%] flex flex-row gap-2  overflow">
+            <article
+              className={`mx-auto  rounded-xl overflow-hidden flex flex-col md:flex-row`}
+            >
+              <div
+                className={`min-w-[340px] max-w-[450px] min-h-[500px] max-content ${""}  flex flex-row gap-2  overflow`}
+              >
                 {/* <img
                       className="w-full h-full object-cover rounded-md hover:scale-125 transition-all duration-500 ease-in-out hover:shadow-2xl hover:cursor-pointer"
                       src={
@@ -210,13 +219,36 @@ export default function Project({ username }) {
                 {selectedProject?.projectDoc ? (
                   <PDFViewer pdfURL={selectedProject.projectDoc} />
                 ) : (
-                  <CustomCarousel images={selectedProject.image} />
+                  // <CustomCarousel images={selectedProject.image} />
+                  <div
+                    className="flex flex-col gap-2 h-[500px] overflow-auto
+                  "
+                    style={{
+                      scrollbarWidth: "none",
+                    }}
+                  >
+                    {selectedProject?.image.map((img) => {
+                      return (
+                        <img
+                          className="w-full h-full object-cover rounded-md transition-all duration-500 ease-in-out "
+                          src={img}
+                          alt="project-1"
+                          style={{
+                            objectFit: "contain",
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
                 )}
               </div>
-              <div className="m-4 md:max-w-[50%] w-[100%]">
+              <div className="m-[1rem] md:max-w-[50%] w-[100%]">
                 <div className="">
                   <h2
-                    className={`md:text-3xl text-[18px] mb-2 ${
+                    className={`text-[${responsiveText(
+                      12,
+                      16
+                    )}] text-start  mb-2 ${
                       theme.theme === "light" ? "text-black-200" : "text-white"
                     }`}
                   >

@@ -356,7 +356,6 @@ a {
   font-weight: 600;
   opacity: 0.8;
   padding: 10px;
-  background-color: #000;
   border-bottom-left-radius: 5px;
 }
 .header .extra-navbar-list .li-item {
@@ -468,6 +467,19 @@ a {
   object-fit: contain;
 }
 
+.dashboard-navabr-item {
+}
+.dashboard-navabr-light-item {
+  background-color: #f7f7f7;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.dashboard-navabr-dark-item {
+  background-color: #1b1b1b;
+  border-radius: 1rem;
+  color: #000;
+  cursor: pointer;
+}
 /*  -------------------------------
           ABOUT SECTION STYLING
     ------------------------------- */
@@ -596,7 +608,6 @@ a {
     /* background-color: #000000; */
   }
   .header .extra-navbar-list {
-    right: 60px;
     top: 0;
   }
   .header {
@@ -767,7 +778,6 @@ a {
   .header {
     height: 53px;
     align-items: center;
-    background-color: #1b1b1b;
   }
 
   .home-section {

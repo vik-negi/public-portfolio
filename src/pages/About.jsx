@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { parseStyledText } from "../utils/text_parser.jsx";
 import { mainProfile } from "../data/constants.jsx";
+import { useWindowWide } from "./admin/utils/useWindowWide.js";
 
 const About = ({ username }) => {
   const queryClient = useQueryClient();
@@ -71,13 +72,26 @@ const About = ({ username }) => {
   //   fetchData();
   // }, []);
 
+  const above450 = useWindowWide(450);
   const store = create();
   if (isLoading) {
     return <></>;
   }
 
   return (
-    <section id="about" className="section about-section" tabIndex="11">
+    <section
+      id="about"
+      style={
+        !above450
+          ? {
+              margin: 0,
+              padding: 0,
+            }
+          : {}
+      }
+      className={`section about-section max-w-[1024px] `}
+      tabIndex="11"
+    >
       {!about && (
         <div className="about-ill">
           <img src={mainProfile} alt="VikramNegi" />
@@ -114,7 +128,13 @@ const About = ({ username }) => {
             })}
           </div>
           <br />
-          <p className="aboutLong">
+          <p
+            style={{
+              fontFamily: "Poppins",
+            }}
+            className="aboutShort text-[12px] sm:text-[18px]"
+            //  className="aboutLong"
+          >
             {about?.description != null
               ? parseStyledText(
                   about?.description.length > 450
@@ -131,7 +151,7 @@ const About = ({ username }) => {
             tabIndex="12"
           >
             <FontAwesomeIcon icon={faDownload} />
-            Download Resume
+            <p className="download text-[14px]">Download Resume</p>
           </a>
         </div>
       }

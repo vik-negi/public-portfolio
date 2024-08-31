@@ -421,14 +421,16 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
       >
         <p className="px-10 text-[20px]">Experience</p>
         <div className="border-4px bg-white-500 flex">
-          <div className="flex w-full flex-col justify-start items-end">
-            <Button
-              className="bg-[#1e1e2f] rounded-[10px] px-5 py-3 text-[#e8e9fa] text-[14px]"
-              onClick={handleNext}
-            >
-              Next
-            </Button>
-          </div>
+          {isFromCreateProtfolio && (
+            <div className="flex w-full flex-col justify-start items-end">
+              <Button
+                className="bg-[#1e1e2f] rounded-[10px] px-5 py-3 text-[#e8e9fa] text-[14px]"
+                onClick={handleNext}
+              >
+                Next
+              </Button>
+            </div>
+          )}
           {isFromCreateProtfolio && (
             <button
               className="flex justify-center

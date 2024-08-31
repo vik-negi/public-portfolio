@@ -84,13 +84,13 @@ const Register = () => {
   };
 
   const store = create();
-  const width425 = useWindowWide(425);
+  const width480 = useWindowWide(480);
 
   return (
-    <div className=" sm:px-[6rem] items-center flex justify-center fontCatamaran">
+    <div className="min-h-[100vh] sm:px-[6rem] items-center flex justify-center fontCatamaran">
       <div
-        className={`my-10 sm:p-[20px] p-[20px] md:p-[52px] rounded-2xl g-6 flex flex-wrap items-center justify-center lg:justify-between  bg-white ${
-          width425 && "border-[1px] border-neutral-200"
+        className={`my-10 my-auto sm:p-[20px] p-[20px] md:p-[3rem] rounded-2xl g-6 flex flex-wrap items-center justify-center lg:justify-between  bg-white ${
+          width480 && "border-[1px] border-neutral-200"
         } 
          transition duration-150 ease-in-out w-[38rem]
       `}
@@ -98,7 +98,7 @@ const Register = () => {
         <div className="w-full">
           <form>
             <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="mb-5 mr-4  font-medium md:text-[28px] text-[20px]">
+              <p className="mb-5 mr-4 text-4xl font-semibold text-center">
                 Register
                 {/* in with */}
               </p>

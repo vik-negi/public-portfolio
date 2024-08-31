@@ -12,6 +12,7 @@ import { callApi, dashboard, publicInfo } from "../axios/dashboard";
 import { useLocation, useParams } from "react-router-dom";
 import { getUsername } from "./admin/utils/auth";
 import MainDashboard from "./MainDashboard";
+import Contact from "./Contact";
 
 library.add(faBars, faTimes);
 
@@ -40,6 +41,7 @@ export default function Home(props) {
       <Skills id="skills" username={username} />
       <Projects id="projects" username={username} />
       <Experiences id="experience" username={username} />
+      <Contact id="contact" username={username} />
     </>
   );
 }

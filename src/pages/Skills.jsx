@@ -644,7 +644,7 @@ const Skills = () => {
   return (
     <div
       id="Skills"
-      className="section lg:mb-[100px] lg:sm-[50px] lg:container px-[5%] mx-auto  flex flex-col justify-center items-center relative z-10"
+      className="section lg:mb-[100px] lg:sm-[50px]  lg:container px-[5%] mx-auto  flex flex-col justify-center items-center relative z-10"
     >
       <div className="w-full flex flex-col items-center">
         {/* <h2
