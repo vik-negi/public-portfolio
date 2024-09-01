@@ -50,7 +50,7 @@ export default function ShowAnimatedDialog({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel
-                className={`relative mx-auto transform bg-transparent overflow-hidden rounded-lg text-left transition-all sm:my-8 flex-col  sm:mx-auto`}
+                className={`relative mx-auto transform bg-transparent overflow-hidden rounded-lg text-left transition-all sm:my-8 flex-col sm:mx-auto`}
               >
                 <div className={` mx-auto  px-4 pb-4 pt-5 sm:p-6 sm:pb-4`}>
                   <div className="sm:items-start bg">
