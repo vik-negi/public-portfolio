@@ -608,7 +608,7 @@ a {
     /* background-color: #000000; */
   }
   .header .extra-navbar-list {
-    top: 0;
+    top: -10;
   }
   .header {
     align-items: start;

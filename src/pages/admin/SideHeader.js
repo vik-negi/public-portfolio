@@ -83,7 +83,7 @@ export const SideBarItemsContainer = ({ open, setOpen, isMobileNavbar }) => {
       <div className="flex justify-between items-center ">
         {open && isMobileNavbar == null ? (
           <Link
-            to="/dashboard"
+            to="/"
             className="logo-with-text flex justify-between items-center mx-3"
           >
             <div className="flex justify-center items-center">

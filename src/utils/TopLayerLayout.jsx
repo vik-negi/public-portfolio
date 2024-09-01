@@ -5,6 +5,7 @@ import create, { themes } from "../utils/Theme";
 import Navbar from "../componenets/Navbar";
 import { isAutheticated } from "../pages/admin/utils/auth";
 import Brightness from "../assets/svg/brightness.svg";
+import DarkMode from "../assets/svg/dark-mode.svg";
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -57,14 +58,14 @@ const LayoutComponent = ({ children, notShowNavbar }) => {
                 themes[theme]?.background == "#FFFFFF" ? "dark" : "light"
               );
             }}
-            className={`${
-              themes[theme]?.background == "#FFFFFF" && "fas fa-moon"
-            } text-[25px] cursor-pointer text-black absolute top-[18px] right-5 z-50
+            className={` text-[10px] cursor-pointer text-black absolute top-[13px] right-4 z-50
            
                 `}
           >
-            {themes[theme]?.background != "#FFFFFF" && (
-              <img src={Brightness} color="white" alt="" />
+            {themes[theme]?.background != "#FFFFFF" ? (
+              <img src={Brightness} color="white" alt="" width={"20px"} />
+            ) : (
+              <img src={DarkMode} color="black" alt="" width={"20px"} />
             )}
           </div>
         )}

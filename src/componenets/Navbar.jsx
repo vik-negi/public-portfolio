@@ -283,7 +283,7 @@ export default function Navbar() {
           className="mobile-nav-icon"
         />
       </button> */}
-      <div className="extra-navbar-list items-center">
+      <div className="extra-navbar-list items-center mt-5">
         <i
           onClick={(e) =>
             switchTheme(store.theme === "light" ? "dark" : "light")
