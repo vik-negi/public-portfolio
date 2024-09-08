@@ -2,6 +2,7 @@ import React from "react";
 import create from "../../../utils/Theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import Loader from "./Loader";
 
 const AllTextFields = ({
   title,
@@ -12,9 +13,11 @@ const AllTextFields = ({
   lines,
   classs,
   isCheckBox = false,
+  checked = false,
   isFullWidth = true,
   isSelect = false,
   isRequired = false,
+  loading = false,
   size,
   options,
   onUseAI,
@@ -26,12 +29,12 @@ const AllTextFields = ({
   }
   return (
     <div
-      className={`flex w-full ${
+      className={`flex w-full mt-10 ${
         isCheckBox === true && isFullWidth === false ? "flex-row" : "flex-col"
-      }  justify-start items-start mb-10 ${classs}`}
+      }  justify-start gap-x-5 items-start ${classs}`}
     >
       <label
-        className={`  ${
+        className={` w-full ${
           theme.theme === "light" && "text-[#1e1e2f]"
         } font-semibold text-[14px]`}
       >
@@ -69,34 +72,46 @@ const AllTextFields = ({
       {(value || value == "" || value == null) &&
         textArea === undefined &&
         !isSelect && (
-          <input
-            onChange={(e) => onChange(e.target.value)}
+          <div className="relative w-full">
+            {loading && (
+              <div className="absolute flex justify-center items-center w-full h-full z-50">
+                <Loader />
+              </div>
+            )}
+            <input
+              onChange={(e) => onChange(e.target.value)}
+              name={name}
+              value={value}
+              checked={checked}
+              type={isCheckBox ? "checkbox" : "text"}
+              className={`${isFullWidth ? "w-full" : ""} h-[${
+                size != null ? size : "45px"
+              }] rounded-[10px] text-[13px] border-[1px]  border-[#e8e9fa] outline-none px-4 mt-2 ${
+                theme.theme === "light" ? "text-[#1e1e2f]" : "text-white"
+              } ${theme.theme === "light" ? "bg-white" : "bg-[#1e1e2f]"}`}
+              placeholder={placeholder}
+            />
+          </div>
+        )}
+      {textArea != null && (
+        <div className="relative w-full">
+          {loading && (
+            <div className="absolute flex justify-center items-center w-full h-full z-50">
+              <Loader />
+            </div>
+          )}
+          <textarea
+            type="text"
             name={name}
-            value={value}
-            checked={value}
-            type={isCheckBox ? "checkbox" : "text"}
-            className={`${isFullWidth ? "w-full" : ""} ${
-              isCheckBox && "ml-5"
-            } h-[${
-              size != null ? size : "45px"
-            }] rounded-[10px] text-[13px] border-[1px]  border-[#e8e9fa] outline-none px-4 mt-2 ${
+            onChange={(e) => onChange(e.target.value)}
+            rows={lines || 6}
+            className={`w-full  rounded-[10px] text-[13px] border-[1px]  border-[#e8e9fa] outline-none px-4 py-2 mt-2 ${
               theme.theme === "light" ? "text-[#1e1e2f]" : "text-white"
             } ${theme.theme === "light" ? "bg-white" : "bg-[#1e1e2f]"}`}
             placeholder={placeholder}
+            value={textArea}
           />
-        )}
-      {textArea != null && (
-        <textarea
-          type="text"
-          name={name}
-          onChange={(e) => onChange(e)}
-          rows={lines || 6}
-          className={`w-full rounded-[10px] text-[13px] border-[1px]  border-[#e8e9fa] outline-none px-4 py-2 mt-2 ${
-            theme.theme === "light" ? "text-[#1e1e2f]" : "text-white"
-          } ${theme.theme === "light" ? "bg-white" : "bg-[#1e1e2f]"}`}
-          placeholder={placeholder}
-          value={textArea}
-        />
+        </div>
       )}
     </div>
   );

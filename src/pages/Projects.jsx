@@ -138,6 +138,13 @@ export default function Project({ username }) {
             Projects?.map((project, i) => {
               return (
                 <motion.div
+                  initial={{ opacity: 0, y: 50 }} // Initial hidden state
+                  whileInView={{ opacity: 1, y: 0 }} // Animation when in view
+                  transition={{
+                    duration: 1,
+                    ease: "easeInOut",
+                    delay: i * 0.2,
+                  }} // Smooth transition
                   onClick={() => setSelectedProject(project)}
                   key={i}
                   layoutId={project.id}

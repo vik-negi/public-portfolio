@@ -9,7 +9,7 @@ const LoginWrapper = ({ childrens }) => {
   return (
     <div
       className={`relative sm:8 min-h-screen flex sm:flex-row flex-col ${
-        theme.theme === "light" && "bg-[#f0f0f4]"
+        theme.theme === "light" && "bg-[#f1f0f8]"
       }`}
     >
       <div className="sm:flex hidden mr-10 relative">

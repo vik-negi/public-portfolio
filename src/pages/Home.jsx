@@ -13,6 +13,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { getUsername } from "./admin/utils/auth";
 import MainDashboard from "./MainDashboard";
 import Contact from "./Contact";
+import Demo from "./demo";
 
 library.add(faBars, faTimes);
 
@@ -37,6 +38,7 @@ export default function Home(props) {
   return (
     <>
       <MainSection username={username} />
+      {/* <Demo /> */}
       <About id="about" username={username} />
       <Skills id="skills" username={username} />
       <Projects id="projects" username={username} />

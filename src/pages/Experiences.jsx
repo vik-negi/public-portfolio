@@ -30,7 +30,8 @@ const ExperienceTimeline = ({ experience }) => {
           </svg>
         </div>
         <div
-          class={`mb-20 ml-6 block max-w-5xl rounded-lg bg-neutral-50 p-6 shadow-md shadow-black/5 dark:bg-[#1e1e2f] light:text-white dark:shadow-black/10 
+          style={{ marginBottom: "5rem", marginLeft: "1.5rem" }}
+          class={`animated-bottom  mb-20 ml-6 block max-w-5xl rounded-lg bg-neutral-50 p-6 shadow-md shadow-black/5 dark:bg-[#1e1e2f] light:text-white dark:shadow-black/10 
         `}
         >
           <div class="mb-4 flex justify-between items-center">
@@ -155,7 +156,7 @@ export default function Experiences({ username }) {
   }
   return (
     <section
-      className="section experience-section"
+      className="section experience-section "
       id="experience"
       tabIndex="24"
     >

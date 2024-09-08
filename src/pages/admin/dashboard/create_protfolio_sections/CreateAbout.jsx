@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoadingComponent from "../../../../utils/loader";
 import AllTextFields from "../../utils/AllTextFields";
 import { AddPassionDialog, SocialMediaItem } from "../../about/AdminAbout";
@@ -10,6 +10,8 @@ import { createAbout } from "../../../../axios/about";
 import { useMutation } from "react-query";
 import { getResponseForGivenPrompt } from "../../../../axios/gemini";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../utils/Loader";
+import { CustomDialog } from "../../utils/CustomDialog";
 
 const CreateAbout = () => {
   const { createPortfolioData, loading, error } = useSelector(
@@ -17,13 +19,19 @@ const CreateAbout = () => {
   );
   const [about, setAbout] = useState({});
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [updated, setUpdated] = useState(false);
   const theme = create();
   const navigate = useNavigate();
 
   const lableTextStyle = "text-[#1e1e2f] font-semibold text-[20px]";
 
   const handleNext = () => {
-    navigate("/admin/create-portfolio/2");
+    if (!updated) {
+      setOpenDialog(true);
+      return;
+    }
+
+    navigate("/create-portfolio/2");
   };
 
   useEffect(() => {
@@ -36,15 +44,26 @@ const CreateAbout = () => {
     }
   }, []);
 
+  const [usingAI, setUsingAI] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+
   const handleGenerateDescriptionFromAI = async (id) => {
-    const prompt = `Create a 1000-character point-wise description for my portfolio that attracts recruiters. \n\nhere's my details:\n\n ${JSON.stringify(
+    setUsingAI(true);
+    const prompt = `Please write a only 500 character professional summary for a user profile that will attract recruiters. The summary should be tailored to highlight key achievements, skills, and experience while maintaining a tone of confidence and professionalism. It should reflect the user's background in the tech industry and showcase their ability to deliver results in software development. Here's the user's profile information. \nwrite as your being user, response should be text format that contain only summary:\n\n ${JSON.stringify(
       createPortfolioData
     )}`;
 
-    const response = await getResponseForGivenPrompt(prompt);
-    if (response) {
-      setAbout({ ...about, description: response });
-    }
+    await getResponseForGivenPrompt(prompt)
+      .then((response) => {
+        if (response) {
+          setAbout({ ...about, description: response });
+        }
+        setUsingAI(false);
+      })
+      .catch((error) => {
+        setUsingAI(false);
+        errorMessage(error);
+      });
   };
 
   const editAboutMutation = useMutation(() => createAbout(about), {
@@ -52,16 +71,19 @@ const CreateAbout = () => {
     onSuccess: (data) => {
       successMessage("About updated successfully");
       setSubmitLoading(false);
+      setUpdated(true);
     },
     onError: (error) => {
       errorMessage(error);
       setSubmitLoading(false);
+      setUpdated(true);
     },
   });
 
   const handleUpdateAbout = async () => {
     console.log("about data ", about);
     setSubmitLoading(true);
+
     editAboutMutation.mutate();
   };
 
@@ -116,10 +138,12 @@ const CreateAbout = () => {
               title="About Description"
               textArea={about?.description ?? ""}
               name="description"
+              loading={usingAI}
               onUseAI={handleGenerateDescriptionFromAI}
               onChange={(val) => handleFieldChange("description", val)}
               placeholder="About Description"
             />
+
             {about?.passion && (
               <label
                 className={`${lableTextStyle} ${
@@ -225,6 +249,17 @@ const CreateAbout = () => {
             </div>
           </div>
         </div>
+        {openDialog && (
+          <CustomDialog
+            open={openDialog}
+            onSubmit={() => {
+              setOpenDialog(false);
+              navigate("/create-portfolio/2");
+            }}
+            cancel={setOpenDialog}
+            text="You have not updated the about section. Are you sure you want to continue?"
+          />
+        )}
       </div>
     </>
   );

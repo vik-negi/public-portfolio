@@ -424,7 +424,7 @@ Here is the resume text: ${text}
 
     setExtractedJson(jsonData);
     dispatch(setResponseData(jsonData));
-    navigate("/admin/create-portfolio/1");
+    navigate("/create-portfolio/1");
   };
 
   const [openAddProjectModel, setOpenAddProjectModel] = useState(false);

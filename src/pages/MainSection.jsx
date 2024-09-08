@@ -10,17 +10,6 @@ import { mainProfile } from "../data/constants";
 
 export default function MainSection({ username }) {
   const [userInfo, setUserInfo] = useState();
-  const [isFirstTime, setIsFirstTime] = useState(true);
-  if (
-    // username === undefined ||
-    // (username === "vikramnegi-9162604468" &&
-    isFirstTime
-    // )
-  ) {
-    // setUserInfo(MyData.publicInfo);
-    setIsFirstTime(false);
-  }
-
   const { isLoading } = useQuery("main-section", () => publicInfo(username), {
     onSuccess: (data) => {
       setUserInfo(data.data?.data);

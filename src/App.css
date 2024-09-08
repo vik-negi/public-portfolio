@@ -15,6 +15,27 @@
   --slate-300: #8b9eab;
   --slate-500: #64748b;
   --arrow-pointer: url("../public/images/arrow-pointer.png"), auto;
+
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 240 5.9% 10%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 45%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 5.9% 10%;
+  --radius: 0.5rem;
 }
 
 * {
@@ -26,6 +47,76 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: proximity;
+}
+
+.animated-right {
+  animation: revealing-right;
+  animation-timeline: view(block);
+  animation-range: cover 0% cover 40%;
+  margin: 0px;
+}
+.animated-left {
+  animation: revealing-left;
+  animation-timeline: view(block);
+  animation-range: cover 0% cover 40%;
+  margin: 0px;
+}
+.animated-bottom {
+  animation: revealing-bottom;
+  animation-timeline: view(block);
+  animation-range: cover 0% cover 38%;
+  margin: 0px;
+  animation-duration: 500ms;
+}
+@keyframes revealing-right {
+  from {
+    color: gray;
+    margin-left: 100vw;
+    filter: blur(50px);
+    opacity: 0.5;
+  }
+  to {
+    margin: 0px;
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes revealing-left {
+  from {
+    color: gray;
+    margin-right: 140vw;
+    filter: blur(50px);
+    opacity: 0.5;
+  }
+  to {
+    margin: 0px;
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes revealing-bottom {
+  0% {
+    color: gray;
+    margin-bottom: 10vh;
+    opacity: 0;
+    /* scale: 0; */
+    transform: scale(0);
+  }
+  50% {
+    color: gray;
+    margin-bottom: 0vh;
+    opacity: 0.2;
+    /* scale: 0; */
+    transform: scale(0.9);
+  }
+
+  100% {
+    margin: 0px;
+    /* scale: 1; */
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 body {

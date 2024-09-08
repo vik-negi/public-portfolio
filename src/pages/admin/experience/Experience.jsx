@@ -13,6 +13,7 @@ import {
   faClose,
   faTrash,
   faCheckCircle,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import create from "../../../utils/Theme";
 import DateTimeFormatter from "../../../utils/dateTime_functionality";
@@ -27,6 +28,8 @@ import CustomEditor from "../../../utils/editor";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import pencilIcon from "../../../assets/svg/pencil-square.svg";
+import { CustomDialog } from "../utils/CustomDialog";
 
 const lableTextStyle = "text-[#1e1e2f] font-semibold text-[14px]";
 
@@ -232,6 +235,9 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
   const [highlight, setHighlight] = useState("");
   const [skillList, setSkillList] = useState([]);
   const [skill, setSkill] = useState("");
+  const [editHigtlightIndex, setEditHighlightIndex] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [updated, setUpdated] = useState(false);
 
   const [openAddProjectModel, setOpenAddProjectModel] = useState(false);
 
@@ -239,6 +245,7 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
     onSuccess: (data) => {
       console.log(data);
       successMessage("Experience Added Successfully");
+      setUpdated(true);
     },
     onError: (error) => {
       console.log(error);
@@ -375,6 +382,12 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
     return dateString;
   }
 
+  const handleEditing = (index, field, value) => {
+    const tempData = [...experiences];
+    tempData[index] = { ...tempData[index], [field]: value };
+    setExperiences(tempData);
+  };
+
   const handleAddAllExperience = async () => {
     var tempData = [];
 
@@ -386,14 +399,14 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
         expp = {
           ...exp,
           current: true,
-          from: correctDateFormat(exp.from) + "T00:00:00.000Z",
+          from: correctDateFormat(exp.from),
         };
         delete expp.to;
       } else {
         expp = {
           ...exp,
-          from: correctDateFormat(exp.from) + "T00:00:00.000Z",
-          to: correctDateFormat(exp.to) + "T00:00:00.000Z",
+          from: correctDateFormat(exp.from),
+          to: correctDateFormat(exp.to),
         };
       }
       // if (expp.skills.length == 0) {
@@ -411,45 +424,130 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
   };
   const navigate = useNavigate();
   const handleNext = () => {
-    navigate("/admin/create-portfolio/3");
+    if (!updated) {
+      setOpenDialog(true);
+      return;
+    }
+    navigate("/create-portfolio/3");
+  };
+
+  const handleModifyHighlight = (index, value, forAdd = true, editIdx) => {
+    var tempData = [...experiences];
+    if (value == "") {
+      errorMessage("Highlight cannot be empty");
+      return;
+    }
+    if (forAdd) {
+      if (tempData[index].highlights.includes(value)) {
+        errorMessage("Highlight already exists");
+        return;
+      }
+      tempData = tempData.map((item, idx) => {
+        if (idx === index) {
+          return {
+            ...item,
+            highlights:
+              editIdx == null
+                ? [...item.highlights, value]
+                : item.highlights.map((highlight, i) => {
+                    if (i === editIdx) {
+                      return value;
+                    }
+                    return highlight;
+                  }),
+          };
+        }
+        return item;
+      });
+    } else {
+      tempData = tempData.map((item, idx) => {
+        console.log(`highlights : ${item.highlights}`);
+        if (idx === index) {
+          return {
+            ...item,
+            highlights: item.highlights.filter((highlight, i) => editIdx !== i),
+          };
+        }
+        return item;
+      });
+    }
+    setExperiences(tempData);
+  };
+
+  const handleModifySkill = (index, value, forAdd = true) => {
+    var tempData = [...experiences];
+    if (value == "") {
+      errorMessage("Skill cannot be empty");
+      return;
+    }
+    if (forAdd) {
+      if (tempData[index].skills.includes(value)) {
+        errorMessage("Skill already exists");
+        return;
+      }
+      tempData = tempData.map((item, idx) => {
+        if (idx === index) {
+          return {
+            ...item,
+            skills: [...item.skills, value],
+          };
+        }
+        return item;
+      });
+    } else {
+      console.log(`skills : ${tempData[index].skills}`);
+      tempData = tempData.map((item, idx) => {
+        if (idx === index) {
+          return {
+            ...item,
+            skills: item.skills.filter((skill) => skill !== value),
+          };
+        }
+        return item;
+      });
+    }
+    setExperiences(tempData);
   };
 
   return (
     <WrapperContent title="Experience">
       <div
-        className={`flex flex-wrap flex-row justify-between items-center mx-auto w-full max-w-[950px]   rounded-[8px] py-1`}
+        className={`flex flex-wrap flex-row justify-between items-center mx-auto w-full max-w-[950px]  rounded-[8px] py-1 mb-5`}
       >
         <p className="px-10 text-[20px]">Experience</p>
-        <div className="border-4px bg-white-500 flex">
+        <div className="bg-white-500 flex gap-x-5">
           {isFromCreateProtfolio && (
             <div className="flex w-full flex-col justify-start items-end">
               <Button
-                className="bg-[#1e1e2f] rounded-[10px] px-5 py-3 text-[#e8e9fa] text-[14px]"
+                className="bg-[#1e1e2f] rounded-[10px] px-8 py-3 text-[#e8e9fa] text-[14px]"
                 onClick={handleNext}
               >
                 Next
               </Button>
             </div>
           )}
-          {isFromCreateProtfolio && (
+          {isFromCreateProtfolio && !updated && (
             <button
               className="flex justify-center
-           items-center bg-[#1e1e2f] hover:bg-[#e8e9fa] text-[#e8e9fa] hover:text-[#1e1e2f]  font-semiblod text-[12px] py-4 px-4 rounded-[4px] mr-5"
+           items-center bg-[#1e1e2f] hover:bg-[#e8e9fa] text-[#e8e9fa] hover:text-[#1e1e2f] w-full font-semiblod text-[12px] py-4 px-4 rounded-[4px] mr-5"
               onClick={handleAddAllExperience}
             >
               <FontAwesomeIcon className="mr-2" icon={faCheckCircle} />
-              Add All Experience
+              Add All
             </button>
           )}
           <button
-            className="flex justify-center
-           items-center bg-[#1e1e2f] hover:bg-[#e8e9fa] text-[#e8e9fa] hover:text-[#1e1e2f]  font-semiblod text-[12px] py-4 px-4 rounded-[4px]"
+            className="hover:bg-[#e8e9fa] text-[#e8e9fa] hover:text-[#1e1e2f] font-semiblod text-[12px]  rounded-full p-2"
             onClick={() => {
               setOpenAddProjectModel(true);
             }}
           >
-            <FontAwesomeIcon className="mr-2" icon={faPlus} />
-            Add Experience
+            <FontAwesomeIcon
+              className={`p-0 h-8 w-8 m-0 ${
+                theme.theme == "light" ? "text-black" : "text-white"
+              }`}
+              icon={faPlus}
+            />
           </button>
         </div>
       </div>
@@ -462,104 +560,230 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
 
       {experiences?.length > 0 &&
         experiences.map((experience, index) => (
-          <div
-            className={`flex flex-wrap flex-row justify-between items-start mx-auto w-full max-w-[1000px] rounded-[10px] p-10 `}
-          >
+          <div className=" mx-auto mb-10 max-w-[1000px] rounded-[10px]  p-10">
             <div
-              className={` ${
-                theme.theme === "light" ? "bg-white" : "bg-[#1e1e2f]"
-              } py-[38px] px-[25px] rounded-[8px]  ${
-                width425 ? "w-[450px]" : "w-full"
-              } flex flex-col justify-start items-center`}
+              className={`flex flex-wrap flex-row justify-between items-start mx-auto w-full  gap-x-10 `}
             >
-              <AllTextFields
-                title="Title"
-                value={experience?.title}
-                placeholder="About Title"
-              />
-              <AllTextFields
-                title="Company"
-                value={experience?.company}
-                placeholder="About Company"
-              />
-              <AllTextFields
-                title="Location"
-                value={experience?.location}
-                placeholder="About Location"
-              />
-              <div className="flex w-full gap-10 justify-start items-center ">
+              <div
+                className={` ${
+                  theme.theme === "light" ? "bg-white" : "bg-[#1e1e2f]"
+                } py-[38px] px-[25px] rounded-[8px]  ${
+                  width425 ? "w-[450px]" : "w-full"
+                } flex flex-col justify-start items-center`}
+              >
                 <AllTextFields
-                  title="Joining From"
-                  value={DateTimeFormatter.getFormattedDate(experience?.from)}
+                  title="Title"
+                  name={"title"}
+                  value={experience?.title}
+                  placeholder="About Title"
+                  onChange={(val) => handleEditing(index, "title", val)}
+                />
+                <AllTextFields
+                  title="Company"
+                  name={"company"}
+                  onChange={(val) => handleEditing(index, "company", val)}
+                  value={experience?.company}
+                  placeholder="About Company"
+                />
+                <AllTextFields
+                  title="Location"
+                  value={experience?.location}
+                  name={"location"}
+                  onChange={(val) => handleEditing(index, "location", val)}
                   placeholder="About Location"
                 />
-                {experience?.current !== true && experience?.to !== null && (
+                <div className="flex w-full gap-10 justify-start items-center ">
                   <AllTextFields
-                    classs="ml-5"
-                    title="End Date"
-                    value={DateTimeFormatter.getFormattedDate(experience?.to)}
+                    title="Joining From"
+                    name={"from"}
+                    onChange={(val) => handleEditing(index, "from", val)}
+                    value={DateTimeFormatter.getFormattedDate(experience?.from)}
                     placeholder="About Location"
                   />
-                )}
-                {experience?.current === true && (
-                  <AllTextFields
-                    title="Current Working"
-                    isCheckBox={true}
-                    size={"12px"}
-                    isFullWidth={false}
-                    value={experience?.current}
-                    placeholder="About Location"
-                  />
-                )}
-              </div>
-              <AllTextFields
-                title="About Description"
-                lines={10}
-                textArea={experience?.description}
-                placeholder="About Description"
-              />
-            </div>
-
-            <div
-              className={`${width425 ? "w-[450px]" : "w-full"}  ${
-                theme.theme === "light" ? "bg-white" : "bg-[#1e1e2f]"
-              } py-[38px] px-[25px] rounded-[8px] `}
-            >
-              <div className="flex flex-col justify-start items-start">
-                <div className="flex flex-col w-full justify-start items-center mt-5">
-                  {experience.highlights?.map((item, index) => (
+                  {experience?.current !== true && experience?.to !== null && (
                     <AllTextFields
-                      lines={3}
-                      title={`Highlights ${index + 1}`}
-                      textArea={item}
-                      placeholder={`Highlights ${index + 1}`}
+                      classs="ml-5"
+                      title="End Date"
+                      name={"to"}
+                      onChange={(val) => handleEditing(index, "to", val)}
+                      value={
+                        experience?.to &&
+                        DateTimeFormatter.getFormattedDate(experience?.to)
+                      }
+                      placeholder="About Location"
                     />
-                  ))}
+                  )}
                 </div>
 
-                <label
-                  className={`${lableTextStyle} ${
-                    theme.theme !== "light" && "text-[#f1f1f1]"
-                  } `}
-                >
-                  Skills
-                </label>
-                <div className="flex flex-row flex-wrap  justify-start items-center mt-5">
-                  {experience &&
-                    experience.skills?.map((item, index) => (
-                      <div
-                        className="mr-2 mb-2 bg-[#e8e9fa] rounded-full px-4 py-2 text-[#1e1e2f] font-normal hover:bg-[#1e1e2f] hover:text-[#e8e9fa] cursor-pointer 
-                 text-[13px]
-              "
-                      >
-                        {item}
+                <AllTextFields
+                  title="Current Working"
+                  isCheckBox={true}
+                  size={"12px"}
+                  classs={"w-full items-start"}
+                  name={"current"}
+                  onChange={(val) => {
+                    console.log(`current : ${val} & ${typeof val}`);
+                    handleEditing(
+                      index,
+                      "current",
+                      experience?.current === true ? false : true
+                    );
+                  }}
+                  isFullWidth={false}
+                  checked={experience?.current === true}
+                  value={experience?.current}
+                  // placeholder="About Location"
+                />
+
+                <AllTextFields
+                  title="About Description"
+                  lines={10}
+                  name={"description"}
+                  onChange={(val) => handleEditing(index, "description", val)}
+                  textArea={experience?.description}
+                  placeholder="About Description"
+                />
+              </div>
+
+              <div
+                className={`${width425 ? "w-[450px]" : "w-full"}  ${
+                  theme.theme === "light" ? "bg-white" : "bg-[#1e1e2f]"
+                } py-[38px] px-[25px] rounded-[8px] `}
+              >
+                <div className="flex flex-col justify-start items-start">
+                  <div className=" w-full">
+                    <label
+                      className={`${lableTextStyle} flex gap-x-5 items-center ${
+                        theme.theme !== "light" && "text-[#f1f1f1]"
+                      } `}
+                    >
+                      Highlights & Achievements{" "}
+                    </label>
+
+                    {experience.highlights?.map((item, i) => (
+                      <div className="flex w-full gap-x-5 justify-start items-start">
+                        <AllTextFields
+                          lines={3}
+                          classs={"mb-0"}
+                          textArea={item}
+                          placeholder={`Highlights ${i + 1}`}
+                        />
+                        <div className="flex flex-col gap-y-5 justify-start items-center">
+                          <img
+                            src={pencilIcon}
+                            onClick={() => {
+                              setHighlight(item);
+                              setEditHighlightIndex(i);
+                            }}
+                            className={`h-12 w-12 cursor-pointer rounded-xl p-1 ${
+                              theme.theme == "light"
+                                ? "hover:bg-gray-300"
+                                : "hover:bg-gray-300"
+                            }`}
+                          />
+                          <div
+                            className="w-[20px] h-[20px] ml-2 rounded-full hover:bg-red-500 hover:text-white flex justify-center items-center mx-auto justify-center"
+                            onClick={() =>
+                              handleModifyHighlight(index, item, false, i)
+                            }
+                          >
+                            <FontAwesomeIcon className="" icon={faClose} />
+                          </div>
+                        </div>
                       </div>
                     ))}
+                    {(experience.highlights?.length < 3 ||
+                      editHigtlightIndex != null) && (
+                      <>
+                        <label
+                          className={`${lableTextStyle} mt-5 flex gap-x-5 items-center ${
+                            theme.theme !== "light" && "text-[#f1f1f1]"
+                          } `}
+                        >
+                          Enter Highlight
+                          <FontAwesomeIcon
+                            className="cursor-pointer"
+                            onClick={() => {
+                              handleModifyHighlight(
+                                index,
+                                highlight,
+                                true,
+                                editHigtlightIndex
+                              );
+                              setEditHighlightIndex(null);
+                              setHighlight("");
+                            }}
+                            icon={faCheck}
+                          />
+                        </label>
+                        <AllTextFields
+                          lines={3}
+                          textArea={highlight}
+                          onChange={(val) => setHighlight(val)}
+                        />
+                      </>
+                    )}
+                  </div>
+
+                  <label
+                    className={`${lableTextStyle} flex gap-x-5 items-center ${
+                      theme.theme !== "light" && "text-[#f1f1f1]"
+                    } `}
+                  >
+                    Skills{" "}
+                  </label>
+
+                  <div className="flex w-full justify-center gap-x-5 items-center">
+                    <AllTextFields
+                      title=""
+                      value={skill}
+                      placeholder="About Title"
+                      onChange={(val) => setSkill(val)}
+                    />
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      onClick={() => {
+                        handleModifySkill(index, skill);
+                        setSkill("");
+                      }}
+                      icon={faCheck}
+                    />
+                  </div>
+
+                  <div className="flex flex-row flex-wrap  justify-start items-center mt-5">
+                    {experience &&
+                      experience.skills?.map((item, i) => (
+                        <div className="mr-2 mb-2 bg-[#e8e9fa] rounded-full px-4 py-2 text-[#1e1e2f] font-normal hover:bg-[#1e1e2f] hover:text-[#e8e9fa] cursor-pointer flex text-[13px]">
+                          {item}
+
+                          <div
+                            className="w-[20px] h-[20px] ml-2 rounded-full hover:bg-red-500 hover:text-white flex justify-center items-center mx-auto justify-center"
+                            onClick={() =>
+                              handleModifySkill(index, item, false)
+                            }
+                          >
+                            <FontAwesomeIcon className="" icon={faClose} />
+                          </div>
+                        </div>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         ))}
+
+      {openDialog && (
+        <CustomDialog
+          open={openDialog}
+          onSubmit={() => {
+            setOpenDialog(false);
+            navigate("/create-portfolio/3");
+          }}
+          cancel={setOpenDialog}
+          text="You have not updated the about section. Are you sure you want to continue?"
+        />
+      )}
       <AddNew
         open={openAddProjectModel}
         cancel={() => {

@@ -12,65 +12,20 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { parseStyledText } from "../utils/text_parser.jsx";
 import { mainProfile } from "../data/constants.jsx";
 import { useWindowWide } from "./admin/utils/useWindowWide.js";
+import { AnimatePresence, motion } from "framer-motion";
 
 const About = ({ username }) => {
   const queryClient = useQueryClient();
-  console.log("nikjmi", username);
-
-  // if (username === undefined) {
-  //   username = "vikramnegi-9162604468";
-  // }
   initTE({ Ripple });
-  const socialLinks = [
-    social.github,
-    social.linkedin && social.linkedin,
-    social.twitter && social.twitter,
-    social.instagram && social.instagram,
-    social.facebook && social.facebook,
-  ];
 
   const [about, setAbout] = useState();
-  // const { isLoading, isSuccess, isError, error, data } = useQuery(
-  //   ["data"],
-  //   getAbout(props.username)
-  // );
-  // if (data) {
-  //   console.log("about : ", data?.data?.data);
-  // }
-  const [isFirstTime, setIsFirstTime] = useState(true);
-
-  if (username == "vikramnegi-9162604468" && isFirstTime) {
-    setIsFirstTime(false);
-    setAbout(MyData.about);
-  }
-
   const { data, isLoading } = useQuery("about", () => getAbout(username), {
     onSuccess: (data) => {
       queryClient.invalidateQueries("avatar");
       setAbout(data?.data?.data);
     },
-    onError: (error) => {
-      setAbout(MyData.about);
-    },
+    onError: (error) => {},
   });
-
-  // const mutation = useMutation((id) => getAbout(username), {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("avatar");
-  //   },
-  //   onError: (error) => {
-  //     setAbout(MyData.about);
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const result = await mutation.mutateAsync(); // Use mutateAsync to get data
-  //     setAbout(result?.data?.data);
-  //     console.log("about : ", result?.data?.data?.passion);
-  //   };
-  //   fetchData();
-  // }, []);
 
   const above450 = useWindowWide(450);
   const store = create();
@@ -99,8 +54,14 @@ const About = ({ username }) => {
       )}
 
       {
-        <div
-          className="aboutMe"
+        <motion.div
+          initial={{ opacity: 0, x: -100 }} // Initial hidden state
+          whileInView={{ opacity: 1, x: 0 }} // Animation when in view
+          transition={{
+            duration: 0.5,
+            ease: "easeInOut",
+          }} //
+          className="aboutMe "
           // data-aos="fade-left"
           data-aos-duration="700"
           data-aos-once="true"
@@ -153,10 +114,18 @@ const About = ({ username }) => {
             <FontAwesomeIcon icon={faDownload} />
             <p className="download text-[14px]">Download Resume</p>
           </a>
-        </div>
+        </motion.div>
       }
       {
-        <div className="socialMedia w-[80px]">
+        <motion.div
+          initial={{ opacity: 0, x: 100 }} // Initial hidden state
+          whileInView={{ opacity: 1, x: 0 }} // Animation when in view
+          transition={{
+            duration: 0.75,
+            ease: "easeInOut",
+          }} //
+          className="socialMedia w-[80px] "
+        >
           {Object.values(social).map((socialLink, index) => {
             return (
               <button
@@ -168,7 +137,7 @@ const About = ({ username }) => {
               </button>
             );
           })}
-        </div>
+        </motion.div>
       }
     </section>
   );

@@ -186,7 +186,7 @@ const AdminProject = ({ isFromCreateProtfolio = false }) => {
   };
 
   const handleNext = () => {
-    navigate("/admin/create-portfolio/4");
+    navigate("/create-portfolio/4");
   };
 
   return (

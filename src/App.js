@@ -120,6 +120,10 @@ function App() {
             element={<LayoutComponent children={<Experiences />} />}
           />
           <Route path="/admin/login" element={<Login />} />
+          <Route
+            path="create-portfolio/:indexNumber"
+            element={<CreatePortfolio />}
+          />
           <Route path="/admin/register" element={<Register />} />
           <Route path="/admin/verify" element={<VerifyOtp />} />
 
@@ -170,10 +174,6 @@ function AdminRoutes() {
   }, []);
   return (
     <Routes>
-      <Route
-        path="create-portfolio/:indexNumber"
-        element={<CreatePortfolio />}
-      />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="about" element={<AboutIndex />} />
       <Route path="experiences" element={<AdminExperience />} />
