@@ -112,7 +112,7 @@ const About = ({ username }) => {
             tabIndex="12"
           >
             <FontAwesomeIcon icon={faDownload} />
-            <p className="download text-[14px]">Download Resume</p>
+            <p className="download text-[14px] text-white">Download Resume</p>
           </a>
         </motion.div>
       }

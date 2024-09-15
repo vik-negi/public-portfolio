@@ -75,10 +75,10 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
   const [submitLoading, setSubmitLoading] = useState(false);
   useEffect(() => {
     if (skillsData) {
-      console.log("skillsData : ", skillsData);
       var myskills = skillsData?.skills ?? [];
 
       const updatedSkills = myskills.map((category) => {
+        console.log("skillsData : ", category.skills);
         return {
           category:
             category.category == null || category.category == "null"
@@ -90,7 +90,11 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
                 // console.log("item : ", skill, " and ", item);
                 return (
                   skill?.name?.toLowerCase() ==
-                  (item?.skill?.name || item?.name).toLowerCase()
+                  (
+                    item?.skill?.name ||
+                    item?.name ||
+                    item?.skill
+                  )?.toLowerCase()
                 );
               }),
               level: item.level,

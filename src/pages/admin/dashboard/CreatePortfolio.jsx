@@ -11,13 +11,15 @@ const CreatePortfolio = () => {
   const theme = create();
 
   return (
-    <div
-      className={`mt-10 overflow-hidden flex flex-wrap flex-row justify-between items-start mx-auto w-full max-w-[980px] mb-10 `}
-    >
-      {indexNumber == 1 && <CreateAbout />}
-      {indexNumber == 2 && <AdminExperience isFromCreateProtfolio={true} />}
-      {indexNumber == 3 && <AdminProject isFromCreateProtfolio={true} />}
-      {indexNumber == 4 && <AdminSkills isFromCreateProtfolio={true} />}
+    <div className={`${theme.theme === "light" && "bg-[#f1f0f8]"} `}>
+      <div
+        className={`pt-10 max-w-[980px] overflow-hidden flex flex-wrap flex-row justify-between items-start mx-auto w-full  pb-10  `}
+      >
+        {indexNumber == 1 && <CreateAbout />}
+        {indexNumber == 2 && <AdminExperience isFromCreateProtfolio={true} />}
+        {indexNumber == 3 && <AdminProject isFromCreateProtfolio={true} />}
+        {indexNumber == 4 && <AdminSkills isFromCreateProtfolio={true} />}
+      </div>
     </div>
   );
 };

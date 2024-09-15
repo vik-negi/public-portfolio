@@ -19,3 +19,6 @@ export const getExperience = async (username) => {
 export const getProjects = async (username) => {
   return await Axios.get(`/api/projects/${username}`);
 };
+export const getSkills = async (username) => {
+  return await Axios.get(`/api/skills/${username}`);
+};

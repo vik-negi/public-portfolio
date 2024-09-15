@@ -120,7 +120,7 @@ const MainDashboard = () => {
             <nav className="lg:hidden">
               <div className="px-1 py-8">
                 <div className="grid gap-y-7">
-                  <a
+                  {/* <a
                     href="#"
                     title=""
                     className={`flex items-center p-3 -m-3 text-base font-medium ${
@@ -135,7 +135,7 @@ const MainDashboard = () => {
                     className="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
                   >
                     Pricing
-                  </a>
+                  </a> */}
                   <a
                     href="#"
                     title=""

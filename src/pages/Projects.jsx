@@ -148,15 +148,17 @@ export default function Project({ username }) {
                   onClick={() => setSelectedProject(project)}
                   key={i}
                   layoutId={project.id}
-                  className={`max-w-xl mx-auto mb-10 rounded-2xl overflow-hidden hover:shadow-md transition-all duration-500 ease-in-out border-[1px] p-4 ${
+                  className={`max-w-xl min-w-full mx-auto mb-10 rounded-2xl overflow-hidden hover:shadow-md transition-all duration-500 ease-in-out border-[1px] p-4 ${
                     theme.theme == "light"
                       ? "border-gray-200"
                       : "border-gray-800"
                   } `}
                 >
-                  <motion.div className="flex flex-row gap-2 h-[200px] rounded-xl overflow-hidden">
-                    <CustomCarousel height={"200px"} images={project.image} />
-                  </motion.div>
+                  {project?.image && project?.image?.length > 0 && (
+                    <motion.div className="flex flex-row gap-2 h-[200px] rounded-xl overflow-hidden">
+                      <CustomCarousel height={"200px"} images={project.image} />
+                    </motion.div>
+                  )}
                   <motion.div className="mt-8">
                     <motion.h2
                       className={`text-3xl  mb-2 ${

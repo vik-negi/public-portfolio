@@ -67,6 +67,7 @@ html {
   animation-timeline: view(block);
   animation-range: cover 0% cover 38%;
   margin: 0px;
+  margin-left: 1.5rem;
   animation-duration: 500ms;
 }
 @keyframes revealing-right {
@@ -112,7 +113,7 @@ html {
   }
 
   100% {
-    margin: 0px;
+    margin-left: 1.5rem;
     /* scale: 1; */
     opacity: 1;
     transform: scale(1);

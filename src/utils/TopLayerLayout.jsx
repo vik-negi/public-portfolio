@@ -6,6 +6,7 @@ import Navbar from "../componenets/Navbar";
 import { isAutheticated } from "../pages/admin/utils/auth";
 import Brightness from "../assets/svg/brightness.svg";
 import DarkMode from "../assets/svg/dark-mode.svg";
+import { Link } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -51,22 +52,35 @@ const LayoutComponent = ({ children, notShowNavbar }) => {
       <div>
         {!notShowNavbar && token && <Navbar />}
         {!token && (
-          <div
-            onClick={(e) => {
-              console.log("clicked ", themes[theme]);
-              switchTheme(
-                themes[theme]?.background == "#FFFFFF" ? "dark" : "light"
-              );
-            }}
-            className={` text-[10px] cursor-pointer text-black absolute top-[13px] right-4 z-50
+          <div className="flex justify-end items-center p-4">
+            <Link
+              to="/admin/login"
+              title=""
+              className={`flex mr-10 items-center p-[4px]  font-medium ${
+                themes[theme].background == "#FFFFFF"
+                  ? "text-black"
+                  : "text-white"
+              } transition-all duration-200 rounded-xl hover:bg-gray-50 hover:text-gray-800 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2 text-xl`}
+            >
+              User Login
+            </Link>
+            <div
+              onClick={(e) => {
+                console.log("clicked ", themes[theme]);
+                switchTheme(
+                  themes[theme]?.background == "#FFFFFF" ? "dark" : "light"
+                );
+              }}
+              className={` text-[10px] cursor-pointer text-black absolute top-[13px] right-4 z-50
            
                 `}
-          >
-            {themes[theme]?.background != "#FFFFFF" ? (
-              <img src={Brightness} color="white" alt="" width={"20px"} />
-            ) : (
-              <img src={DarkMode} color="black" alt="" width={"20px"} />
-            )}
+            >
+              {themes[theme]?.background != "#FFFFFF" ? (
+                <img src={Brightness} color="white" alt="" width={"20px"} />
+              ) : (
+                <img src={DarkMode} color="black" alt="" width={"20px"} />
+              )}
+            </div>
           </div>
         )}
         {children}

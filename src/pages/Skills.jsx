@@ -7,8 +7,9 @@ import SectionHeader from "../componenets/SectionHeader";
 import React, { useState } from "react";
 import { getAdminSkills } from "../axios/skills";
 import { useQuery } from "react-query";
+import { getSkills } from "../axios/dashboard";
 
-const Skills = () => {
+const Skills = ({ username }) => {
   const theme = create();
 
   const [skills, setSkills] = useState([]);
@@ -17,7 +18,7 @@ const Skills = () => {
     isLoading,
     data,
     refetch: refetchskills,
-  } = useQuery("my-skills", getAdminSkills, {
+  } = useQuery("my-skills", () => getSkills(username), {
     retry: 1,
     retryDelay: 1,
     refetchOnWindowFocus: false,

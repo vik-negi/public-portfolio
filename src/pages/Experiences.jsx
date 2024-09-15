@@ -15,7 +15,9 @@ const ExperienceTimeline = ({ experience }) => {
   return (
     <li>
       <div class={`flex-start md:flex  `}>
-        <div class="-ml-[23px] flex h-[45px] w-[45px] items-center justify-center rounded-full bg-info-100 text-info-700">
+        <div
+          className={`-ml-[23px] flex h-[45px] w-[45px] items-center justify-center rounded-full bg-info-100 text-info-700`}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -31,7 +33,11 @@ const ExperienceTimeline = ({ experience }) => {
         </div>
         <div
           style={{ marginBottom: "5rem", marginLeft: "1.5rem" }}
-          class={`animated-bottom  mb-20 ml-6 block max-w-5xl rounded-lg bg-neutral-50 p-6 shadow-md shadow-black/5 dark:bg-[#1e1e2f] light:text-white dark:shadow-black/10 
+          class={`animated-bottom  mb-20 ml-6 block max-w-5xl rounded-2xl  p-6  light:text-black  ${
+            theme.theme === "light"
+              ? "bg-[#f2f2fc6f] text-neutral-900 border border-neutral-200"
+              : "bg-[#00000030] text-neutral-100 border border-neutral-800"
+          } 
         `}
         >
           <div class="mb-4 flex justify-between items-center">
@@ -47,7 +53,7 @@ const ExperienceTimeline = ({ experience }) => {
                 : "Present"}
             </p>
           </div>
-          <h3 class="mb-4 text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+          <h3 class="mb-4 text-xl font-semibold  ">
             {experience.company} | {experience.location}
           </h3>
           <div class="mb-4 flex flex-wrap gap-2">
@@ -64,8 +70,8 @@ const ExperienceTimeline = ({ experience }) => {
           </div>
 
           <p
-            class="mb-6 dark:text-neutral-200 text-[14px]"
-            style={{ color: "white" }}
+            class="mb-6  text-[14px]"
+
             // dangerouslySetInnerHTML={{
             //   __html: experience.description,
             // }}

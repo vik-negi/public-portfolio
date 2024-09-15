@@ -10,6 +10,8 @@ import {
   faPlus,
   faClose,
   faTrash,
+  faCheck,
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import DateTimeFormatter from "../../../utils/dateTime_functionality";
 import { useWindowWide } from "../utils/useWindowWide";
@@ -195,10 +197,10 @@ const AdminProject = ({ isFromCreateProtfolio = false }) => {
         className={` mx-auto max-w-[1100px] rounded-[5px] flex justify-between items-center w-full p-1`}
       >
         <p className="px-10 text-[20px]">Projects</p>
-        <div className="border-4px bg-white-500">
+        <div className="border-4px bg-white-500 flex gap-x-5">
           {isFromCreateProtfolio && (
             <Button
-              className="bg-[#1e1e2f] rounded-[10px] px-5 py-3 text-[#e8e9fa] text-[14px]"
+              className="bg-[#1e1e2f] rounded-[4px] px-5 py-3 text-[#e8e9fa] text-[12px]"
               onClick={handleNext}
             >
               Next
@@ -271,19 +273,12 @@ const AdminProject = ({ isFromCreateProtfolio = false }) => {
                 placeholder="Project Title"
               />
               <AllTextFields
-                title="Link"
-                value={project?.link}
-                name={"link"}
-                onChange={(e) => handleFieldChange(e, "link", index)}
-                placeholder="Enter Site Link"
-              />
-              <AllTextFields
-                title="level"
-                value={project?.level}
-                name={"level"}
-                isSelect={true}
-                onChange={(e) => handleFieldChange(e, "level", index)}
-                placeholder="Enter Site Link"
+                title="Project Description"
+                lines={10}
+                name={"description"}
+                onChange={(e) => handleFieldChange(e, "description", index)}
+                textArea={project?.description}
+                placeholder="About Description"
               />
             </div>
             <div className={`${width425 ? "w-[450px]" : "w-full"}`}>
@@ -300,21 +295,47 @@ const AdminProject = ({ isFromCreateProtfolio = false }) => {
                 </div>
 
                 <AllTextFields
-                  title="Project Description"
-                  lines={10}
-                  name={"description"}
-                  onChange={(e) => handleFieldChange(e, "description", index)}
-                  textArea={project?.description}
-                  placeholder="About Description"
+                  title="Link"
+                  value={project?.link}
+                  name={"link"}
+                  onChange={(e) => handleFieldChange(e, "link", index)}
+                  placeholder="Enter Site Link"
+                />
+                <AllTextFields
+                  title="level"
+                  value={project?.level}
+                  name={"level"}
+                  isSelect={true}
+                  onChange={(e) => handleFieldChange(e, "level", index)}
+                  placeholder="Enter Site Link"
                 />
 
-                <label
+                {/* <label
                   className={`${lableTextStyle} ${
                     theme.theme !== "light" && "text-[#f1f1f1]"
                   } `}
                 >
                   tags
-                </label>
+                </label> */}
+                <div className="w-full flex gap-x-5 items-center">
+                  <AllTextFields
+                    lines={3}
+                    title={`Tags`}
+                    value={tag}
+                    onChange={(val) => setTag(val)}
+                    placeholder={`Enter Tag`}
+                  />
+                  <FontAwesomeIcon
+                    className="text-[#1e1e2f] cursor-pointer mt-10 pt-10"
+                    icon={faCheckCircle}
+                    size="xl"
+                    onClick={() => {
+                      if (project.tags.includes(tag)) return;
+                      handleFieldChange([...project.tags, tag], "tags", index);
+                      setTag("");
+                    }}
+                  ></FontAwesomeIcon>
+                </div>
                 <div className="flex flex-row flex-wrap  justify-start items-center mt-5">
                   {project &&
                     project.tags?.map((item, index) => (
@@ -324,17 +345,44 @@ const AdminProject = ({ isFromCreateProtfolio = false }) => {
               "
                       >
                         {item}
+                        <FontAwesomeIcon
+                          icon={faClose}
+                          className="ml-4"
+                          onClick={() => {
+                            handleFieldChange(
+                              project.tags.filter((tag) => tag !== item),
+                              "tags",
+                              index
+                            );
+                          }}
+                        />
                       </div>
                     ))}
                 </div>
 
-                <label
-                  className={`${lableTextStyle} ${
-                    theme.theme !== "light" && "text-[#f1f1f1]"
-                  } `}
-                >
-                  Skills
-                </label>
+                <div className="w-full flex gap-x-5 items-center">
+                  <AllTextFields
+                    lines={3}
+                    title={`Skills`}
+                    value={skill}
+                    onChange={(val) => setSkill(val)}
+                    placeholder={`Enter skill`}
+                  />
+                  <FontAwesomeIcon
+                    className="text-[#1e1e2f] cursor-pointer mt-10 pt-10"
+                    icon={faCheckCircle}
+                    size="xl"
+                    onClick={() => {
+                      if (project.skillsUsed.includes(skill)) return;
+                      handleFieldChange(
+                        [...project.skillsUsed, skill],
+                        "skillsUsed",
+                        index
+                      );
+                      setSkill("");
+                    }}
+                  ></FontAwesomeIcon>
+                </div>
                 <div className="flex flex-row flex-wrap  justify-start items-center mt-5">
                   {project &&
                     project.skillsUsed?.map((item, index) => (
@@ -344,6 +392,19 @@ const AdminProject = ({ isFromCreateProtfolio = false }) => {
               "
                       >
                         {item}
+                        <FontAwesomeIcon
+                          icon={faClose}
+                          className="ml-4"
+                          onClick={() => {
+                            handleFieldChange(
+                              project.skillsUsed.filter(
+                                (skill) => skill !== item
+                              ),
+                              "skillsUsed",
+                              index
+                            );
+                          }}
+                        />
                       </div>
                     ))}
                 </div>
