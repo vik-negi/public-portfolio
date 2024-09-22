@@ -41,6 +41,7 @@ const About = ({ username }) => {
           ? {
               margin: 0,
               padding: 0,
+              marginTop: "100px",
             }
           : {}
       }
@@ -55,7 +56,7 @@ const About = ({ username }) => {
 
       {
         <motion.div
-          initial={{ opacity: 0, x: -100 }} // Initial hidden state
+          initial={{ opacity: 0, x: above450 ? -100 : 0 }} // Initial hidden state
           whileInView={{ opacity: 1, x: 0 }} // Animation when in view
           transition={{
             duration: 0.5,
@@ -118,7 +119,7 @@ const About = ({ username }) => {
       }
       {
         <motion.div
-          initial={{ opacity: 0, x: 100 }} // Initial hidden state
+          initial={{ opacity: above450 ? 0 : 1, x: above450 ? 100 : 0 }} // Initial hidden state
           whileInView={{ opacity: 1, x: 0 }} // Animation when in view
           transition={{
             duration: 0.75,

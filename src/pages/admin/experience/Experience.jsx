@@ -519,7 +519,7 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
           {isFromCreateProtfolio && (
             <div className="flex w-full flex-col justify-start items-end">
               <Button
-                className="bg-[#1e1e2f] rounded-[10px] px-8 py-3 text-[#e8e9fa] text-[14px]"
+                className="bg-[#1e1e2f] rounded-[4px] px-8 py-4 text-[#e8e9fa] text-[12px]"
                 onClick={handleNext}
               >
                 Next
@@ -781,7 +781,7 @@ function AdminExperience({ isFromCreateProtfolio = false }) {
             navigate("/create-portfolio/3");
           }}
           cancel={setOpenDialog}
-          text="You have not updated the about section. Are you sure you want to continue?"
+          text="You have not updated the Experience section. Are you sure you want to continue?"
         />
       )}
       <AddNew

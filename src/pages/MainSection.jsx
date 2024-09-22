@@ -55,6 +55,7 @@ export default function MainSection({ username }) {
     <section
       className="section home-section mt-24 only-bg"
       id="home"
+      // className="section mt-[120px] px-[12rem] only-bg flex flex-row justify-between items-center w-full"
       tabIndex="42"
     >
       {userInfo && (
@@ -110,17 +111,22 @@ export default function MainSection({ username }) {
         </div>
       )}
       <div className="img_sec">
-        <div className={`${"imgDiv"}`}>
-          <img
-            src={userInfo?.user?.profilePic ?? mainProfile}
-            className={`profile-image ${
-              userInfo?.user?.profilePic !== null
-                ? "rounded-full w-[200px] h-[200px]"
-                : "rounded-lg"
-            }`}
-            alt="ProfileImage"
-          />
-        </div>
+        <img
+          src={userInfo?.user?.profilePic ?? mainProfile}
+          style={{
+            // width: "40%",
+            height: "350px",
+            objectFit: "cover",
+            objectPosition: "end",
+            filter: "grayscale(0.5)",
+          }}
+          className={`profile-image   shadow-2xl ${
+            userInfo?.user?.profilePic !== null
+              ? "rounded-xl w-[300px] h-[350px]"
+              : "rounded-lg"
+          }`}
+          alt="ProfileImage"
+        />
       </div>
     </section>
   );

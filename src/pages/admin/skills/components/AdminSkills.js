@@ -19,6 +19,7 @@ import {
   getAdminSkills,
   addSkill,
   getAllSkills,
+  addAllSkill,
 } from "../../../../axios/skills";
 import AllTextFields from "../../utils/AllTextFields";
 import { useNavigate } from "react-router-dom";
@@ -42,13 +43,14 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
   const [skills, setSkills] = useState([]);
 
   const { data: mySkillsData } = useQuery("skills", () => getAllSkills(), {
-    retry: 1,
+    // retry: 1,
     retryDelay: 1,
     refetchOnWindowFocus: false,
     onError: (error) => {
       errorMessage(error?.response?.data?.message);
     },
     onSuccess: (data) => {
+      console.log("setting all skills : ", data?.data?.data);
       setAllSkills(data?.data?.data);
     },
   });
@@ -85,27 +87,30 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
               ? category?.skillCategory ?? "Other"
               : category.category,
           skills: category.skills.map((item) => {
-            return {
-              skill: allSkills.find((skill) => {
-                // console.log("item : ", skill, " and ", item);
-                return (
-                  skill?.name?.toLowerCase() ==
-                  (
-                    item?.skill?.name ||
-                    item?.name ||
-                    item?.skill
-                  )?.toLowerCase()
-                );
-              }),
-              level: item.level,
+            console.log("allSkills - data: ", allSkills.length);
+            const foundSkill = allSkills.find((skill) => {
+              console.log("item : ", skill, " and ", item);
+              return (
+                skill?.name?.toLowerCase() ==
+                (item?.skill?.name || item?.name || item?.skill)?.toLowerCase()
+              );
+            });
+            console.log("foundSkill : ", foundSkill);
+            let newData = {
+              skill: foundSkill
+                ? foundSkill
+                : item?.skill || { name: item?.name },
+              level: item.level || "Intermediate",
             };
+            return newData;
           }),
         };
       });
       setSkills(updatedSkills);
-      console.log("skills", updatedSkills);
+      console.log("skills updated", updatedSkills);
     }
-  }, []);
+    console.log("it's work");
+  }, [allSkills]);
 
   const [skillsFromFile, setSkillsFromFile] = useState([]);
 
@@ -139,17 +144,18 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
     },
   });
 
-  const handleAddAllSkills = () => {
+  const handleAddAllSkills = async () => {
     console.log("data : ", skills);
 
     const userSkillsFromResume = [];
 
     skills.map((skill) => {
       skill.skills.map((item) => {
-        if (item?.skill?._id == null) return;
+        // if (item?.skill?._id == null) return;
         userSkillsFromResume.push({
           skillCategory: skill.category,
           skill: item.skill._id,
+          name: item.skill?.name,
           level: item?.level ?? "Intermediate",
         });
       });
@@ -233,6 +239,11 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
   ];
 
   const handleSuggesstion = (value) => {
+    if (value === "") {
+      setSuggesstionCategory([]);
+      setCategoryName(value);
+      return;
+    }
     setCategoryName(value);
     const filtered = allCategories.filter((item) =>
       item.toLowerCase().includes(value.toLowerCase())
@@ -309,11 +320,13 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
                         theme.theme !== "light" && "bg-gray-900"
                       }  border border-gray-400 dark:border-gray-600 rounded-md py-2 px-4 transform hover:rotate-6 hover:scale-110 transition duration-300`}
                     >
-                      <img
-                        src={item.skill?.image}
-                        alt={item.skill?.name}
-                        className="w-6 h-6 mr-2"
-                      />
+                      {item?.skill?.image && (
+                        <img
+                          src={item.skill?.image}
+                          alt={item.skill?.name}
+                          className="w-6 h-6 mr-2"
+                        />
+                      )}
                       <span
                         className={` ${
                           theme.theme == "light"
@@ -422,7 +435,7 @@ function AdminSkills({ isFromCreateProtfolio = false }) {
                         setSuggesstionSkills([]);
                       }}
                     >
-                      {item.name}
+                      {item?.name}
                     </div>
                   ))}
                 </div>

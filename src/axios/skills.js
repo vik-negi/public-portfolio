@@ -31,3 +31,14 @@ export const addSkill = async (data) => {
   console.log("usernameu : ", username);
   return await Axios.post(`/api/skills`, data, { headers: headers });
 };
+export const addAllSkill = async (data) => {
+  const { token } = isAutheticated();
+  const username = getUsername();
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  };
+  // Data should be an array of objects containe name atleast
+  return await Axios.post(`/api/skills/many`, data, { headers: headers });
+};

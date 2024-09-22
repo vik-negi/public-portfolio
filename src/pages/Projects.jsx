@@ -143,7 +143,7 @@ export default function Project({ username }) {
                   transition={{
                     duration: 1,
                     ease: "easeInOut",
-                    delay: i * 0.2,
+                    delay: i * (width480 ? 0 : 0.2),
                   }} // Smooth transition
                   onClick={() => setSelectedProject(project)}
                   key={i}

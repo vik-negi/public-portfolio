@@ -200,7 +200,7 @@ const AdminProject = ({ isFromCreateProtfolio = false }) => {
         <div className="border-4px bg-white-500 flex gap-x-5">
           {isFromCreateProtfolio && (
             <Button
-              className="bg-[#1e1e2f] rounded-[4px] px-5 py-3 text-[#e8e9fa] text-[12px]"
+              className="bg-[#1e1e2f] rounded-[4px] px-5 py-4 text-[#e8e9fa] text-[12px]"
               onClick={handleNext}
             >
               Next

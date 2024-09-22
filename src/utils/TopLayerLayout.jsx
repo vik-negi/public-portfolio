@@ -6,7 +6,7 @@ import Navbar from "../componenets/Navbar";
 import { isAutheticated } from "../pages/admin/utils/auth";
 import Brightness from "../assets/svg/brightness.svg";
 import DarkMode from "../assets/svg/dark-mode.svg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -46,12 +46,14 @@ const LayoutComponent = ({ children, notShowNavbar }) => {
     localStorage.setItem("theme", themeName);
   };
 
+  var { username } = useParams();
+
   return (
     <div>
       <GlobalStyle theme={themes[theme]} />
       <div>
         {!notShowNavbar && token && <Navbar />}
-        {!token && (
+        {!token && username != null && (
           <div className="flex justify-end items-center p-4">
             <Link
               to="/admin/login"
