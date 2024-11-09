@@ -14,6 +14,7 @@ import { getUsername } from "./admin/utils/auth";
 import MainDashboard from "./MainDashboard";
 import Contact from "./Contact";
 import Demo from "./demo";
+import { Tamplate1 } from "../templates/template_1/template_1";
 
 library.add(faBars, faTimes);
 
@@ -37,6 +38,7 @@ export default function Home(props) {
 
   return (
     <>
+      <Tamplate1 />
       <MainSection username={username} />
       {/* <Demo /> */}
       <About id="about" username={username} />

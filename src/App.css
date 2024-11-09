@@ -170,12 +170,12 @@ section {
   justify-content: center;
   flex-direction: column;
   /* padding: 8rem 7rem; */
-  padding: 2rem 7rem 8rem 7rem;
+  /* padding: 2rem 7rem 8rem 7rem; */
 
-  width: 100vw;
+  /* width: 100vw;
   height: -moz-max-content;
-  height: max-content;
-  min-width: 100vw;
+  height: max-content; */
+  /* min-width: 100vw; */
   /* min-height: 100vh; */
   /* background-color: var(--light-gray); */
   color: var(--text-gray);
@@ -582,6 +582,7 @@ a {
   flex-direction: row;
   justify-content: space-evenly;
   background-color: transparent;
+  min-width: 100vw;
   /* background-image: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.95),

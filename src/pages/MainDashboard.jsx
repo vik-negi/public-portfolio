@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import create from "../utils/Theme";
 import { Link } from "react-router-dom";
 import logo from "../assets/image/protfoliohub-logo-n.png";
+import { Axios } from "../axios/axios";
 
 const NavBarTitle = ({ title, toRoute = "" }) => {
   const theme = create();
@@ -24,6 +25,14 @@ const MainDashboard = () => {
   const toggleMenu = () => {
     setExpanded(!expanded);
   };
+
+  const startServer = async () => {
+    const res = await Axios.get("");
+  };
+
+  useEffect(() => {
+    startServer();
+  }, []);
 
   return (
     <div className={`overflow-x-hidden `}>

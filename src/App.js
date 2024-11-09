@@ -34,6 +34,9 @@ import AdminProject from "./pages/admin/project/AdminProjects";
 import AdminSkills from "./pages/admin/skills/components/AdminSkills";
 import CreatePortfolio from "./pages/admin/dashboard/CreatePortfolio";
 import MainDashboard from "./pages/MainDashboard";
+import { Tamplate1 } from "./templates/template_1/template_1";
+import WallOfWellness from "./pages/WallOfWellness/WallOfWellness";
+import IndividualWallOfWellness from "./pages/WallOfWellness/IndividualWallOfWellness";
 
 function App() {
   // const slowInternet = setTimeout(() => {
@@ -83,11 +86,24 @@ function App() {
         {/* <div className="bg-div"></div> */}
 
         <Routes>
+          <Route path="/wall-of-wellness" element={<WallOfWellness />} />
+          <Route
+            path="/wall-of-wellness/:id"
+            element={<IndividualWallOfWellness />}
+          />
           <Route
             path="/"
             element={
               <LayoutComponent
-                children={token ? <Home /> : <MainDashboard />}
+                children={
+                  token ? (
+                    // <Tamplate1 />
+                    <MainDashboard />
+                  ) : (
+                    // <Home />
+                    <MainDashboard />
+                  )
+                }
               />
             }
           />
@@ -158,11 +174,7 @@ function AdminRoutes() {
       // navigate("/admin/dashboard");
     } else if (!token && window.location.pathname === "/") {
       navigate("/admin/login");
-    }
-    // else if (token && window.location.pathname === "/forgotPassword") {
-    // navigate("/branch");
-    // }
-    else {
+    } else {
       return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

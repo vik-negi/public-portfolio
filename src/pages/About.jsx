@@ -45,7 +45,7 @@ const About = ({ username }) => {
             }
           : {}
       }
-      className={`section about-section max-w-[1024px] `}
+      className={` about-section max-w-[1024px] `}
       tabIndex="11"
     >
       {!about && (

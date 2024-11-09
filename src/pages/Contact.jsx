@@ -55,7 +55,7 @@ const Contact = ({ username }) => {
 
   return (
     <>
-      <section id="contact" className={`${!above650 && "p-10"}`}>
+      <section id="" className={`${!above650 && "p-10"}`}>
         <div className=" w-full max-w-[1024px]">
           <div className="">
             <div className="mb-5">
