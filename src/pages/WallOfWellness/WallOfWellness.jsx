@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import wallBgImage from "../../assets/wallOfWellness/wall_bg_image.png";
 import wow from "../../assets/wallOfWellness/wow.svg";
 import edit from "../../assets/wallOfWellness/edit.svg";
@@ -8,10 +8,33 @@ import WOWAppBar from "./components/WOWAppBar";
 import { Link } from "react-router-dom";
 
 const WallOfWellness = () => {
+  const [userData, setUserData] = useState({
+    name: "",
+    userId: "",
+    imageUrl: "",
+  });
+
+  useEffect(() => {
+    window.receiveUserData = (data) => {
+      console.log("User Data received:", data);
+      setUserData({
+        name: data.name,
+        userId: data.userId,
+        imageUrl: data.imageUrl,
+      });
+    };
+
+    // Clean up the function when the component unmounts
+    return () => {
+      delete window.receiveUserData;
+    };
+  }, []);
+
   return (
     <div className="bg-[#24262bec]">
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
         <WOWAppBar />
+
         <div className="relative ">
           <img
             src={wallBgImage}
@@ -33,25 +56,33 @@ const WallOfWellness = () => {
             alt="Wall of Wellness"
             className="object-cover flex ml-auto mr-[24px] relative"
           />
-
           <p className="text-[27px] text-center text-white">WALL OF WELLNESS</p>
           <p className="text-[16px] mt-[10.5px] mx-[30px] text-center text-[#FFFFFFCC]">
             Join the Wall of Wellness (WoW) by sharing your Koshiqa story!
           </p>
-          <div
-            className="mt-[32px] mb-[10px] py-[18px] rounded-[16px] flex items-center justify-center mx-[24px]"
-            style={{
-              background:
-                "linear-gradient(360deg, rgba(255, 255, 255, 0.1) 0%, rgba(153, 153, 153, 0.1) 100%)",
-            }}
-          >
-            <img
-              src={edit}
-              alt="Share Icon"
-              className="float-left mr-[10px] h-[20px]"
-            />
+          <Link to="/wall-of-wellness/create/choose-picture">
+            <div
+              className="mt-[32px] mb-[10px] py-[18px] rounded-[16px] flex items-center justify-center mx-[24px]"
+              style={{
+                background:
+                  "linear-gradient(360deg, rgba(255, 255, 255, 0.1) 0%, rgba(153, 153, 153, 0.1) 100%)",
+              }}
+            >
+              <img
+                src={edit}
+                alt="Share Icon"
+                className="float-left mr-[10px] h-[20px]"
+              />
+              <p className="text-[14px] font-semibold text-white leading-[18.2px]">
+                Write Your Story
+              </p>
+            </div>
+          </Link>
+
+          <div className="flex items-center justify-center text-white mt-5">
+            <img src={userData.imageUrl} alt="User" className="h-[30px] ml-2" />
             <p className="text-[14px] font-semibold text-white leading-[18.2px]">
-              Write Your Story
+              {userData.name} , {userData.userId} ,
             </p>
           </div>
           <p className="text-[14px] text-[#FFFFFFCC] text-center leading-[18.2px] font-medium">

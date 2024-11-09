@@ -1,9 +1,11 @@
 import React from "react";
 import WOWAppBar from "./components/WOWAppBar";
 import calendar from "../../assets/wallOfWellness/calendar.svg";
-import frame from "../../assets/wallOfWellness/frame.png";
+
 import playStore from "../../assets/playstore.png";
 import appStore from "../../assets/appStore.png";
+import { Helmet } from "react-helmet";
+import WoWIndividualStoryCard from "./components/WoWIndividualStoryCard";
 
 const IndividualWallOfWellness = () => {
   let text = `Walking has been a transformative experience in my life, offering both physical and mental benefits that have shaped my well-being. It started as a simple activity, a way to get from one place to another, but over time, it evolved into a cherished routine that I look forward to every day.
@@ -18,6 +20,20 @@ In conclusion, walking has been more than just a form of exercise for me; it has
 
   return (
     <div className="bg-[#24262bec]">
+      <Helmet>
+        <title>WoW - Wall of Wellness</title>
+        <meta
+          name="description"
+          content="
+        Walking has been a transformative experience in my life, offering both physical and mental benefits that have shaped my well-being. It started as a simple activity, a way to get from one place to another, but over time, it evolved into a cherished routine that I look forward to every day.
+        "
+        />
+        <meta name="theme-color" content="#24262B" />
+        <meta
+          name="keywords"
+          content="Walking, Physical Health, Mental Health"
+        />
+      </Helmet>
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
         <WOWAppBar />
         <div className="bg-[#FFFFFF1A] h-[1px]" />
@@ -46,47 +62,8 @@ In conclusion, walking has been more than just a form of exercise for me; it has
           </div>
         </div>
 
-        <div
-          className="p-4 bg-[#D3FFF6] justify-between flex rounded-[12px] relative min-h-[204px] mx-[26px] mt-[24px] "
-          style={{
-            boxShadow: "0px 6px 0px 0px #0E986A",
-          }}
-        >
-          <div className="">
-            <p className="text-[14px] max-w-[105px] text-[#005D3E] font-semibold leading-[17.5px]">
-              Kolkata Medal Contest
-            </p>
-            <StoryCardText title="Medal" subtitle="#2" />
-            <StoryCardText title="Completed in" subtitle="40 Days" />
-            <StoryCardText title="Total Steps" subtitle="6,00,000 Steps" />
-          </div>
-          <div className={`  mt-[-36px] mr-[-8px] transform rotate-[2deg]`}>
-            <img
-              src={frame}
-              alt="Frame"
-              style={{}}
-              className="inset-0 object-cover"
-              height={"176px"}
-              width={"212px"}
-            />
-            <img
-              src={
-                "https://s3-alpha-sig.figma.com/img/300f/32ae/27071ef94f8189b31899140af51636be?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=O4vGQ7A3qLi-2bOye178VnzXwO1kHtwLbKoVtq8tinL2SbcD9fDs-QYwm52FR~4VXT0JgBl3XiLpzmgk42UGqCmsEe54tG-4aIFsQaBDjws4gXIDlP2YpVfk~lu5LOm-sD4CZ8f1~FCwFG3nxcpS-vxt4i2PJa17JMhkpuC1O9SaOyWKxXdVfrLugG8zoXzOX6X0RNVP60mdG9N~nCV~lqQbcNQONG9IJdJkM8MQLhKmWlpXHdLsEQK23ugxqEJlPYcgfCy2efycktgCSuGlC1x~SrXGOgHpR3rwTDQCpHrA5Q1FcWk4YI2H29dXffcG-A9ccMoz3oGcYwg~oUHy7Q__"
-              }
-              alt="Frame"
-              className="inset-0 absolute object-cover transform rotate-[0deg]"
-              style={{
-                zIndex: -1,
-                padding: "10px",
-                height: "200px",
-                overflow: "hidden",
-              }}
-              height={"200px"}
-              width={"190px"}
-            />
-          </div>
-          <div className="h-1 bg-["></div>
-        </div>
+        {/*  */}
+        <WoWIndividualStoryCard />
 
         <div className="mt-[36px] pb-[100px] p-[28px] bg-white rounded-t-[16px]">
           <img
@@ -112,7 +89,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
   );
 };
 
-const StoryCardText = ({ title, subtitle }) =>
+export const StoryCardText = ({ title, subtitle }) =>
   // : { title: string; subtitle: String }
   {
     return (
