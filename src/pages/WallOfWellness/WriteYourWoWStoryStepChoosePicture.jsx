@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { WOWWhiteAppBar } from "./components/WOWAppBar";
 import images from "../../assets/wallOfWellness/images.svg";
 import WoWIndividualStoryCard from "./components/WoWIndividualStoryCard";
 
 const WriteYourWoWStoryStepChoosePicture = () => {
+  const [userData, setUserData] = useState({
+    name: null,
+    userId: null,
+    imageUrl: null,
+  });
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
+  }, []);
+
   return (
     <div
       className="
@@ -29,9 +42,11 @@ const WriteYourWoWStoryStepChoosePicture = () => {
               <div className="ml-[6px] h-[1px] bg-[#0000001A] w-full" />
             </div>
           </div>
-
-          <WoWIndividualStoryCard />
         </div>
+        <WoWIndividualStoryCard
+          userImage={userData.imageUrl}
+          name={userData.name}
+        />
 
         <div className="mt-[36px] max-w-[344px] w-full m-[28px] ">
           <button

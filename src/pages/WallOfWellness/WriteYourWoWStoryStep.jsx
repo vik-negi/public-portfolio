@@ -79,9 +79,9 @@ const WriteYourWoWStoryStep = () => {
               multiple // Allow selecting multiple files
             />
           </div>
-
-          <div className="mt-4 h-[182px] w-[182px]">
-            {/* {selectedFiles.map((file, index) => (
+          {selectedFiles.length > 0 && (
+            <div className="mt-4 h-[182px] w-[182px]">
+              {/* {selectedFiles.map((file, index) => (
               <div key={index} className="flex items-center">
                 <img
                   src={URL.createObjectURL(file)}
@@ -94,32 +94,33 @@ const WriteYourWoWStoryStep = () => {
               </div>
             ))} */}
 
-            <Swiper
-              pagination={{
-                dynamicBullets: true,
-                clickable: true,
-              }}
-              modules={[Pagination]}
-              loop={true}
-              spaceBetween={10}
-              slidesPerView={1}
-            >
-              {selectedFiles.map((file, index) => (
-                <SwiperSlide
-                  key={index}
-                  // className="h-[182px] w-[182px] rounded-xl shadow-md"
-                >
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt={file.name}
-                    height={"182px"}
-                    width={"182px"}
-                    className="rounded-3xl "
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+              <Swiper
+                pagination={{
+                  dynamicBullets: true,
+                  clickable: true,
+                }}
+                modules={[Pagination]}
+                loop={true}
+                spaceBetween={10}
+                slidesPerView={1}
+              >
+                {selectedFiles.map((file, index) => (
+                  <SwiperSlide
+                    key={index}
+                    // className="h-[182px] w-[182px] rounded-xl shadow-md"
+                  >
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={file.name}
+                      height={"182px"}
+                      width={"182px"}
+                      className="rounded-3xl "
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )}
 
           <textarea
             value={story}
