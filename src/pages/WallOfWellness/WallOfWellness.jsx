@@ -67,7 +67,7 @@ const WallOfWellness = () => {
             Join the Wall of Wellness (WoW) by sharing your Koshiqa story!
           </p>
           {userData.userId !== null && (
-            <Link to="/wall-of-wellness/create/choose-picture">
+            <Link to="/wow/create/choose-picture">
               <div
                 className="mt-[32px] mb-[10px] py-[18px] rounded-[16px] flex items-center justify-center mx-[24px]"
                 style={{
@@ -178,7 +178,7 @@ const StoryCard = ({ rotate = false }) =>
               </div>
             </div>
             <Link
-              to="/wall-of-wellness/1"
+              to="/wow/1"
               className="cursor-pointer mt-[50px] ml-auto justify-end flex items-center"
             >
               <div className="flex items-center justify-end">

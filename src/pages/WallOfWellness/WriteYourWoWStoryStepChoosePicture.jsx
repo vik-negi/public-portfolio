@@ -51,7 +51,7 @@ const WriteYourWoWStoryStepChoosePicture = () => {
         <div className="mt-[36px] max-w-[344px] w-full m-[28px] ">
           <button
             onClick={() => {
-              window.location.href = "/#/wall-of-wellness/create/write-story";
+              window.location.href = "/#/wow/create/write-story";
             }}
             className="bg-[#0E986A] max-w-[344px] mb-[28px] w-full fixed bottom-0 text-white py-[18px] rounded-[16px] font-semibold"
           >

@@ -89,17 +89,14 @@ function App() {
         {/* <div className="bg-div"></div> */}
 
         <Routes>
-          <Route path="/wall-of-wellness" element={<WallOfWellness />} />
+          <Route path="/wow" element={<WallOfWellness />} />
+          <Route path="/wow/:id" element={<IndividualWallOfWellness />} />
           <Route
-            path="/wall-of-wellness/:id"
-            element={<IndividualWallOfWellness />}
-          />
-          <Route
-            path="/wall-of-wellness/create/choose-picture"
+            path="/wow/create/choose-picture"
             element={<WriteYourWoWStoryStepChoosePicture />}
           />
           <Route
-            path="/wall-of-wellness/create/write-story"
+            path="/wow/create/write-story"
             element={<WriteYourWoWStoryStep />}
           />
           <Route
