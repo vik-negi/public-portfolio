@@ -104,6 +104,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
     };
 
     const storedUserData = localStorage.getItem("userData");
+    console.log(`storedUserData : ${storedUserData}`);
     if (storedUserData) {
       const data = JSON.parse(storedUserData);
       setUserData(data);

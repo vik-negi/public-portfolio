@@ -175,7 +175,7 @@ const WallOfWellness = () => {
                   className="float-left mr-[10px] h-[20px]"
                 />
                 <p className="text-[14px] font-semibold text-white leading-[18.2px]">
-                  Write Your Story
+                  Write Your Story (+1)
                 </p>
               </div>
             </Link>
