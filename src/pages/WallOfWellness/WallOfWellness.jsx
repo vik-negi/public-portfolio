@@ -185,6 +185,15 @@ const WallOfWellness = () => {
               Get yourself featured on the WoW
             </p>
           )}
+          {userData.accessToken && (
+            <div
+              style={{
+                width: "380px",
+              }}
+            >
+              <p>{userData.accessToken.substring(50)}</p>
+            </div>
+          )}
         </div>
 
         <div className="py-[20px] px-[20px] bg-white rounded-t-[30.6px]">
