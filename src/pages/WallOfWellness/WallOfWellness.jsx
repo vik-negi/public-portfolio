@@ -14,7 +14,7 @@ const WallOfWellness = () => {
     userId: null,
     imageUrl: null,
     accessToken:
-      "3bae8df17e4a3c04bb237e24275077027088f58ec98ed76c251361987c3b3cf1db739d91b07c77ce31546e2db2b79b81",
+      "1cf06b4364c1cd3909f728cbaa5cbfe2c6199973a431c0b752b91f2a2997178f60d5d1ea20276ab01eb481d28f1eafeb",
   });
   // const tripId = "ec96e83d-f126-464f-8526-fbb9df3ec227";
   const [wowStories, setWoWStories] = useState([]);
@@ -160,26 +160,26 @@ const WallOfWellness = () => {
           <p className="text-[16px] mt-[10.5px] mx-[30px] text-center text-[#FFFFFFCC]">
             Join the Wall of Wellness (WoW) by sharing your Koshiqa story!
           </p>
-          {/* {userData.userId !== null && ( */}
-          <Link to="/wow/create">
-            <div
-              className="mt-[32px] mb-[10px] py-[18px] rounded-[16px] flex items-center justify-center mx-[24px]"
-              style={{
-                background:
-                  "linear-gradient(360deg, rgba(255, 255, 255, 0.1) 0%, rgba(153, 153, 153, 0.1) 100%)",
-              }}
-            >
-              <img
-                src={edit}
-                alt="Share Icon"
-                className="float-left mr-[10px] h-[20px]"
-              />
-              <p className="text-[14px] font-semibold text-white leading-[18.2px]">
-                Write Your Story
-              </p>
-            </div>
-          </Link>
-          {/* )} */}
+          {userData.userId !== null && (
+            <Link to="/wow/create">
+              <div
+                className="mt-[32px] mb-[10px] py-[18px] rounded-[16px] flex items-center justify-center mx-[24px]"
+                style={{
+                  background:
+                    "linear-gradient(360deg, rgba(255, 255, 255, 0.1) 0%, rgba(153, 153, 153, 0.1) 100%)",
+                }}
+              >
+                <img
+                  src={edit}
+                  alt="Share Icon"
+                  className="float-left mr-[10px] h-[20px]"
+                />
+                <p className="text-[14px] font-semibold text-white leading-[18.2px]">
+                  Write Your Story
+                </p>
+              </div>
+            </Link>
+          )}
           {userData.userId !== null && (
             <p className="text-[14px] text-[#FFFFFFCC] text-center leading-[18.2px] font-medium">
               Get yourself featured on the WoW

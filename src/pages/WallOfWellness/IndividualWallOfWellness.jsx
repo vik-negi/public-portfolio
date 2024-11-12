@@ -35,7 +35,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
   const fetchWoWStories = async (token) => {
     try {
       const response = await axios.get(
-        `http://43.204.123.130:3008/trekking/user/v1/trekking/getuserStoryById/${id}`,
+        `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/getuserStoryById/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -69,7 +69,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
     userId: null,
     imageUrl: null,
     accessToken:
-      "3bae8df17e4a3c04bb237e24275077027088f58ec98ed76c251361987c3b3cf1db739d91b07c77ce31546e2db2b79b81",
+      "1cf06b4364c1cd3909f728cbaa5cbfe2c6199973a431c0b752b91f2a2997178f60d5d1ea20276ab01eb481d28f1eafeb",
   });
 
   const getFormattedDate = (inputDate) => {
@@ -109,6 +109,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
       setUserData(data);
       fetchWoWStories(data.accessToken);
     }
+    // fetchWoWStories(userData.accessToken);
 
     return () => {
       delete window.receiveUserData;
@@ -241,8 +242,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
             </p>
           </div>
         </div>
-
-        <FooterAppDowwnload />
+        {userData.userId === null && <FooterAppDowwnload />}
       </div>
     </div>
   );

@@ -46,6 +46,7 @@ const WriteYourWoWStory = () => {
       setUserData(data);
       fetchLatestTripDetails(data.accessToken);
     }
+    fetchLatestTripDetails(userData.accessToken);
   }, []);
   const [tripDetails, setTripDetails] = useState(null);
   const [tripDetailsLoading, setTripDetailsLoading] = useState(false);
@@ -58,7 +59,7 @@ const WriteYourWoWStory = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            accessToken: token,
+            // accessToken: token,
           },
         }
       );
@@ -124,16 +125,23 @@ const WriteYourWoWStory = () => {
       content: story,
       title: headline,
     };
-
-    const cardImage = await uploadFile({
-      file: selectedFile,
-      fileType: "PHOTO",
-    });
-    if (cardImage === null) {
+    if (selectedFile == null && userData.imageUrl == null) {
       setLoadingCreateStory(false);
       return;
     }
-    data["photoURL"] = cardImage;
+    if (selectedFile !== null) {
+      const cardImage = await uploadFile({
+        file: selectedFile,
+        fileType: "PHOTO",
+      });
+      if (cardImage === null) {
+        setLoadingCreateStory(false);
+        return;
+      }
+      data["photoURL"] = cardImage;
+    } else {
+      data["photoURL"] = userData.imageUrl;
+    }
     let storyId = null;
 
     try {
@@ -170,6 +178,7 @@ const WriteYourWoWStory = () => {
       }
       handleUploadStoryImages(storyId, storyImage);
     }
+    window.history.back();
     setLoadingCreateStory(false);
   };
 
