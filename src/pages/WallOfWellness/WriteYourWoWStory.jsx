@@ -403,7 +403,8 @@ const WriteYourWoWStory = () => {
                 style={{
                   backgroundColor: "#FAFAFA !important",
                   color: "#FAFAFA !important",
-                  background: "#FAFAFA !important",
+                  // background: "#FAFAFA !important",
+                  background: "#FAFAFA",
                 }}
                 className="w-full focus:outline-none mt-4 story-input text-[14px] font-medium text-[#1C1C1C] leading-[20px]"
                 rows={10}
