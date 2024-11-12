@@ -32,39 +32,37 @@ In conclusion, walking has been more than just a form of exercise for me; it has
   const { id } = useParams();
   const [files, setFiles] = useState([]);
 
-  useEffect(() => {
-    const fetchWoWStories = async () => {
-      try {
-        const response = await axios.get(
-          `http://43.204.123.130:3008/trekking/user/v1/trekking/getuserStoryById/${id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "x-user-id": "86662af3-0110-4024-b132-831e533bfe6b",
-            },
-          }
-        );
-        setWoWStory(response.data);
-        let lists = [];
-        for (let i = 0; i < response.data?.userStory.videos.length; i++) {
-          lists.push({
-            link: response.data?.userStory.videos[i].videoURL,
-            type: "video",
-          });
+  const fetchWoWStories = async (token) => {
+    try {
+      const response = await axios.get(
+        `http://43.204.123.130:3008/trekking/user/v1/trekking/getuserStoryById/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "x-user-id": "86662af3-0110-4024-b132-831e533bfe6b",
+            accessToken: token,
+          },
         }
-        for (let i = 0; i < response.data?.userStory.photos.length; i++) {
-          lists.push({
-            link: response.data?.userStory.photos[i].photoURL,
-            type: "photo",
-          });
-        }
-        setFiles(lists);
-      } catch (error) {
-        console.error("Cannot fetch all the trips correctly!", error);
+      );
+      setWoWStory(response.data);
+      let lists = [];
+      for (let i = 0; i < response.data?.userStory.videos.length; i++) {
+        lists.push({
+          link: response.data?.userStory.videos[i].videoURL,
+          type: "video",
+        });
       }
-    };
-    fetchWoWStories();
-  }, []);
+      for (let i = 0; i < response.data?.userStory.photos.length; i++) {
+        lists.push({
+          link: response.data?.userStory.photos[i].photoURL,
+          type: "photo",
+        });
+      }
+      setFiles(lists);
+    } catch (error) {
+      console.error("Cannot fetch all the trips correctly!", error);
+    }
+  };
 
   const [userData, setUserData] = useState({
     name: null,
@@ -107,7 +105,9 @@ In conclusion, walking has been more than just a form of exercise for me; it has
 
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
+      const data = JSON.parse(storedUserData);
+      setUserData(data);
+      fetchWoWStories(data.accessToken);
     }
 
     return () => {

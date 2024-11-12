@@ -42,14 +42,15 @@ const WriteYourWoWStory = () => {
 
     console.log(`storedUserData : ${storedUserData}`);
     if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
-      fetchLatestTripDetails();
+      const data = JSON.parse(storedUserData);
+      setUserData(data);
+      fetchLatestTripDetails(data.accessToken);
     }
   }, []);
   const [tripDetails, setTripDetails] = useState(null);
   const [tripDetailsLoading, setTripDetailsLoading] = useState(false);
 
-  const fetchLatestTripDetails = async () => {
+  const fetchLatestTripDetails = async (token) => {
     setTripDetailsLoading(true);
     try {
       const response = await axios.get(
@@ -57,7 +58,7 @@ const WriteYourWoWStory = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            accessToken: userData.accessToken,
+            accessToken: token,
           },
         }
       );
