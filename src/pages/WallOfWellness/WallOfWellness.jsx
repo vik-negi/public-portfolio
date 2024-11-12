@@ -14,7 +14,7 @@ const WallOfWellness = () => {
     userId: null,
     imageUrl: null,
     accessToken:
-      "7e9fdc2e5cdcf5732b47e98c7a18929bfcc272a7cdfa70b290d8cedd001dad9a75c7c08797307878fb5a8446fd58ae28",
+      "54ddd697482dfe287e540646814a5286f4ba74929720968b99becb0fc2094a03cf701438033917696e1af43056ac1f6a",
   });
   // const tripId = "ec96e83d-f126-464f-8526-fbb9df3ec227";
   const [wowStories, setWoWStories] = useState([]);
@@ -36,9 +36,21 @@ const WallOfWellness = () => {
           },
         }
       );
-      setLatestTrips(response.data);
-      if (response.data.length > 0) {
-        setTripId(response.data[tripIdIndex].id);
+      const filteredList = [];
+      response.data.forEach((trip) => {
+        if (
+          !trip.name.toLowerCase().includes("sample") &&
+          !trip.name.toLowerCase().includes(" test")
+        ) {
+          // console.log(`trip : ${trip.name}`);
+          filteredList.push(trip);
+        }
+      });
+
+      console.log(`filteredList : ${filteredList[1].name}`);
+      setLatestTrips(filteredList);
+      if (filteredList.length > 0) {
+        setTripId(filteredList[tripIdIndex].id);
         setTripIdIndex(tripIdIndex + 1);
       }
     } catch (error) {
