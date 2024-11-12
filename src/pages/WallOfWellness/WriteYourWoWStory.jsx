@@ -39,6 +39,8 @@ const WriteYourWoWStory = () => {
 
   useEffect(() => {
     const storedUserData = localStorage.getItem("userData");
+
+    console.log(`storedUserData : ${storedUserData}`);
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
     }
