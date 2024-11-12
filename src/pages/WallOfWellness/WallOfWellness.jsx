@@ -14,7 +14,7 @@ const WallOfWellness = () => {
     userId: null,
     imageUrl: null,
     accessToken:
-      "17437e2bc1c14de5c7b460ff9637e2e046560b259b4be70c448b1bf4335a35dc89893903720cb8a60764217ba6d3f720",
+      "3bae8df17e4a3c04bb237e24275077027088f58ec98ed76c251361987c3b3cf1db739d91b07c77ce31546e2db2b79b81",
   });
   // const tripId = "ec96e83d-f126-464f-8526-fbb9df3ec227";
   const [wowStories, setWoWStories] = useState([]);
@@ -77,6 +77,7 @@ const WallOfWellness = () => {
           },
         }
       );
+      console.log(`wow cards response : ${response.data}`);
       setWoWStories((prevStories) => [...prevStories, ...response.data]);
     } catch (error) {
       console.error("Cannot fetch all the trips correctly!", error);

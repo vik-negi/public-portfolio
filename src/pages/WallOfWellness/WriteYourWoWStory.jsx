@@ -15,7 +15,7 @@ const WriteYourWoWStory = () => {
     userId: null,
     imageUrl: null,
     accessToken:
-      "17437e2bc1c14de5c7b460ff9637e2e046560b259b4be70c448b1bf4335a35dc89893903720cb8a60764217ba6d3f720",
+      "3bae8df17e4a3c04bb237e24275077027088f58ec98ed76c251361987c3b3cf1db739d91b07c77ce31546e2db2b79b81",
   });
   const [moveToNextStep, setMoveToNextStep] = useState(false);
 
