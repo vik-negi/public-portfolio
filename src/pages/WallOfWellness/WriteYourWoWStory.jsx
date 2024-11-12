@@ -43,32 +43,30 @@ const WriteYourWoWStory = () => {
     console.log(`storedUserData : ${storedUserData}`);
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
+      fetchLatestTripDetails();
     }
   }, []);
   const [tripDetails, setTripDetails] = useState(null);
   const [tripDetailsLoading, setTripDetailsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchLatestTripDetails = async () => {
-      setTripDetailsLoading(true);
-      try {
-        const response = await axios.get(
-          `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/wowPageTripDetailsByUserId`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              accessToken: userData.accessToken,
-            },
-          }
-        );
-        setTripDetails(response.data);
-      } catch (error) {
-        console.error("Cannot fetch all the trips correctly!", error);
-      }
-      setTripDetailsLoading(false);
-    };
-    fetchLatestTripDetails();
-  }, []);
+  const fetchLatestTripDetails = async () => {
+    setTripDetailsLoading(true);
+    try {
+      const response = await axios.get(
+        `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/wowPageTripDetailsByUserId`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accessToken: userData.accessToken,
+          },
+        }
+      );
+      setTripDetails(response.data);
+    } catch (error) {
+      console.error("Cannot fetch all the trips correctly!", error);
+    }
+    setTripDetailsLoading(false);
+  };
 
   // const tripId = "ec96e83d-f126-464f-8526-fbb9df3ec227";
 
