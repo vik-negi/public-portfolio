@@ -293,8 +293,13 @@ const WriteYourWoWStory = () => {
                 type="text"
                 value={headline}
                 placeholder="Story Headline"
+                style={{
+                  backgroundColor: "#FAFAFA !important",
+                  color: "#FAFAFA !important",
+                  background: "#FAFAFA !important",
+                }}
                 onChange={(e) => setHeadline(e.target.value)}
-                className="w-full border-b border-gray-300 focus:outline-none focus:border-[#0E986A] mb-4 headline-input text-[20px] font-semibold text-[#1C1C1C] leading-[20px]"
+                className="w-full bg-[#FAFAFA] border-b border-gray-300 focus:outline-none focus:border-[#0E986A] mb-4 headline-input text-[20px] font-semibold text-[#1C1C1C] leading-[20px]"
               />
 
               <div className="mt-4">
@@ -308,7 +313,10 @@ const WriteYourWoWStory = () => {
                 <input
                   type="file"
                   id="fileInput"
-                  style={{ display: "none" }}
+                  style={{
+                    display: "none",
+                    backgroundColor: "#FAFAFA",
+                  }}
                   onChange={onUploadFile}
                   multiple // Allow selecting multiple files
                 />
@@ -391,6 +399,12 @@ const WriteYourWoWStory = () => {
                 value={story}
                 onChange={(e) => setStory(e.target.value)}
                 placeholder="Write your story"
+                color="#FAFAFA"
+                style={{
+                  backgroundColor: "#FAFAFA !important",
+                  color: "#FAFAFA !important",
+                  background: "#FAFAFA !important",
+                }}
                 className="w-full focus:outline-none mt-4 story-input text-[14px] font-medium text-[#1C1C1C] leading-[20px]"
                 rows={10}
               />
