@@ -14,7 +14,7 @@ const WallOfWellness = () => {
     userId: null,
     imageUrl: null,
     accessToken:
-      "1cf06b4364c1cd3909f728cbaa5cbfe2c6199973a431c0b752b91f2a2997178f60d5d1ea20276ab01eb481d28f1eafeb",
+      "6b5531bd276939cccfa67d4237da0a0e7043df4740b41212c2749b243c43f88eadf76e275b4883ca479f4497b1abf632",
   });
   // const tripId = "ec96e83d-f126-464f-8526-fbb9df3ec227";
   const [wowStories, setWoWStories] = useState([]);
@@ -185,15 +185,6 @@ const WallOfWellness = () => {
               Get yourself featured on the WoW
             </p>
           )}
-          {userData.accessToken && (
-            <div
-              style={{
-                width: "380px",
-              }}
-            >
-              <p>{userData.accessToken.substring(50)}</p>
-            </div>
-          )}
         </div>
 
         <div className="py-[20px] px-[20px] bg-white rounded-t-[30.6px]">
@@ -305,9 +296,22 @@ const StoryCard = ({ rotate = false, wowStory }) =>
 
         {/* bottom */}
         <div className="px-5 py-4 rounded-b-[12px] bg-[#025B4B] flex justify-around">
-          <StoryCardBottomText title="Medal" subtitle="#2" />
-          <StoryCardBottomText title="Completed in" subtitle="40 Days" />
-          <StoryCardBottomText title="Total Steps" subtitle="6,00,000" />
+          <StoryCardBottomText
+            title="Medal"
+            subtitle={`#${wowStory.medalInfo.completedTripsCount}`}
+          />
+          <StoryCardBottomText
+            title="Completed in"
+            subtitle={
+              wowStory.daysBetween == null
+                ? "-"
+                : `${wowStory.daysBetween} Days`
+            }
+          />
+          <StoryCardBottomText
+            title="Total Steps"
+            subtitle={`${wowStory.stepsMoved}`}
+          />
         </div>
       </div>
     );
