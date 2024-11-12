@@ -71,7 +71,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
     userId: null,
     imageUrl: null,
     accessToken:
-      "54ddd697482dfe287e540646814a5286f4ba74929720968b99becb0fc2094a03cf701438033917696e1af43056ac1f6a",
+      "17437e2bc1c14de5c7b460ff9637e2e046560b259b4be70c448b1bf4335a35dc89893903720cb8a60764217ba6d3f720",
   });
 
   const getFormattedDate = (inputDate) => {
