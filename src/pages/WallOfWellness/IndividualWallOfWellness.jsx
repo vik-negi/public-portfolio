@@ -15,24 +15,18 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import loader from "../../assets/wallOfWellness/loader.json";
+import Lottie from "lottie-react";
 
 const IndividualWallOfWellness = () => {
-  let text = `Walking has been a transformative experience in my life, offering both physical and mental benefits that have shaped my well-being. It started as a simple activity, a way to get from one place to another, but over time, it evolved into a cherished routine that I look forward to every day.
-
-One of the most significant impacts of walking has been on my physical health. Regular walks have improved my cardiovascular fitness, strengthened my muscles, and helped me maintain a healthy weight. I often find myself exploring local parks or strolling through my neighborhood, and each step contributes to my overall vitality. The fresh air and natural surroundings invigorate me, making exercise feel less like a chore and more like a delightful escape.
-
-Beyond the physical benefits, walking has also been a powerful tool for mental clarity. Whenever I feel overwhelmed or stressed, I lace up my shoes and head outside. The rhythmic motion of walking allows my mind to wander and process thoughts more freely. I often find solutions to problems or gain new perspectives during these walks. It’s as if the act of moving my body unlocks creativity and insight that I might not access while sitting at my desk.
-
-Moreover, walking has fostered a sense of community in my life. I’ve met wonderful people during my walks, whether it’s fellow dog owners at the park or neighbors out for their evening strolls. These interactions, however brief, have enriched my social life and made me feel more connected to my surroundings.
-
-In conclusion, walking has been more than just a form of exercise for me; it has been a holistic practice that nurtures my body and mind. It’s a simple yet profound activity that I will continue to embrace, knowing the countless benefits it brings to my life.`;
-
   const [wowStory, setWoWStory] = useState(null);
 
   const { id } = useParams();
   const [files, setFiles] = useState([]);
+  const [loadingAllData, setLoadingAllData] = useState(true);
 
   const fetchWoWStories = async (token) => {
+    setLoadingAllData(true);
     try {
       const response = await axios.get(
         `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/getuserStoryById/${id}`,
@@ -62,6 +56,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
     } catch (error) {
       console.error("Cannot fetch all the trips correctly!", error);
     }
+    setLoadingAllData(false);
   };
 
   const [userData, setUserData] = useState({
@@ -135,54 +130,63 @@ In conclusion, walking has been more than just a form of exercise for me; it has
       </Helmet> */}
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
         {userData?.userId === null && <WOWAppBar />}
-
-        <div className="bg-[#FFFFFF1A] h-[1px]" />
-        <div className="pt[17px] px-[24px] mt-[17px] pb-[4px]">
-          <div className="relative">
-            <p className="text-[18px] text-[#FFFFFF] font-general font-semibold leading-[22px] trim-text">
-              “{wowStory?.userStory.title}”
-            </p>
-            {/* <div className="absolute w-[20px] right-0 bottom-[1px] bg-[#24262B]">
+        {loadingAllData ? (
+          <Lottie
+            style={{
+              height: "100vh",
+            }}
+            animationData={loader}
+            alt=""
+          />
+        ) : (
+          <>
+            <div className="bg-[#FFFFFF1A] h-[1px]" />
+            <div className="pt[17px] px-[24px] mt-[17px] pb-[4px]">
+              <div className="relative">
+                <p className="text-[18px] text-[#FFFFFF] font-general font-semibold leading-[22px] trim-text">
+                  “{wowStory?.userStory.title}”
+                </p>
+                {/* <div className="absolute w-[20px] right-0 bottom-[1px] bg-[#24262B]">
               <p className="text-[18px] text-[#FFFFFF]  font-semibold leading-[22px] text-right trim-text">
                 ...”
               </p>
             </div> */}
-          </div>
+              </div>
 
-          <div className="mt-[10px]">
-            <img
-              src={calendar}
-              alt="Calendar"
-              className="h-[20px] w-[20px] float-left mr-[10px]"
+              <div className="mt-[10px]">
+                <img
+                  src={calendar}
+                  alt="Calendar"
+                  className="h-[20px] w-[20px] float-left mr-[10px]"
+                />
+                {wowStory?.userStory?.createdAt !== null && (
+                  <p className="text-[12px] text-[#FFFFFF66] font-medium leading-[15px]">
+                    {getFormattedDate(wowStory?.userStory.createdAt)}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/*  */}
+            <WoWIndividualStoryCard
+              name={wowStory?.firstName + " " + wowStory?.lastName}
+              tripName={wowStory?.tripName}
+              userImage={wowStory?.userStory?.photoURL}
+              completedIn={wowStory?.tripCompletedInDays}
+              totalSteps={wowStory?.stepsMoved}
+              medal={wowStory?.medalInfo?.completedTripsCount}
             />
-            {wowStory?.userStory?.createdAt !== null && (
-              <p className="text-[12px] text-[#FFFFFF66] font-medium leading-[15px]">
-                {getFormattedDate(wowStory?.userStory.createdAt)}
-              </p>
-            )}
-          </div>
-        </div>
 
-        {/*  */}
-        <WoWIndividualStoryCard
-          name={wowStory?.firstName + " " + wowStory?.lastName}
-          tripName={wowStory?.tripName}
-          userImage={wowStory?.userStory?.photoURL}
-          completedIn={wowStory?.tripCompletedInDays}
-          totalSteps={wowStory?.stepsMoved}
-          medal={wowStory?.medalInfo?.completedTripsCount}
-        />
-
-        <div className="mt-[36px] pb-[100px] p-[28px] bg-white rounded-t-[16px]">
-          {/* <img
+            <div className="mt-[36px] pb-[100px] p-[28px] bg-white rounded-t-[16px]">
+              {/* <img
             src="https://s3-alpha-sig.figma.com/img/d830/c648/dd6eccbf40a9914b7c671ec1e553aaa5?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=l~Qn2Hh92rdPuYi3MGn1GC9yPwHzaim~BOsgpNwVt-P188XsNUAO-mGiTEeiJRCtjhrGFbd9e7G7vAw1f0-q0K-IKcbHrXGEEhDHoLx3goAee6lmG8mh-h3c1VuG5psn2IjN~baLdxh8EDvszuYSavbv7rvvTMcEFADkNQsS-nVDiqMGlk0gAKctfaIms4-oTV91bbe60w9xvuN3lUjcUp3~W4SNia0yq4a-4zh9LZgCcdpR4tOPdvul~IWOnZnmEb-EZgpI51jz98V5jhmHTbSXxZjXOEzwZkLwvkUnLZKVYDHjKrA-6pu38Ar0NyVp1JM5O74XRyV7i03I9UWcgA__"
             alt="Image"
             className="w-full h-[310px] object-cover rounded-[10px]"
           /> */}
 
-          {files.length > 0 && (
-            <div className="mt-4">
-              {/* {selectedFiles.map((file, index) => (
+              {files.length > 0 && (
+                <div className="mt-4">
+                  {/* {selectedFiles.map((file, index) => (
               <div key={index} className="flex items-center">
                 <img
                   src={URL.createObjectURL(file)}
@@ -195,55 +199,57 @@ In conclusion, walking has been more than just a form of exercise for me; it has
               </div>
             ))} */}
 
-              <Swiper
-                pagination={{
-                  dynamicBullets: true,
-                  clickable: true,
-                }}
-                modules={[Pagination]}
-                loop={true}
-                spaceBetween={10}
-                slidesPerView={1}
-              >
-                {files.map((file, index) => (
-                  <SwiperSlide
-                    key={index}
-                    // className="h-[182px] w-[182px] rounded-xl shadow-md"
+                  <Swiper
+                    pagination={{
+                      dynamicBullets: true,
+                      clickable: true,
+                    }}
+                    modules={[Pagination]}
+                    loop={true}
+                    spaceBetween={10}
+                    slidesPerView={1}
                   >
-                    {file.type === "video" ? (
-                      <video
-                        src={file.link}
-                        controls
-                        className="rounded-3xl"
-                        // height={"320px"}
-                        // width={"320px"}
-                      ></video>
-                    ) : (
-                      <img
-                        src={file.link}
-                        alt={file.link}
-                        // height={"320px"}
-                        // width={"320px"}
-                        className="rounded-3xl object-cover"
-                      />
-                    )}
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                    {files.map((file, index) => (
+                      <SwiperSlide
+                        key={index}
+                        // className="h-[182px] w-[182px] rounded-xl shadow-md"
+                      >
+                        {file.type === "video" ? (
+                          <video
+                            src={file.link}
+                            controls
+                            className="rounded-3xl"
+                            // height={"320px"}
+                            // width={"320px"}
+                          ></video>
+                        ) : (
+                          <img
+                            src={file.link}
+                            alt={file.link}
+                            // height={"320px"}
+                            // width={"320px"}
+                            className="rounded-3xl object-cover"
+                          />
+                        )}
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              )}
+              <div className="mt-[20px]">
+                <p className="text-[#000000] font-medium leading-[24px]">
+                  <span className="text-[24px] leading-[38.4px]">
+                    {wowStory?.userStory.content?.charAt(0)}
+                  </span>
+                  <span className="text-[14px] leading-[17.5px]">
+                    {wowStory?.userStory.content?.slice(1)}
+                  </span>
+                </p>
+              </div>
             </div>
-          )}
-          <div className="mt-[20px]">
-            <p className="text-[#000000] font-medium leading-[24px]">
-              <span className="text-[24px] leading-[38.4px]">
-                {wowStory?.userStory.content?.charAt(0)}
-              </span>
-              <span className="text-[14px] leading-[17.5px]">
-                {wowStory?.userStory.content?.slice(1)}
-              </span>
-            </p>
-          </div>
-        </div>
-        {userData.userId === null && <FooterAppDowwnload />}
+            {userData.userId === null && <FooterAppDowwnload />}
+          </>
+        )}
       </div>
     </div>
   );

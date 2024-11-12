@@ -8,6 +8,8 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import Lottie from "lottie-react";
+import loader from "../../assets/wallOfWellness/loader.json";
 
 const WriteYourWoWStory = () => {
   const [userData, setUserData] = useState({
@@ -46,7 +48,7 @@ const WriteYourWoWStory = () => {
       setUserData(data);
       fetchLatestTripDetails(data.accessToken);
     }
-    fetchLatestTripDetails(userData.accessToken);
+    // fetchLatestTripDetails(userData.accessToken);
   }, []);
   const [tripDetails, setTripDetails] = useState(null);
   const [tripDetailsLoading, setTripDetailsLoading] = useState(false);
@@ -59,7 +61,7 @@ const WriteYourWoWStory = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            // accessToken: token,
+            accessToken: token,
           },
         }
       );
@@ -188,70 +190,83 @@ const WriteYourWoWStory = () => {
      bg-[#f9f9f9]
   "
     >
-      <div className="mx-auto max-w-[400px] bg-[#FAFAFA] min-h-[100vh]">
-        <WOWWhiteAppBar title={"Write your WoW Story"} />
-        <div className="bg-[#0000001A] h-[1px]" />
-        {!moveToNextStep ? (
-          <>
-            <div className="pt-[36px] px-[28px] pb-[28px]">
-              <button
-                onClick={() => document.getElementById("fileInputCard").click()}
-                className="flex items-center bg-[#24262B] px-4 py-2 text-white text-sm font-semibold rounded-[8px]"
-              >
-                <img src={images} alt="Choose Picture" className="" />
-                <span className="text-[12px] text-[#FFFFFF] font-semibold leading-[15.6px]  ml-[6px]">
-                  Upload Your Photo
-                </span>
-                <input
-                  type="file"
-                  id="fileInputCard"
-                  style={{ display: "none" }}
-                  onChange={onUploadCardImage}
-                  multiple // Allow selecting multiple files
-                />
-              </button>
+      {tripDetailsLoading ? (
+        <div className="mx-auto max-w-[400px] bg-[#FAFAFA] min-h-[100vh]">
+          <Lottie
+            style={{
+              height: "100vh",
+            }}
+            animationData={loader}
+            alt=""
+          />
+        </div>
+      ) : (
+        <div className="mx-auto max-w-[400px] bg-[#FAFAFA] min-h-[100vh]">
+          <WOWWhiteAppBar title={"Write your WoW Story"} />
+          <div className="bg-[#0000001A] h-[1px]" />
+          {!moveToNextStep ? (
+            <>
+              <div className="pt-[36px] px-[28px] pb-[28px]">
+                <button
+                  onClick={() =>
+                    document.getElementById("fileInputCard").click()
+                  }
+                  className="flex items-center bg-[#24262B] px-4 py-2 text-white text-sm font-semibold rounded-[8px]"
+                >
+                  <img src={images} alt="Choose Picture" className="" />
+                  <span className="text-[12px] text-[#FFFFFF] font-semibold leading-[15.6px]  ml-[6px]">
+                    Upload Your Photo
+                  </span>
+                  <input
+                    type="file"
+                    id="fileInputCard"
+                    style={{ display: "none" }}
+                    onChange={onUploadCardImage}
+                    multiple // Allow selecting multiple files
+                  />
+                </button>
 
-              <div className="mt-[38px]">
-                <div className="flex items-center">
-                  <p className="text-[14px] text-[#1C1C1C80]  font-medium leading-[20px]">
-                    PREVIEW
-                  </p>
-                  <div className="ml-[6px] h-[1px] bg-[#0000001A] w-full" />
+                <div className="mt-[38px]">
+                  <div className="flex items-center">
+                    <p className="text-[14px] text-[#1C1C1C80]  font-medium leading-[20px]">
+                      PREVIEW
+                    </p>
+                    <div className="ml-[6px] h-[1px] bg-[#0000001A] w-full" />
+                  </div>
                 </div>
               </div>
-            </div>
-            <WoWIndividualStoryCard
-              userImage={
-                selectedFile
-                  ? URL.createObjectURL(selectedFile)
-                  : userData.imageUrl
-              }
-              name={userData.name}
-              tripName={
-                tripDetailsLoading ? "--" : tripDetails?.tripDetails?.tripName
-              }
-              totalSteps={
-                tripDetailsLoading
-                  ? "-"
-                  : tripDetails?.tripDetails?.stepsData?.stepsMoved
-              }
-              completedIn={
-                tripDetailsLoading
-                  ? "-"
-                  : tripDetails?.tripDetails?.stepsData?.tripCompletionDate
-              }
-              medal={
-                tripDetailsLoading
-                  ? "-"
-                  : tripDetails?.medalData?.completedTripsCount
-              }
-            />
-          </>
-        ) : (
-          <div className="p-[28px]">
-            {/* Inline style for the placeholder in a specific input */}
-            <style>
-              {`
+              <WoWIndividualStoryCard
+                userImage={
+                  selectedFile
+                    ? URL.createObjectURL(selectedFile)
+                    : userData.imageUrl
+                }
+                name={userData.name}
+                tripName={
+                  tripDetailsLoading ? "--" : tripDetails?.tripDetails?.tripName
+                }
+                totalSteps={
+                  tripDetailsLoading
+                    ? "-"
+                    : tripDetails?.tripDetails?.stepsData?.stepsMoved
+                }
+                completedIn={
+                  tripDetailsLoading
+                    ? "-"
+                    : tripDetails?.tripDetails?.stepsData?.tripCompletionDate
+                }
+                medal={
+                  tripDetailsLoading
+                    ? "-"
+                    : tripDetails?.medalData?.completedTripsCount
+                }
+              />
+            </>
+          ) : (
+            <div className="p-[28px]">
+              {/* Inline style for the placeholder in a specific input */}
+              <style>
+                {`
           .headline-input::placeholder {
             font-family: 'General Sans', sans-serif;
             font-size: 20px;
@@ -273,40 +288,40 @@ const WriteYourWoWStory = () => {
             text-decoration-skip-ink: none;
           }
         `}
-            </style>
-            <input
-              type="text"
-              value={headline}
-              placeholder="Story Headline"
-              onChange={(e) => setHeadline(e.target.value)}
-              className="w-full border-b border-gray-300 focus:outline-none focus:border-[#0E986A] mb-4 headline-input text-[20px] font-semibold text-[#1C1C1C] leading-[20px]"
-            />
-
-            <div className="mt-4">
-              <button
-                onClick={() => document.getElementById("fileInput").click()}
-                className="flex items-center bg-[#24262B] px-4 py-2 text-white text-sm font-semibold rounded-[8px]"
-              >
-                <img src={images} alt="Choose Picture" className="" />
-                Upload Images/Videos
-              </button>
+              </style>
               <input
-                type="file"
-                id="fileInput"
-                style={{ display: "none" }}
-                onChange={onUploadFile}
-                multiple // Allow selecting multiple files
+                type="text"
+                value={headline}
+                placeholder="Story Headline"
+                onChange={(e) => setHeadline(e.target.value)}
+                className="w-full border-b border-gray-300 focus:outline-none focus:border-[#0E986A] mb-4 headline-input text-[20px] font-semibold text-[#1C1C1C] leading-[20px]"
               />
-            </div>
-            {selectedFiles.length > 0 && (
-              <div
-                className="mt-4 h-[182px] w-[182px]"
-                style={{
-                  maxHeight: "182px",
-                  maxWidth: "182px",
-                }}
-              >
-                {/* {selectedFiles.map((file, index) => (
+
+              <div className="mt-4">
+                <button
+                  onClick={() => document.getElementById("fileInput").click()}
+                  className="flex items-center bg-[#24262B] px-4 py-2 text-white text-sm font-semibold rounded-[8px]"
+                >
+                  <img src={images} alt="Choose Picture" className="" />
+                  Upload Images/Videos
+                </button>
+                <input
+                  type="file"
+                  id="fileInput"
+                  style={{ display: "none" }}
+                  onChange={onUploadFile}
+                  multiple // Allow selecting multiple files
+                />
+              </div>
+              {selectedFiles.length > 0 && (
+                <div
+                  className="mt-4 h-[182px] w-[182px]"
+                  style={{
+                    maxHeight: "182px",
+                    maxWidth: "182px",
+                  }}
+                >
+                  {/* {selectedFiles.map((file, index) => (
               <div key={index} className="flex items-center">
                 <img
                   src={URL.createObjectURL(file)}
@@ -319,85 +334,85 @@ const WriteYourWoWStory = () => {
               </div>
             ))} */}
 
-                <Swiper
-                  pagination={{
-                    dynamicBullets: true,
-                    clickable: true,
-                  }}
-                  modules={[Pagination]}
-                  loop={true}
-                  spaceBetween={10}
-                  slidesPerView={1}
-                >
-                  {selectedFiles.map((file, index) => (
-                    <SwiperSlide
-                      key={index}
-                      // className="h-[182px] w-[182px] rounded-xl shadow-md"
-                    >
-                      {file.type.startsWith("video/") ? (
-                        <video
-                          height="182px"
-                          width="182px"
-                          controls
-                          style={{
-                            objectFit: "cover",
-                            maxHeight: "182px",
-                            maxWidth: "182px",
-                          }}
-                          className="rounded-3xl"
-                        >
-                          <source
+                  <Swiper
+                    pagination={{
+                      dynamicBullets: true,
+                      clickable: true,
+                    }}
+                    modules={[Pagination]}
+                    loop={true}
+                    spaceBetween={10}
+                    slidesPerView={1}
+                  >
+                    {selectedFiles.map((file, index) => (
+                      <SwiperSlide
+                        key={index}
+                        // className="h-[182px] w-[182px] rounded-xl shadow-md"
+                      >
+                        {file.type.startsWith("video/") ? (
+                          <video
+                            height="182px"
+                            width="182px"
+                            controls
+                            style={{
+                              objectFit: "cover",
+                              maxHeight: "182px",
+                              maxWidth: "182px",
+                            }}
+                            className="rounded-3xl"
+                          >
+                            <source
+                              src={URL.createObjectURL(file)}
+                              type={file.type}
+                            />
+                            Your browser does not support the video tag.
+                          </video>
+                        ) : (
+                          <img
                             src={URL.createObjectURL(file)}
-                            type={file.type}
+                            alt={file.name}
+                            height={"182px"}
+                            width={"182px"}
+                            style={{
+                              objectFit: "cover",
+                              maxHeight: "182px",
+                              maxWidth: "182px",
+                            }}
+                            className="rounded-3xl"
                           />
-                          Your browser does not support the video tag.
-                        </video>
-                      ) : (
-                        <img
-                          src={URL.createObjectURL(file)}
-                          alt={file.name}
-                          height={"182px"}
-                          width={"182px"}
-                          style={{
-                            objectFit: "cover",
-                            maxHeight: "182px",
-                            maxWidth: "182px",
-                          }}
-                          className="rounded-3xl"
-                        />
-                      )}
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            )}
+                        )}
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              )}
 
-            <textarea
-              value={story}
-              onChange={(e) => setStory(e.target.value)}
-              placeholder="Write your story"
-              className="w-full focus:outline-none mt-4 story-input text-[14px] font-medium text-[#1C1C1C] leading-[20px]"
-              rows={10}
-            />
-          </div>
-        )}
-        <WriteYourWoWStoryStepChoosePicture
-          onTap={() => {
-            if (!moveToNextStep) {
-              if (selectedFile === null && userData.imageUrl === null) {
-                alert("Please upload a photo");
-                return;
+              <textarea
+                value={story}
+                onChange={(e) => setStory(e.target.value)}
+                placeholder="Write your story"
+                className="w-full focus:outline-none mt-4 story-input text-[14px] font-medium text-[#1C1C1C] leading-[20px]"
+                rows={10}
+              />
+            </div>
+          )}
+          <WriteYourWoWStoryStepChoosePicture
+            onTap={() => {
+              if (!moveToNextStep) {
+                if (selectedFile === null && userData.imageUrl === null) {
+                  alert("Please upload a photo");
+                  return;
+                }
+                setMoveToNextStep(true);
+              } else {
+                handleCreateStory();
               }
-              setMoveToNextStep(true);
-            } else {
-              handleCreateStory();
-            }
-          }}
-          showLoading={loadingCreateStory && moveToNextStep}
-          text={moveToNextStep ? "Send your story" : "Next"}
-        />
+            }}
+            showLoading={loadingCreateStory && moveToNextStep}
+            text={moveToNextStep ? "Send your story" : "Next"}
+          />
 
-        {/* <div className="mt-[36px] max-w-[344px] w-full m-[28px] ">
+          {/* <div className="mt-[36px] max-w-[344px] w-full m-[28px] ">
           <button
 
             onClick={() => {
@@ -409,7 +424,8 @@ const WriteYourWoWStory = () => {
             Next
           </button>
         </div> */}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
