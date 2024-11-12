@@ -34,7 +34,7 @@ const IndividualWallOfWellness = () => {
           headers: {
             "Content-Type": "application/json",
             // "x-user-id": "86662af3-0110-4024-b132-831e533bfe6b",
-            accessToken: token,
+            // accessToken: token,
           },
         }
       );
