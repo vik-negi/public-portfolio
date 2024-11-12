@@ -37,9 +37,7 @@ import MainDashboard from "./pages/MainDashboard";
 import { Tamplate1 } from "./templates/template_1/template_1";
 import WallOfWellness from "./pages/WallOfWellness/WallOfWellness";
 import IndividualWallOfWellness from "./pages/WallOfWellness/IndividualWallOfWellness";
-import WriteYourWoWStoryStep1 from "./pages/WallOfWellness/WriteYourWoWStoryStepChoosePicture";
-import WriteYourWoWStoryStepChoosePicture from "./pages/WallOfWellness/WriteYourWoWStoryStepChoosePicture";
-import WriteYourWoWStoryStep from "./pages/WallOfWellness/WriteYourWoWStoryStep";
+import WriteYourWoWStory from "./pages/WallOfWellness/WriteYourWoWStory";
 
 function App() {
   // const slowInternet = setTimeout(() => {
@@ -91,14 +89,8 @@ function App() {
         <Routes>
           <Route path="/wow" element={<WallOfWellness />} />
           <Route path="/wow/:id" element={<IndividualWallOfWellness />} />
-          <Route
-            path="/wow/create/choose-picture"
-            element={<WriteYourWoWStoryStepChoosePicture />}
-          />
-          <Route
-            path="/wow/create/write-story"
-            element={<WriteYourWoWStoryStep />}
-          />
+          <Route path="/wow/create" element={<WriteYourWoWStory />} />
+
           <Route
             path="/"
             element={

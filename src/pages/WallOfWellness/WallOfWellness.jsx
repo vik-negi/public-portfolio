@@ -13,29 +13,86 @@ const WallOfWellness = () => {
     name: null,
     userId: null,
     imageUrl: null,
+    accessToken:
+      "7e9fdc2e5cdcf5732b47e98c7a18929bfcc272a7cdfa70b290d8cedd001dad9a75c7c08797307878fb5a8446fd58ae28",
   });
-  const tripId = "ec96e83d-f126-464f-8526-fbb9df3ec227";
+  // const tripId = "ec96e83d-f126-464f-8526-fbb9df3ec227";
   const [wowStories, setWoWStories] = useState([]);
+  const [tripId, setTripId] = useState(null);
+  const [tripIdIndex, setTripIdIndex] = useState(0);
+  const [latestTrips, setLatestTrips] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchLatestTrips = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        "https://api.koshiqa.com/gateway/trekking/user/v1/trekking/fetchAllTripIdByDate",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "x-user-id": "86662af3-0110-4024-b132-831e533bfe6b",
+            accessToken: userData.accessToken,
+          },
+        }
+      );
+      setLatestTrips(response.data);
+      if (response.data.length > 0) {
+        setTripId(response.data[tripIdIndex].id);
+        setTripIdIndex(tripIdIndex + 1);
+      }
+    } catch (error) {
+      console.error("Cannot fetch all the trips correctly!", error);
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    const fetchWoWStories = async () => {
-      try {
-        const response = await axios.get(
-          `http://43.204.123.130:3008/trekking/user/v1/trekking/getUserStoryByTrip/${tripId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "x-user-id": "86662af3-0110-4024-b132-831e533bfe6b",
-            },
-          }
-        );
-        setWoWStories(response.data);
-      } catch (error) {
-        console.error("Cannot fetch all the trips correctly!", error);
-      }
-    };
-    fetchWoWStories();
+    fetchLatestTrips();
   }, []);
+
+  const fetchWoWStories = async () => {
+    if (tripId === null) return;
+    try {
+      const response = await axios.get(
+        `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/getUserStoryByTrip/${tripId}`,
+        // `https://api-stage.koshiqa.com/gateway/trekking/user/v1/trekking/getUserStoryByTrip/${tripId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "x-user-id": "86662af3-0110-4024-b132-831e533bfe6b",
+            accessToken: userData.accessToken,
+          },
+        }
+      );
+      setWoWStories((prevStories) => [...prevStories, ...response.data]);
+    } catch (error) {
+      console.error("Cannot fetch all the trips correctly!", error);
+    }
+  };
+
+  const handleScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 10 &&
+      !isLoading
+    ) {
+      if (tripIdIndex < latestTrips.length) {
+        setTripId(latestTrips[tripIdIndex].id);
+        setTripIdIndex(tripIdIndex + 1);
+      }
+    }
+  };
+
+  // Fetch stories when tripId changes
+  useEffect(() => {
+    fetchWoWStories(tripId);
+  }, [tripId]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [tripId]);
 
   useEffect(() => {
     window.receiveUserData = (data) => {
@@ -46,6 +103,7 @@ const WallOfWellness = () => {
         name: data.name,
         userId: data.userId,
         imageUrl: data.imageUrl,
+        accessToken: data.accessToken,
       });
     };
 
@@ -62,7 +120,7 @@ const WallOfWellness = () => {
   return (
     <div className="bg-[#24262bec]">
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
-        <WOWAppBar />
+        {userData?.userId === null && <WOWAppBar />}
 
         <div className="relative ">
           <img
@@ -89,26 +147,26 @@ const WallOfWellness = () => {
           <p className="text-[16px] mt-[10.5px] mx-[30px] text-center text-[#FFFFFFCC]">
             Join the Wall of Wellness (WoW) by sharing your Koshiqa story!
           </p>
-          {userData.userId !== null && (
-            <Link to="/wow/create/choose-picture">
-              <div
-                className="mt-[32px] mb-[10px] py-[18px] rounded-[16px] flex items-center justify-center mx-[24px]"
-                style={{
-                  background:
-                    "linear-gradient(360deg, rgba(255, 255, 255, 0.1) 0%, rgba(153, 153, 153, 0.1) 100%)",
-                }}
-              >
-                <img
-                  src={edit}
-                  alt="Share Icon"
-                  className="float-left mr-[10px] h-[20px]"
-                />
-                <p className="text-[14px] font-semibold text-white leading-[18.2px]">
-                  Write Your Story
-                </p>
-              </div>
-            </Link>
-          )}
+          {/* {userData.userId !== null && ( */}
+          <Link to="/wow/create">
+            <div
+              className="mt-[32px] mb-[10px] py-[18px] rounded-[16px] flex items-center justify-center mx-[24px]"
+              style={{
+                background:
+                  "linear-gradient(360deg, rgba(255, 255, 255, 0.1) 0%, rgba(153, 153, 153, 0.1) 100%)",
+              }}
+            >
+              <img
+                src={edit}
+                alt="Share Icon"
+                className="float-left mr-[10px] h-[20px]"
+              />
+              <p className="text-[14px] font-semibold text-white leading-[18.2px]">
+                Write Your Story
+              </p>
+            </div>
+          </Link>
+          {/* )} */}
           {userData.userId !== null && (
             <p className="text-[14px] text-[#FFFFFFCC] text-center leading-[18.2px] font-medium">
               Get yourself featured on the WoW
@@ -207,19 +265,19 @@ const StoryCard = ({ rotate = false, wowStory }) =>
                 </>
               )}
             </div>
-            <Link
-              to={`/wow/${wowStory?.userStoryId}`}
-              className="cursor-pointer mt-[50px] ml-auto justify-end flex items-center"
-            >
-              <div className="flex items-center justify-end">
+            <div className="relative ml-auto hover:cursor-pointer">
+              <Link
+                to={`/wow/${wowStory?.userStoryId || ""}`}
+                className="cursor-pointer mt-[50px] ml-auto justify-end flex items-center"
+              >
                 <p className="text-black">Read More</p>
                 <img
                   src={arrowRight}
                   alt="Arrow Right"
                   className="h-[20px] ml-1"
                 />
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
 

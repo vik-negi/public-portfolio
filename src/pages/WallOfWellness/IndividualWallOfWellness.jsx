@@ -46,19 +46,19 @@ In conclusion, walking has been more than just a form of exercise for me; it has
         );
         setWoWStory(response.data);
         let lists = [];
-        for (let i = 0; i < response.data?.videos.length; i++) {
+        for (let i = 0; i < response.data?.userStory.videos.length; i++) {
           lists.push({
-            link: response.data?.videos[i].videoURL,
+            link: response.data?.userStory.videos[i].videoURL,
             type: "video",
           });
         }
-        for (let i = 0; i < response.data?.photos.length; i++) {
+        for (let i = 0; i < response.data?.userStory.photos.length; i++) {
           lists.push({
-            link: response.data?.photos[i].photoURL,
+            link: response.data?.userStory.photos[i].photoURL,
             type: "photo",
           });
         }
-        setFiles(response.data?.videos + response.data?.photos);
+        setFiles(lists);
       } catch (error) {
         console.error("Cannot fetch all the trips correctly!", error);
       }
@@ -70,7 +70,27 @@ In conclusion, walking has been more than just a form of exercise for me; it has
     name: null,
     userId: null,
     imageUrl: null,
+    accessToken:
+      "7e9fdc2e5cdcf5732b47e98c7a18929bfcc272a7cdfa70b290d8cedd001dad9a75c7c08797307878fb5a8446fd58ae28",
   });
+
+  const getFormattedDate = (inputDate) => {
+    if (inputDate === null || inputDate == undefined) return "";
+    console.log("Input Date", inputDate);
+    const formatDate = (isoString) => {
+      const date = new Date(isoString);
+      return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }).format(date);
+    };
+
+    // Usage
+    const formattedDate = formatDate(inputDate);
+
+    return formattedDate;
+  };
 
   useEffect(() => {
     window.receiveUserData = (data) => {
@@ -81,6 +101,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
         name: data.name,
         userId: data.userId,
         imageUrl: data.imageUrl,
+        accessToken: data.accessToken,
       });
     };
 
@@ -96,7 +117,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
 
   return (
     <div className="bg-[#24262bec]">
-      <Helmet>
+      {/* <Helmet>
         <title>WoW - Wall of Wellness</title>
         <meta
           name="description"
@@ -109,20 +130,21 @@ In conclusion, walking has been more than just a form of exercise for me; it has
           name="keywords"
           content="Walking, Physical Health, Mental Health"
         />
-      </Helmet>
+      </Helmet> */}
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
-        <WOWAppBar />
+        {userData?.userId === null && <WOWAppBar />}
+
         <div className="bg-[#FFFFFF1A] h-[1px]" />
         <div className="pt[17px] px-[24px] mt-[17px] pb-[4px]">
           <div className="relative">
             <p className="text-[18px] text-[#FFFFFF] font-general font-semibold leading-[22px] trim-text">
-              “{wowStory?.title}
+              “{wowStory?.userStory.title}”
             </p>
-            <div className="absolute w-[20px] right-0 bottom-[1px] bg-[#24262B]">
+            {/* <div className="absolute w-[20px] right-0 bottom-[1px] bg-[#24262B]">
               <p className="text-[18px] text-[#FFFFFF]  font-semibold leading-[22px] text-right trim-text">
                 ...”
               </p>
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-[10px]">
@@ -131,16 +153,22 @@ In conclusion, walking has been more than just a form of exercise for me; it has
               alt="Calendar"
               className="h-[20px] w-[20px] float-left mr-[10px]"
             />
-            <p className="text-[12px] text-[#FFFFFF66] font-medium leading-[15px]">
-              {wowStory?.createdAt}
-            </p>
+            {wowStory?.userStory?.createdAt !== null && (
+              <p className="text-[12px] text-[#FFFFFF66] font-medium leading-[15px]">
+                {getFormattedDate(wowStory?.userStory.createdAt)}
+              </p>
+            )}
           </div>
         </div>
 
         {/*  */}
         <WoWIndividualStoryCard
-          name={"Vikram Negi"}
-          userImage={wowStory?.photoURL}
+          name={wowStory?.firstName + " " + wowStory?.lastName}
+          tripName={wowStory?.tripName}
+          userImage={wowStory?.userStory?.photoURL}
+          completedIn={wowStory?.tripCompletedInDays}
+          totalSteps={wowStory?.stepsMoved}
+          medal={wowStory?.medalInfo?.completedTripsCount}
         />
 
         <div className="mt-[36px] pb-[100px] p-[28px] bg-white rounded-t-[16px]">
@@ -151,7 +179,7 @@ In conclusion, walking has been more than just a form of exercise for me; it has
           /> */}
 
           {files.length > 0 && (
-            <div className="mt-4 h-[182px] w-[182px]">
+            <div className="mt-4">
               {/* {selectedFiles.map((file, index) => (
               <div key={index} className="flex items-center">
                 <img
@@ -185,16 +213,16 @@ In conclusion, walking has been more than just a form of exercise for me; it has
                         src={file.link}
                         controls
                         className="rounded-3xl"
-                        height={"320px"}
-                        width={"320px"}
+                        // height={"320px"}
+                        // width={"320px"}
                       ></video>
                     ) : (
                       <img
-                        src={URL.createObjectURL(file)}
+                        src={file.link}
                         alt={file.link}
-                        height={"320px"}
-                        width={"320px"}
-                        className="rounded-3xl "
+                        // height={"320px"}
+                        // width={"320px"}
+                        className="rounded-3xl object-cover"
                       />
                     )}
                   </SwiperSlide>
@@ -205,10 +233,10 @@ In conclusion, walking has been more than just a form of exercise for me; it has
           <div className="mt-[20px]">
             <p className="text-[#000000] font-medium leading-[24px]">
               <span className="text-[24px] leading-[38.4px]">
-                {wowStory?.content?.charAt(0)}
+                {wowStory?.userStory.content?.charAt(0)}
               </span>
               <span className="text-[14px] leading-[17.5px]">
-                {wowStory?.content?.slice(1)}
+                {wowStory?.userStory.content?.slice(1)}
               </span>
             </p>
           </div>

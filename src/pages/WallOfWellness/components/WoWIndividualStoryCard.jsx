@@ -2,7 +2,14 @@ import React from "react";
 import { StoryCardText } from "../IndividualWallOfWellness";
 import frame from "../../../assets/wallOfWellness/frame.png";
 
-const WoWIndividualStoryCard = ({ userImage, name }) => {
+const WoWIndividualStoryCard = ({
+  userImage,
+  name,
+  tripName,
+  medal,
+  totalSteps,
+  completedIn,
+}) => {
   return (
     <div
       className="p-4 bg-[#D3FFF6] justify-between flex rounded-[12px] relative min-h-[204px] mx-[26px] mt-[24px] "
@@ -12,13 +19,16 @@ const WoWIndividualStoryCard = ({ userImage, name }) => {
     >
       <div className="">
         <p className="text-[14px] max-w-[105px] text-[#005D3E] font-semibold leading-[17.5px]">
-          Kolkata Medal Contest
+          {tripName ?? "Kolkata Medal Contest"}
         </p>
-        <StoryCardText title="Medal" subtitle="#2" />
-        <StoryCardText title="Completed in" subtitle="40 Days" />
-        <StoryCardText title="Total Steps" subtitle="6,00,000 Steps" />
+        <StoryCardText title="Medal" subtitle={`#${medal}`} />
+        <StoryCardText
+          title="Completed in"
+          subtitle={completedIn == null ? "Ongoing" : `${completedIn} Days`}
+        />
+        <StoryCardText title="Total Steps" subtitle={`${totalSteps} Steps`} />
       </div>
-      <div className={`  mt-[-36px] mr-[-8px] transform rotate-[2deg]`}>
+      <div className={`mt-[-36px] mr-[-8px] transform rotate-[2deg]`}>
         <img
           src={frame}
           alt="Frame"
@@ -42,7 +52,7 @@ const WoWIndividualStoryCard = ({ userImage, name }) => {
           height={"200px"}
           width={"190px"}
         />
-        <p className="text-[14px] text-[#000000CC] tex-[10px] font-semibold leading-[10.5px] absolute bottom-[20px]  ml-4 mb-4 left-1/2 transform -translate-x-1/2">
+        <p className="text-[14px] text-[#000000CC] tex-[10px] font-semibold leading-[10.5px] absolute bottom-[20px]   mb-4 w-full text-center">
           {name ?? ""}
         </p>
       </div>
