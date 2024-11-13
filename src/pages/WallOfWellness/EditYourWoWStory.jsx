@@ -143,7 +143,7 @@ const EditYourWoWStory = () => {
       //   fetchLatestTripDetails(data.accessToken);
       fetchWoWStories();
     }
-    fetchWoWStories();
+    // fetchWoWStories();
     // fetchLatestTripDetails(userData.accessToken);
   }, []);
 
@@ -548,7 +548,7 @@ const EditYourWoWStory = () => {
                   // background: "#FAFAFA !important",
                   background: "#FAFAFA",
                 }}
-                className="w-full focus:outline-none mt-[28px] story-input text-[14px] font-medium text-[#1C1C1C] leading-[20px]"
+                className="w-full focus:outline-none mt-[28px] story-input text-[14px] font-medium text-[#1C1C1C] leading-[20px] "
                 rows={10}
               />
             </div>
