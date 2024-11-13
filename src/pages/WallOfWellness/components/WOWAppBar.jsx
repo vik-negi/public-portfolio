@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import arrowBack from "../../../assets/arrow_left.svg";
 import arrowBackGrey from "../../../assets/wallOfWellness/arrow_left.svg";
 import shareIcon from "../../../assets/wallOfWellness/share.svg";
+import editIcon from "../../../assets/wallOfWellness/edit.svg";
 import {
   FacebookShareButton,
   EmailShareButton,
@@ -13,8 +14,9 @@ import {
   RedditIcon,
   EmailIcon,
 } from "react-share";
+import { Link } from "react-router-dom";
 
-const WOWAppBar = () => {
+const WOWAppBar = ({ storyId, userId }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const openDialog = () => setIsDialogOpen(true);
@@ -38,20 +40,38 @@ const WOWAppBar = () => {
   const [showLinkCopied, setShowLinkCopied] = useState(false);
 
   return (
-    <div className="py-[20px] px-[20px] flex max-w-[420px] items-center sticky top-0 bg-[#24262B] z-10">
+    <div
+      className={` py-[20px] px-[20px] flex max-w-[420px] items-center sticky top-0 bg-[#24262B] z-10`}
+    >
       <img
         src={arrowBack}
         alt="Arrow Back"
         className="float-left h-[28px] mr-[8px]"
       />
       <p className="text-[18px] font-bold text-white">Wall of Wellness</p>
+      {storyId && (
+        <Link
+          to={`/wow/edit/${storyId}`}
+          className={`float-right ml-auto ${userId == null ? "" : "mr-[40px]"}`}
+        >
+          <img
+            src={editIcon}
+            alt="Arrow Back"
+            className="float-left ml-auto  h-[20px]"
+          />
+        </Link>
+      )}
 
-      <img
-        onClick={openDialog}
-        src={shareIcon}
-        alt="Arrow Back"
-        className="float-left ml-auto  h-[20px]"
-      />
+      {userId == null && (
+        <img
+          onClick={openDialog}
+          src={shareIcon}
+          alt="Arrow Back"
+          className={`float-left ${
+            storyId == null ? "ml-auto" : "ml-[12px]"
+          }  h-[20px]`}
+        />
+      )}
 
       <Dialog isOpen={isDialogOpen} onClose={closeDialog}>
         <p

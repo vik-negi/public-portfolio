@@ -11,17 +11,19 @@ import "swiper/css/navigation";
 import Lottie from "lottie-react";
 import loader from "../../assets/wallOfWellness/loader.json";
 import trash from "../../assets/wallOfWellness/trash.svg";
+import { WriteYourWoWStoryStepChoosePicture } from "./WriteYourWoWStory";
+import { useParams } from "react-router-dom";
 
-const WriteYourWoWStory = () => {
+const EditYourWoWStory = () => {
+  const { id } = useParams();
   const [userData, setUserData] = useState({
     name: null,
     userId: null,
     imageUrl: null,
     accessToken:
-      "3bae8df17e4a3c04bb237e24275077027088f58ec98ed76c251361987c3b3cf1db739d91b07c77ce31546e2db2b79b81",
+      "3a2787cd62dfd0604afeca7155e2bbaaf37496b2e47e827fd67ceb33906d1645e29004157580f0b264dc11d6d72e8159",
   });
   const [moveToNextStep, setMoveToNextStep] = useState(false);
-
   const [selectedFile, setSelectedFile] = useState(null);
 
   const onUploadCardImage = (e) => {
@@ -40,6 +42,97 @@ const WriteYourWoWStory = () => {
     setSelectedFiles((prevFiles) => [...prevFiles, ...filesArray]);
   };
 
+  const [wowStory, setWoWStory] = useState(null);
+
+  const fetchWoWStories = async (token) => {
+    setTripDetailsLoading(true);
+    try {
+      const response = await axios.get(
+        `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/getuserStoryById/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "x-user-id": "86662af3-0110-4024-b132-831e533bfe6b",
+            // accessToken: token,
+          },
+        }
+      );
+      setWoWStory(response.data);
+      setHeadline(response.data?.userStory.title);
+      setStory(response.data?.userStory.content);
+    } catch (error) {
+      console.error("Cannot fetch all the trips correctly!", error);
+    }
+    setTripDetailsLoading(false);
+  };
+
+  const deleteImageFile = async (uid) => {
+    console.log(`uuuid : ${uid}`);
+    const imageToBeDeleted = wowStory.userStory.photos.find(
+      (file) => file.id === uid
+    );
+    setWoWStory((prevStory) => {
+      const newStory = { ...prevStory };
+      newStory.userStory.photos = newStory.userStory.photos.filter(
+        (file) => file.id !== uid
+      );
+      return newStory;
+    });
+    const isDeleted = await deleteFiles(uid, "photo");
+    if (!isDeleted) {
+      setWoWStory((prevStory) => {
+        const newStory = { ...prevStory };
+        newStory.userStory.photos.push(imageToBeDeleted);
+        return newStory;
+      });
+    }
+  };
+  const deleteVideoFile = async (uid) => {
+    const videoToBeDeleted = wowStory.userStory.videos.find(
+      (file) => file.id === uid
+    );
+    setWoWStory((prevStory) => {
+      const newStory = { ...prevStory };
+      newStory.userStory.videos = newStory.userStory.videos.filter(
+        (file) => file.id !== uid
+      );
+      return newStory;
+    });
+
+    const isDeleted = await deleteFiles(uid, "video");
+    if (!isDeleted) {
+      setWoWStory((prevStory) => {
+        const newStory = { ...prevStory };
+        newStory.userStory.videos.push(videoToBeDeleted);
+        return newStory;
+      });
+    }
+  };
+
+  const deleteFiles = async (uid, type) => {
+    try {
+      const response = await axios.delete(
+        type === "photo"
+          ? `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/deleteUserStoryPhoto/${id}?uniquePhotoId=${uid}`
+          : `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/deleteUserStoryVideo/${id}?uniqueVideoId=${uid}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "x-user-id": "86662af3-0110-4024-b132-831e533bfe6b",
+            accessToken: userData.accessToken,
+            "Allow-Cross-Origin": "*",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+      return true;
+    } catch (error) {
+      console.error("Cannot fetch all the trips correctly!", error);
+    }
+    return false;
+  };
+
   useEffect(() => {
     const storedUserData = localStorage.getItem("userData");
 
@@ -47,33 +140,14 @@ const WriteYourWoWStory = () => {
     if (storedUserData) {
       const data = JSON.parse(storedUserData);
       setUserData(data);
-      fetchLatestTripDetails(data.accessToken);
+      //   fetchLatestTripDetails(data.accessToken);
+      fetchWoWStories();
     }
+    fetchWoWStories();
     // fetchLatestTripDetails(userData.accessToken);
   }, []);
-  const [tripDetails, setTripDetails] = useState(null);
+
   const [tripDetailsLoading, setTripDetailsLoading] = useState(false);
-
-  const fetchLatestTripDetails = async (token) => {
-    setTripDetailsLoading(true);
-    try {
-      const response = await axios.get(
-        `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/wowPageTripDetailsByUserId`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            accessToken: token,
-          },
-        }
-      );
-      setTripDetails(response.data);
-    } catch (error) {
-      console.error("Cannot fetch all the trips correctly!", error);
-    }
-    setTripDetailsLoading(false);
-  };
-
-  // const tripId = "ec96e83d-f126-464f-8526-fbb9df3ec227";
 
   const uploadFile = async ({ file, fileType }) => {
     const formData = new FormData();
@@ -122,13 +196,13 @@ const WriteYourWoWStory = () => {
 
   const [loadingCreateStory, setLoadingCreateStory] = useState(false);
 
-  const handleCreateStory = async () => {
+  const handleEditStory = async () => {
     setLoadingCreateStory(true);
     let data = {
       content: story,
       title: headline,
     };
-    if (selectedFile == null && userData.imageUrl == null) {
+    if (selectedFile == null && wowStory.userStory.photoURL == null) {
       setLoadingCreateStory(false);
       return;
     }
@@ -143,13 +217,13 @@ const WriteYourWoWStory = () => {
       }
       data["photoURL"] = cardImage;
     } else {
-      data["photoURL"] = userData.imageUrl;
+      data["photoURL"] = wowStory.userStory.photoURL;
     }
-    let storyId = null;
+    let storyId = wowStory.userStory.userStoryId;
 
     try {
       const response = await axios.post(
-        `https://api.koshiqa.com/gateway/trekking/trekking/createUserStory/${tripDetails.tripDetails.id}`,
+        `https://api.koshiqa.com/gateway/trekking/trekking/updateUserStoryByUserStoryId/${storyId}`,
         data,
         {
           headers: {
@@ -158,11 +232,10 @@ const WriteYourWoWStory = () => {
           },
         }
       );
-      if (response.status !== 201) {
+      if (response.status !== 200 && response.status !== 201) {
         setLoadingCreateStory(false);
         return;
       }
-      storyId = response.data.userStoryId;
 
       console.log("Story created successfully!", response);
     } catch (error) {
@@ -170,7 +243,7 @@ const WriteYourWoWStory = () => {
       setLoadingCreateStory(false);
       return;
     }
-    if (storyId == null) return;
+
     for (const file of selectedFiles) {
       const storyImage = await uploadFile({
         file,
@@ -203,7 +276,7 @@ const WriteYourWoWStory = () => {
         </div>
       ) : (
         <div className="mx-auto max-w-[400px] bg-[#FAFAFA] min-h-[100vh]">
-          <WOWWhiteAppBar title={"Write your WoW Story"} />
+          <WOWWhiteAppBar title={"Update your WoW Story"} />
           <div className="bg-[#0000001A] h-[1px]" />
           {!moveToNextStep ? (
             <>
@@ -240,26 +313,18 @@ const WriteYourWoWStory = () => {
                 userImage={
                   selectedFile
                     ? URL.createObjectURL(selectedFile)
-                    : userData.imageUrl
+                    : wowStory?.userStory?.photoURL
                 }
                 name={userData.name}
-                tripName={
-                  tripDetailsLoading ? "--" : tripDetails?.tripDetails?.tripName
-                }
-                totalSteps={
-                  tripDetailsLoading
-                    ? "-"
-                    : tripDetails?.tripDetails?.stepsData?.stepsMoved
-                }
+                tripName={tripDetailsLoading ? "--" : wowStory?.tripName}
+                totalSteps={tripDetailsLoading ? "-" : wowStory?.stepsMoved}
                 completedIn={
-                  tripDetailsLoading
-                    ? "-"
-                    : tripDetails?.tripDetails?.stepsData?.tripCompletionDate
+                  tripDetailsLoading ? "-" : wowStory?.tripCompletedInDays
                 }
                 medal={
                   tripDetailsLoading
                     ? "-"
-                    : tripDetails?.medalData?.completedTripsCount
+                    : wowStory?.medalInfo?.completedTripsCount
                 }
               />
             </>
@@ -322,7 +387,9 @@ const WriteYourWoWStory = () => {
                   multiple // Allow selecting multiple files
                 />
               </div>
-              {selectedFiles.length > 0 && (
+              {(selectedFiles.length > 0 ||
+                wowStory.userStory.photos.length > 0 ||
+                wowStory.userStory.videos.length > 0) && (
                 <div
                   className="mt-4 h-[182px] w-[182px]"
                   style={{
@@ -405,6 +472,67 @@ const WriteYourWoWStory = () => {
                         </button>
                       </SwiperSlide>
                     ))}
+                    {wowStory.userStory.videos?.map((video, index) => (
+                      <SwiperSlide
+                        key={index}
+                        // className="h-[182px] w-[182px] rounded-xl shadow-md"
+                      >
+                        <video
+                          height="182px"
+                          width="182px"
+                          controls
+                          style={{
+                            objectFit: "cover",
+                            height: "182px",
+                            width: "182px",
+                          }}
+                          className="rounded-[5.02px]"
+                        >
+                          <source src={video.videoURL} type={"video"} />
+                          Your browser does not support the video tag.
+                        </video>
+
+                        <button
+                          onClick={() => {
+                            deleteVideoFile(video.id);
+                          }}
+                        >
+                          <div className="absolute top-[4px] right-[4px] p-1 rounded-[5px] bg-white">
+                            <img src={trash} alt="Delete" />
+                          </div>
+                        </button>
+                      </SwiperSlide>
+                    ))}
+
+                    {wowStory.userStory.photos.map((photo, index) => (
+                      <SwiperSlide
+                        key={index}
+                        // className="h-[182px] w-[182px] rounded-xl shadow-md"
+                      >
+                        <img
+                          src={photo.photoURL}
+                          alt={"image"}
+                          height={"182px"}
+                          width={"182px"}
+                          style={{
+                            objectFit: "cover",
+                            height: "182px",
+                            width: "182px",
+                          }}
+                          className="rounded-[5.02px]"
+                        />
+
+                        <button
+                          onClick={() => {
+                            deleteImageFile(photo.id);
+                          }}
+                        >
+                          <div className="absolute top-[4px] right-[4px] p-1 rounded-[5px] bg-white">
+                            <img src={trash} alt="Delete" />
+                          </div>
+                        </button>
+                      </SwiperSlide>
+                    ))}
                   </Swiper>
                 </div>
               )}
@@ -420,7 +548,7 @@ const WriteYourWoWStory = () => {
                   // background: "#FAFAFA !important",
                   background: "#FAFAFA",
                 }}
-                className="w-full focus:outline-none mt-4 story-input text-[14px] font-medium text-[#1C1C1C] leading-[20px]"
+                className="w-full focus:outline-none mt-[28px] story-input text-[14px] font-medium text-[#1C1C1C] leading-[20px]"
                 rows={10}
               />
             </div>
@@ -428,13 +556,16 @@ const WriteYourWoWStory = () => {
           <WriteYourWoWStoryStepChoosePicture
             onTap={() => {
               if (!moveToNextStep) {
-                if (selectedFile === null && userData.imageUrl === null) {
+                if (
+                  selectedFile === null &&
+                  wowStory?.userStory?.photoURL === null
+                ) {
                   alert("Please upload a photo");
                   return;
                 }
                 setMoveToNextStep(true);
               } else {
-                handleCreateStory();
+                handleEditStory();
               }
             }}
             showLoading={loadingCreateStory && moveToNextStep}
@@ -459,27 +590,4 @@ const WriteYourWoWStory = () => {
   );
 };
 
-export const WriteYourWoWStoryStepChoosePicture = ({
-  onTap,
-  text,
-  showLoading,
-}) => {
-  return (
-    <div className="mt-[36px] max-w-[344px] w-full m-[28px] ">
-      <button
-        onClick={onTap}
-        className="bg-[#0E986A] max-w-[344px] mb-[28px] w-full fixed bottom-0 text-white py-[18px] rounded-[16px] font-semibold"
-      >
-        {showLoading ? (
-          <div className="flex justify-center items-center">
-            <div className="w-5 h-5 border-2 border-t-[4px] border-[#fff] rounded-full animate-spin" />
-          </div>
-        ) : (
-          text
-        )}
-      </button>
-    </div>
-  );
-};
-
-export default WriteYourWoWStory;
+export default EditYourWoWStory;

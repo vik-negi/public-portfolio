@@ -105,7 +105,7 @@ const IndividualWallOfWellness = () => {
       setUserData(data);
       fetchWoWStories(data.accessToken);
     }
-    // fetchWoWStories(userData.accessToken);
+    fetchWoWStories(userData.accessToken);
 
     return () => {
       delete window.receiveUserData;
@@ -113,7 +113,7 @@ const IndividualWallOfWellness = () => {
   }, []);
 
   return (
-    <div className="bg-[#24262bec]">
+    <div className="bg-[#24262bec] min-h-[100vh]">
       {/* <Helmet>
         <title>WoW - Wall of Wellness</title>
         <meta
@@ -129,7 +129,9 @@ const IndividualWallOfWellness = () => {
         />
       </Helmet> */}
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
-        {userData?.userId === null && <WOWAppBar />}
+        {/* {userData?.userId === null && ( */}
+        <WOWAppBar storyId={id} userId={userData.userId} />
+        {/* )} */}
         {loadingAllData ? (
           <Lottie
             style={{

@@ -67,8 +67,9 @@ const WallOfWellness = () => {
     if (tripId === null) return;
     try {
       const response = await axios.get(
-        `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/getUserStoryByTrip/${tripId}`,
-        // `https://api-stage.koshiqa.com/gateway/trekking/user/v1/trekking/getUserStoryByTrip/${tripId}`,
+        // `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/getUserStoryByTrip/${tripId}`,
+        `https://api.koshiqa.com/gateway/trekking/user/v1/trekking/getUserStoryByTrip/ec96e83d-f126-464f-8526-fbb9df3ec239`,
+
         {
           headers: {
             "Content-Type": "application/json",
@@ -133,7 +134,7 @@ const WallOfWellness = () => {
   return (
     <div className="bg-[#24262bec]">
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
-        {userData?.userId === null && <WOWAppBar />}
+        <WOWAppBar userId={userData.userId} />
 
         <div className="relative ">
           <img

@@ -38,6 +38,7 @@ import { Tamplate1 } from "./templates/template_1/template_1";
 import WallOfWellness from "./pages/WallOfWellness/WallOfWellness";
 import IndividualWallOfWellness from "./pages/WallOfWellness/IndividualWallOfWellness";
 import WriteYourWoWStory from "./pages/WallOfWellness/WriteYourWoWStory";
+import EditYourWoWStory from "./pages/WallOfWellness/EditYourWoWStory";
 
 function App() {
   // const slowInternet = setTimeout(() => {
@@ -90,6 +91,7 @@ function App() {
           <Route path="/wow" element={<WallOfWellness />} />
           <Route path="/wow/:id" element={<IndividualWallOfWellness />} />
           <Route path="/wow/create" element={<WriteYourWoWStory />} />
+          <Route path="/wow/edit/:id" element={<EditYourWoWStory />} />
 
           <Route
             path="/"
