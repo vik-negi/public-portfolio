@@ -46,7 +46,12 @@ const WOWAppBar = ({ storyId, userId }) => {
       <img
         src={arrowBack}
         onClick={() => {
-          window.history.back();
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            // Send a close message to the Flutter WebView
+            window.closeWebView();
+          }
         }}
         alt="Arrow Back"
         className="float-left h-[28px] mr-[8px]"
