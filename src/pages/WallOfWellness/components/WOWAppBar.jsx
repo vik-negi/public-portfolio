@@ -45,6 +45,9 @@ const WOWAppBar = ({ storyId, userId }) => {
     >
       <img
         src={arrowBack}
+        onClick={() => {
+          window.history.back();
+        }}
         alt="Arrow Back"
         className="float-left h-[28px] mr-[8px]"
       />

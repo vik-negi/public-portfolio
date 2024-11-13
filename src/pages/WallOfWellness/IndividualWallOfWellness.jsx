@@ -219,8 +219,12 @@ const IndividualWallOfWellness = () => {
                         {file.type === "video" ? (
                           <video
                             src={file.link}
+                            style={{
+                              maxHeight: "320px",
+                            }}
                             controls
                             className="rounded-3xl"
+                            width={"100%"}
                             // height={"320px"}
                             // width={"320px"}
                           ></video>
@@ -228,6 +232,10 @@ const IndividualWallOfWellness = () => {
                           <img
                             src={file.link}
                             alt={file.link}
+                            style={{
+                              maxHeight: "320px",
+                            }}
+                            width={"100%"}
                             // height={"320px"}
                             // width={"320px"}
                             className="rounded-3xl object-cover"
@@ -287,6 +295,7 @@ const FooterAppDowwnload = () => {
         className={`py-4 max-w-[400px] w-[100%] fixed bottom-0 bg-white rounded-t-[16px] flex justify-center`}
         style={{
           boxShadow: "0px 0px 8px 0px #00000024",
+          zIndex: 100,
         }}
       >
         <img
