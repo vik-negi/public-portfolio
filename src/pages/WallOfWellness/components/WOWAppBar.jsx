@@ -19,6 +19,16 @@ import { Link } from "react-router-dom";
 const WOWAppBar = ({ storyId, userId }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  useEffect(() => {
+    window.closeWebView = () => {
+      // This function can be left empty since Flutter will listen for the message
+    };
+
+    return () => {
+      delete window.closeWebView;
+    };
+  }, []);
+
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
 
@@ -203,13 +213,27 @@ const styles = {
 export const WOWWhiteAppBar = ({ title }) =>
   // :{}
   {
+    useEffect(() => {
+      window.closeWebView = () => {
+        // This function can be left empty since Flutter will listen for the message
+      };
+
+      return () => {
+        delete window.closeWebView;
+      };
+    }, []);
     return (
       <div
         className={`py-[20px] px-[20px] flex max-w-[420px] items-center sticky top-0 bg-[#FAFAFA] z-10`}
       >
         <img
           onClick={() => {
-            window.history.back();
+            if (window.history.length > 1) {
+              window.history.back();
+            } else {
+              // Send a close message to the Flutter WebView
+              window.closeWebView();
+            }
           }}
           src={arrowBackGrey}
           alt="Arrow Back"
