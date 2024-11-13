@@ -40,16 +40,43 @@ const WriteYourWoWStory = () => {
     setSelectedFiles((prevFiles) => [...prevFiles, ...filesArray]);
   };
 
-  useEffect(() => {
-    const storedUserData = localStorage.getItem("userData");
+  // useEffect(() => {
+  //   const storedUserData = localStorage.getItem("userData");
 
+  //   console.log(`storedUserData : ${storedUserData}`);
+  //   if (storedUserData) {
+  //     const data = JSON.parse(storedUserData);
+  //     setUserData(data);
+  //     fetchLatestTripDetails(data.accessToken);
+  //   }
+  //   // fetchLatestTripDetails(userData.accessToken);
+  // }, []);
+
+  useEffect(() => {
+    window.receiveUserData = (data) => {
+      console.log("User Data received:", data);
+      localStorage.setItem("userData", JSON.stringify(data));
+
+      setUserData({
+        name: data.name,
+        userId: data.userId,
+        imageUrl: data.imageUrl,
+        accessToken: data.accessToken,
+      });
+    };
+
+    const storedUserData = localStorage.getItem("userData");
     console.log(`storedUserData : ${storedUserData}`);
     if (storedUserData) {
       const data = JSON.parse(storedUserData);
       setUserData(data);
       fetchLatestTripDetails(data.accessToken);
     }
-    // fetchLatestTripDetails(userData.accessToken);
+    fetchLatestTripDetails(data.accessToken);
+
+    return () => {
+      delete window.receiveUserData;
+    };
   }, []);
   const [tripDetails, setTripDetails] = useState(null);
   const [tripDetailsLoading, setTripDetailsLoading] = useState(false);
