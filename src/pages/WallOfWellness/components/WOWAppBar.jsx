@@ -232,20 +232,15 @@ export const WOWWhiteAppBar = ({ title }) =>
         className={`py-[20px] px-[20px] flex max-w-[420px] items-center sticky top-0 bg-[#FAFAFA] z-10`}
       >
         <img
-          onClick={() => {
-            console.log(
-              "window.history.length",
-              window.history.length,
-              " & ",
-              window.history.state
-            );
-            if (window.history.length > 1) {
-              window.history.back();
-            } else {
-              // Send a close message to the Flutter WebView
-              window.closeWebView();
-            }
-          }}
+          onClick={
+            window.history.length > 1
+              ? () => {
+                  window.history.back();
+                }
+              : () => {
+                  window.closeWebView();
+                }
+          }
           src={arrowBackGrey}
           alt="Arrow Back"
           className="float-left h-[28px] mr-[8px]"
