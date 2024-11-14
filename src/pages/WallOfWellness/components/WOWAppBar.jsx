@@ -230,9 +230,9 @@ export const WOWWhiteAppBar = ({ title }) => {
     <div
       className={`py-[20px] px-[20px] flex max-w-[420px] items-center sticky top-0 bg-[#FAFAFA] z-10`}
     >
-      <button
+      <img
         onClick={() => {
-          console.log(window.history.length, "length outside");
+          console.log(window.history.length, "length outside m");
           if (window.history.length > 1) {
             console.log(window.history.length, "length inside");
             window.history.back();
@@ -242,28 +242,10 @@ export const WOWWhiteAppBar = ({ title }) => {
             window.flutter_inappwebview.callHandler("closeWebView");
           }
         }}
-      >
-        <img
-          // onClick={
-          //   window.history.length > 1
-          //     ? () => {
-          //         console.log(window.history.length, "window.history.length");
-          //         if (windoww.history.length === 1) {
-          //           window.closeWebView();
-          //           return;
-          //         }
-          //         window.history.back();
-          //       }
-          //     : () => {
-          //         console.log(window.history.length, "closeWebView");
-          //         window.closeWebView();
-          //       }
-          // }
-          src={arrowBackGrey}
-          alt="Arrow Back"
-          className="float-left h-[28px] mr-[8px]"
-        />
-      </button>
+        src={arrowBackGrey}
+        alt="Arrow Back"
+        className="float-left h-[28px] mr-[8px]"
+      />
       <p className="text-[18px] font-medium leading-[24.3px] text-black">
         {title}
       </p>
