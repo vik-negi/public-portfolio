@@ -134,7 +134,7 @@ const WallOfWellness = () => {
   return (
     <div className="bg-[#24262bec]">
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
-        <WOWAppBar userId={userData.userId} />
+        <WOWAppBar userId={userData.userId} forceClose={true} />
 
         <div className="relative ">
           <img

@@ -16,7 +16,7 @@ import {
 } from "react-share";
 import { Link } from "react-router-dom";
 
-const WOWAppBar = ({ storyId, userId }) => {
+const WOWAppBar = ({ storyId, userId, forceClose }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -55,14 +55,19 @@ const WOWAppBar = ({ storyId, userId }) => {
     >
       <img
         src={arrowBack}
-        onClick={() => {
-          if (window.history.length > 1) {
-            window.history.back();
-          } else {
-            // Send a close message to the Flutter WebView
-            window.closeWebView();
-          }
-        }}
+        onClick={
+          forceClose != null
+            ? () => {
+                window.closeWebView();
+              }
+            : () => {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  window.closeWebView();
+                }
+              }
+        }
         alt="Arrow Back"
         className="float-left h-[28px] mr-[8px]"
       />
