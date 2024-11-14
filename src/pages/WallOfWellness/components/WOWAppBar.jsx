@@ -235,9 +235,15 @@ export const WOWWhiteAppBar = ({ title }) =>
           onClick={
             window.history.length > 1
               ? () => {
+                  console.log(window.history.length, "window.history.length");
+                  if (windoww.history.length === 1) {
+                    window.closeWebView();
+                    return;
+                  }
                   window.history.back();
                 }
               : () => {
+                  console.log(window.history.length, "closeWebView");
                   window.closeWebView();
                 }
           }
