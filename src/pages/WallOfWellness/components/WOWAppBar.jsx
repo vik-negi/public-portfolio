@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import arrowBack from "../../../assets/arrow_left.svg";
 import arrowBackGrey from "../../../assets/wallOfWellness/arrow_left.svg";
 import shareIcon from "../../../assets/wallOfWellness/share.svg";

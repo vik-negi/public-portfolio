@@ -18,7 +18,7 @@ const WriteYourWoWStory = () => {
     userId: null,
     imageUrl: null,
     accessToken:
-      "3bae8df17e4a3c04bb237e24275077027088f58ec98ed76c251361987c3b3cf1db739d91b07c77ce31546e2db2b79b81",
+      "5cceb8926be3e43cfea1b59b8be1c6e383ffa1ff30f2c724d78f365de7342965311d6896c55c958f8270996501977117",
   });
   const [moveToNextStep, setMoveToNextStep] = useState(false);
 
@@ -66,13 +66,20 @@ const WriteYourWoWStory = () => {
     };
 
     const storedUserData = localStorage.getItem("userData");
-    console.log(`storedUserData : ${storedUserData}`);
     if (storedUserData) {
-      const data = JSON.parse(storedUserData);
-      setUserData(data);
-      fetchLatestTripDetails(data.accessToken);
+      setUserData(JSON.parse(storedUserData));
+      if (
+        JSON.parse(storedUserData).accessToken == null ||
+        JSON.parse(storedUserData).accessToken == undefined
+      ) {
+        setTimeout(() => {
+          storedUserData = localStorage.getItem("userData");
+          fetchLatestTripDetails(JSON.parse(storedUserData).accessToken);
+        }, 1000);
+      } else {
+        fetchLatestTripDetails(JSON.parse(storedUserData).accessToken);
+      }
     }
-    fetchLatestTripDetails(data.accessToken);
 
     return () => {
       delete window.receiveUserData;
