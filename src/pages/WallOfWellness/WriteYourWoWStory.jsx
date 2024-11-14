@@ -17,8 +17,7 @@ const WriteYourWoWStory = () => {
     name: null,
     userId: null,
     imageUrl: null,
-    accessToken:
-      "5cceb8926be3e43cfea1b59b8be1c6e383ffa1ff30f2c724d78f365de7342965311d6896c55c958f8270996501977117",
+    accessToken: null,
   });
   const [moveToNextStep, setMoveToNextStep] = useState(false);
 
@@ -63,22 +62,16 @@ const WriteYourWoWStory = () => {
         imageUrl: data.imageUrl,
         accessToken: data.accessToken,
       });
+      fetchLatestTripDetails(data.accessToken);
     };
 
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
-      if (
-        JSON.parse(storedUserData).accessToken == null ||
-        JSON.parse(storedUserData).accessToken == undefined
-      ) {
-        setTimeout(() => {
-          storedUserData = localStorage.getItem("userData");
-          fetchLatestTripDetails(JSON.parse(storedUserData).accessToken);
-        }, 1000);
-      } else {
+      setTimeout(() => {
+        storedUserData = localStorage.getItem("userData");
         fetchLatestTripDetails(JSON.parse(storedUserData).accessToken);
-      }
+      }, 1000);
     }
 
     return () => {
@@ -86,7 +79,7 @@ const WriteYourWoWStory = () => {
     };
   }, []);
   const [tripDetails, setTripDetails] = useState(null);
-  const [tripDetailsLoading, setTripDetailsLoading] = useState(false);
+  const [tripDetailsLoading, setTripDetailsLoading] = useState(true);
 
   const fetchLatestTripDetails = async (token) => {
     setTripDetailsLoading(true);
