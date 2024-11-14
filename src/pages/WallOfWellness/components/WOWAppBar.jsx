@@ -239,6 +239,7 @@ export const WOWWhiteAppBar = ({ title }) => {
           } else {
             console.log(window.history.length, "closeWebView");
             window.closeWebView();
+            window.flutter_inappwebview.callHandler("closeWebView");
           }
         }}
       >
