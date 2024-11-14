@@ -215,47 +215,59 @@ const styles = {
   },
 };
 
-export const WOWWhiteAppBar = ({ title }) =>
-  // :{}
-  {
-    useEffect(() => {
-      window.closeWebView = () => {
-        // This function can be left empty since Flutter will listen for the message
-      };
+export const WOWWhiteAppBar = ({ title }) => {
+  useEffect(() => {
+    window.closeWebView = () => {
+      // This function can be left empty since Flutter will listen for the message
+    };
 
-      return () => {
-        delete window.closeWebView;
-      };
-    }, []);
-    return (
-      <div
-        className={`py-[20px] px-[20px] flex max-w-[420px] items-center sticky top-0 bg-[#FAFAFA] z-10`}
+    return () => {
+      delete window.closeWebView;
+    };
+  }, []);
+
+  return (
+    <div
+      className={`py-[20px] px-[20px] flex max-w-[420px] items-center sticky top-0 bg-[#FAFAFA] z-10`}
+    >
+      <button
+        onClick={() => {
+          console.log(window.history.length, "length outside");
+          if (window.history.length > 1) {
+            console.log(window.history.length, "length inside");
+            window.history.back();
+          } else {
+            console.log(window.history.length, "closeWebView");
+            window.closeWebView();
+          }
+        }}
       >
         <img
-          onClick={
-            window.history.length > 1
-              ? () => {
-                  console.log(window.history.length, "window.history.length");
-                  if (windoww.history.length === 1) {
-                    window.closeWebView();
-                    return;
-                  }
-                  window.history.back();
-                }
-              : () => {
-                  console.log(window.history.length, "closeWebView");
-                  window.closeWebView();
-                }
-          }
+          // onClick={
+          //   window.history.length > 1
+          //     ? () => {
+          //         console.log(window.history.length, "window.history.length");
+          //         if (windoww.history.length === 1) {
+          //           window.closeWebView();
+          //           return;
+          //         }
+          //         window.history.back();
+          //       }
+          //     : () => {
+          //         console.log(window.history.length, "closeWebView");
+          //         window.closeWebView();
+          //       }
+          // }
           src={arrowBackGrey}
           alt="Arrow Back"
           className="float-left h-[28px] mr-[8px]"
         />
-        <p className="text-[18px] font-medium leading-[24.3px] text-black">
-          {title}
-        </p>
-      </div>
-    );
-  };
+      </button>
+      <p className="text-[18px] font-medium leading-[24.3px] text-black">
+        {title}
+      </p>
+    </div>
+  );
+};
 
 export default WOWAppBar;
