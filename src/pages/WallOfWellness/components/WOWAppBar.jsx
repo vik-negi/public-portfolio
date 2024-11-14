@@ -233,6 +233,12 @@ export const WOWWhiteAppBar = ({ title }) =>
       >
         <img
           onClick={() => {
+            console.log(
+              "window.history.length",
+              window.history.length,
+              " & ",
+              window.history.state
+            );
             if (window.history.length > 1) {
               window.history.back();
             } else {
