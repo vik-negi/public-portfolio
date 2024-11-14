@@ -65,7 +65,7 @@ const WOWAppBar = ({ storyId, userId, forceClose }) => {
                 if (window.history.length > 1) {
                   window.history.back();
                 } else {
-                  // window.closeWebView();
+                  window.closeWebView();
                   window.flutter_inappwebview.callHandler("closeWebView");
                 }
               }
