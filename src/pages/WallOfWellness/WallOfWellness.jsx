@@ -152,7 +152,10 @@ const WallOfWellness = () => {
             "https://res.cloudinary.com/dolqf9s3y/image/upload/v1732011613/wow_ss_gel6dh.png"
           }
         />
-        <meta property="og:url" content={"https://koshiqa.com/wow"} />
+        <meta
+          property="og:url"
+          content={"https://portfoliahub.vercel.app/#/wow"}
+        />
         <meta property="og:type" content="website" />
 
         {/* Meta Tags for Twitter */}
@@ -170,7 +173,10 @@ const WallOfWellness = () => {
             "https://res.cloudinary.com/dolqf9s3y/image/upload/v1732011613/wow_ss_gel6dh.png"
           }
         />
-        <meta name="twitter:url" content={"https://koshiqa.com/wow"} />
+        <meta
+          name="twitter:url"
+          content={"https://portfoliahub.vercel.app/#/wow"}
+        />
       </Helmet>
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
         <WOWAppBar userId={userData.userId} forceClose={true} />
