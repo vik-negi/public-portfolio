@@ -202,7 +202,9 @@ const WallOfWellness = () => {
             alt="Wall of Wellness"
             className="object-cover flex ml-auto mr-[24px] relative"
           />
-          <p className="text-[27px] text-center text-white">WALL OF WELLNESS</p>
+          <p className="text-[27px] text-center text-white">
+            WALL OF WELLNESS 1
+          </p>
           <p className="text-[16px] mt-[10.5px] mx-[30px] text-center text-[#FFFFFFCC]">
             Join the Wall of Wellness (WoW) by sharing your Koshiqa story!
           </p>

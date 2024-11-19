@@ -38,7 +38,7 @@ const WOWAppBar = ({ storyId, userId, forceClose }) => {
         .share({
           title: "My Website",
           text: "Check out this amazing website!",
-          url: "https://d13f6mc9d8xfqo.cloudfront.net/wall-of-wellness", // Current URL
+          url: "https://portfoliahub.vercel.app/#/wow", // Current URL
         })
         .then(() => console.log("Successfully shared"))
         .catch((error) => console.log("Error sharing", error));
@@ -108,17 +108,17 @@ const WOWAppBar = ({ storyId, userId, forceClose }) => {
         <div className="flex flex-wrap gap-1">
           <FacebookShareButton
             className="rounded-[24px]"
-            hashtag="#koshiqa"
-            quote="Koshiqa"
-            url={"https://koshiqa.com"}
+            hashtag="#koshiqa #wow"
+            quote="WoW - Wall of Wellness"
+            url={"https://portfoliahub.vercel.app/#/wow"}
           >
             <FacebookIcon className="rounded-[12px]" />
           </FacebookShareButton>
 
           <LinkedinShareButton
-            title="Koshiqa"
-            summary="This is a summary"
-            url={"https://d13f6mc9d8xfqo.cloudfront.net/wall-of-wellness"}
+            title="WoW - Wall of Wellness"
+            summary="This wall of wellness from Koshiqa is so inspiring.\nLoved these medal winning journey and experience of people with Koshiqa. Do read it"
+            url={"https://portfoliahub.vercel.app/#/wow"}
           >
             <LinkedinIcon className="rounded-[12px]" />
           </LinkedinShareButton>
