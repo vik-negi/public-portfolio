@@ -39,6 +39,7 @@ import WallOfWellness from "./pages/WallOfWellness/WallOfWellness";
 import IndividualWallOfWellness from "./pages/WallOfWellness/IndividualWallOfWellness";
 import WriteYourWoWStory from "./pages/WallOfWellness/WriteYourWoWStory";
 import EditYourWoWStory from "./pages/WallOfWellness/EditYourWoWStory";
+import NotFound from "./pages/NotFound";
 
 function App() {
   // const slowInternet = setTimeout(() => {
@@ -109,14 +110,14 @@ function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             path="/:username"
             element={<LayoutComponent children={<Home />} />}
           />
           <Route
             path="/#/:username"
             element={<LayoutComponent children={<Home />} />}
-          />
+          /> */}
           <Route
             path="/about"
             element={<LayoutComponent children={<About />} />}
@@ -138,14 +139,14 @@ function App() {
             element={<LayoutComponent children={<Experiences />} />}
           />
           <Route path="/admin/login" element={<Login />} />
-          <Route
+          {/* <Route
             path="create-portfolio/:indexNumber"
             element={<CreatePortfolio />}
-          />
+          /> */}
           <Route path="/admin/register" element={<Register />} />
           <Route path="/admin/verify" element={<VerifyOtp />} />
 
-          <Route
+          {/* <Route
             path="/admin/*"
             element={
               <LoginWrapper
@@ -161,7 +162,8 @@ function App() {
           <Route
             path="/:username"
             element={<LayoutComponent children={<Home />} />}
-          />
+          /> */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AppProvider>
     </HashRouter>
