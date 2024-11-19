@@ -7,6 +7,7 @@ import arrowRight from "../../assets/wallOfWellness/arrowRight.svg";
 import WOWAppBar from "./components/WOWAppBar";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 const WallOfWellness = () => {
   const [userData, setUserData] = useState({
@@ -133,6 +134,44 @@ const WallOfWellness = () => {
 
   return (
     <div className="bg-[#24262bec]">
+      <Helmet>
+        {/* Dynamic Page Title */}
+        <title>{"WoW - Wall Of Wellness"}</title>
+
+        {/* Meta Tags for Open Graph (used by Facebook, LinkedIn) */}
+        <meta property="og:title" content={"WoW - Wall Of Wellness"} />
+        <meta
+          property="og:description"
+          content={
+            "This wall of wellness from Koshiqa is so inspiring.\nLoved these medal winning journey and experience of people with Koshiqa. Do read it"
+          }
+        />
+        <meta
+          property="og:image"
+          content={
+            "https://res.cloudinary.com/dolqf9s3y/image/upload/v1732011613/wow_ss_gel6dh.png"
+          }
+        />
+        <meta property="og:url" content={"https://koshiqa.com/wow"} />
+        <meta property="og:type" content="website" />
+
+        {/* Meta Tags for Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={"WoW - Wall Of Wellness"} />
+        <meta
+          name="twitter:description"
+          content={
+            "This wall of wellness from Koshiqa is so inspiring.\nLoved these medal winning journey and experience of people with Koshiqa. Do read it"
+          }
+        />
+        <meta
+          name="twitter:image"
+          content={
+            "https://res.cloudinary.com/dolqf9s3y/image/upload/v1732011613/wow_ss_gel6dh.png"
+          }
+        />
+        <meta name="twitter:url" content={"https://koshiqa.com/wow"} />
+      </Helmet>
       <div className="mx-auto max-w-[400px] bg-[#24262B]">
         <WOWAppBar userId={userData.userId} forceClose={true} />
 
