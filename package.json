@@ -22,7 +22,6 @@
     "axios": "^1.5.0",
     "date-fns": "^3.6.0",
     "dotenv": "^16.0.3",
-    "express": "^4.21.1",
     "framer-motion": "^11.3.31",
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
@@ -44,8 +43,8 @@
     "zustand": "^4.4.3"
   },
   "scripts": {
-    "start": "node server/index.js",
-    "build": "npm run build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "npm run build&&node server/index.js"

@@ -32,14 +32,15 @@ const getPostById = (url) => {
 
 // here we serve the index.html page
 
-app.get("/wow/:id", (req, res, next) => {
+app.get(["/wow", "/wow/:id"], (req, res, next) => {
   fs.readFile(indexPath, "utf8", (err, htmlData) => {
     if (err) {
       console.error("Error during file reading", err);
       return res.status(404).end();
     }
 
-    const post = getPostById("req.params");
+    const id = req.params.id || "wow";
+    const post = getPostById(id);
     if (!post) return res.status(404).send("Post not found");
 
     // inject meta tags
@@ -53,28 +54,7 @@ app.get("/wow/:id", (req, res, next) => {
   });
 });
 
-app.get("/wow", (req, res, next) => {
-  fs.readFile(indexPath, "utf8", (err, htmlData) => {
-    if (err) {
-      console.error("Error during file reading", err);
-      return res.status(404).end();
-    }
-
-    const post = getPostById("wow");
-    if (!post) return res.status(404).send("Post not found");
-
-    // inject meta tags
-    htmlData = htmlData
-      .replace("<title>React App</title>", `<title>${post.title}</title>`)
-      .replace("__META_OG_TITLE__", post.title)
-      .replace("__META_OG_DESCRIPTION__", post.description)
-      .replace("__META_DESCRIPTION__", post.description)
-      .replace("__META_OG_IMAGE__", post.thumbnail);
-    return res.send(htmlData);
-  });
-});
-
-app.get("/", (req, res, next) => {
+app.get("*", (req, res, next) => {
   fs.readFile(indexPath, "utf8", (err, htmlData) => {
     if (err) {
       console.error("Error during file reading", err);

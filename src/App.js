@@ -40,6 +40,7 @@ import IndividualWallOfWellness from "./pages/WallOfWellness/IndividualWallOfWel
 import WriteYourWoWStory from "./pages/WallOfWellness/WriteYourWoWStory";
 import EditYourWoWStory from "./pages/WallOfWellness/EditYourWoWStory";
 import NotFound from "./pages/NotFound";
+import EmbedWoW from "./pages/WallOfWellness/components/EmbedWoW";
 
 function App() {
   // const slowInternet = setTimeout(() => {
@@ -90,6 +91,7 @@ function App() {
 
         <Routes>
           <Route path="/wow" element={<WallOfWellness />} />
+          <Route path="/embed/:id" element={<EmbedWoW />} />
           <Route path="/wow/:id" element={<IndividualWallOfWellness />} />
           <Route path="/wow/create" element={<WriteYourWoWStory />} />
           <Route path="/wow/edit/:id" element={<EditYourWoWStory />} />
@@ -163,7 +165,6 @@ function App() {
             path="/:username"
             element={<LayoutComponent children={<Home />} />}
           /> */}
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </AppProvider>
     </HashRouter>
