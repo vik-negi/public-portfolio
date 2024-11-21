@@ -1,6 +1,11 @@
+require("@babel/register")({
+  presets: ["@babel/preset-env", "@babel/preset-react"],
+});
+
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const { default: App } = require("../src/App");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -32,41 +37,62 @@ const getPostById = (url) => {
 
 // here we serve the index.html page
 
-app.get(["/wow", "/wow/:id"], (req, res, next) => {
-  fs.readFile(indexPath, "utf8", (err, htmlData) => {
-    if (err) {
-      console.error("Error during file reading", err);
-      return res.status(404).end();
-    }
+app.get("*", (req, res) => {
+  const routePath = req.path; // e.g., /wow, /wow/:id, etc.
 
-    const id = req.params.id || "wow";
-    const post = getPostById(id);
-    if (!post) return res.status(404).send("Post not found");
+  // Get metadata based on route (implement your logic here)
+  const metadata = getMetadataForRoute(routePath);
 
-    // inject meta tags
-    htmlData = htmlData
-      .replace("<title>React App</title>", `<title>${post.title}</title>`)
-      .replace("__META_OG_TITLE__", post.title)
-      .replace("__META_OG_DESCRIPTION__", post.description)
-      .replace("__META_DESCRIPTION__", post.description)
-      .replace("__META_OG_IMAGE__", post.thumbnail);
-    return res.send(htmlData);
-  });
+  const html = ReactDOMServer.renderToString(<App initialRoute={routePath} />);
+
+  const metaTags = `
+    <title>${metadata.title}</title>
+    <meta name="description" content="${metadata.description}" />
+    <meta property="og:title" content="${metadata.title}" />
+    <meta property="og:description" content="${metadata.description}" />
+    <meta property="og:image" content="${metadata.image}" />
+  `;
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        ${metaTags}
+      </head>
+      <body>
+        <div id="root">${html}</div>
+        <script src="/static/js/main.js"></script> <!-- Adjust if needed -->
+      </body>
+    </html>
+  `);
 });
 
-app.get("*", (req, res, next) => {
-  fs.readFile(indexPath, "utf8", (err, htmlData) => {
-    if (err) {
-      console.error("Error during file reading", err);
-      return res.status(404).end();
+function getMetadataForRoute(route) {
+  const metadataMap = {
+    "/wow": {
+      title: "WoW - Wall Of Wellness",
+      description: "Discover inspiring stories on the Wall Of Wellness.",
+      image:
+        "https://res.cloudinary.com/dolqf9s3y/image/upload/v1732011613/wow_ss_gel6dh.png",
+    },
+    "/contact": {
+      title: "Contact Us - Your Website",
+      description: "Reach out to us with your questions.",
+      image:
+        "https://res.cloudinary.com/dolqf9s3y/image/upload/v1732011613/wow_ss_gel6dh.png",
+    },
+    // Add metadata for all other routes
+  };
+
+  return (
+    metadataMap[route] || {
+      title: "Default Title",
+      description: "Default Description",
+      image:
+        "https://res.cloudinary.com/dolqf9s3y/image/upload/v1732011613/wow_ss_gel6dh.png",
     }
-
-    const post = getPostById(req.params);
-    if (!post) return res.status(404).send("Post not found");
-
-    return res.send(htmlData);
-  });
-});
+  );
+}
 // listening...
 app.listen(PORT, (error) => {
   if (error) {
