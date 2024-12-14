@@ -38,7 +38,7 @@ export default function Home(props) {
 
   return (
     <>
-      <Tamplate1 />
+      {/* <Tamplate1 /> */}
       <MainSection username={username} />
       {/* <Demo /> */}
       <About id="about" username={username} />
