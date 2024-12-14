@@ -1,11 +1,15 @@
+require("module-alias/register");
+
 require("@babel/register")({
   presets: ["@babel/preset-env", "@babel/preset-react"],
 });
-
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const { default: App } = require("../src/App");
+require("module-alias").addAliases({
+  "App.css": path.resolve(__dirname, "./empty.css"),
+});
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -43,7 +47,10 @@ app.get("*", (req, res) => {
   // Get metadata based on route (implement your logic here)
   const metadata = getMetadataForRoute(routePath);
 
-  const html = ReactDOMServer.renderToString(<App initialRoute={routePath} />);
+  // const html = ReactDOMServer.renderToString(<App initialRoute={routePath} />);
+  const html = ReactDOMServer.renderToString(
+    React.createElement(App, { initialRoute: routePath }) // Use React.createElement for JSX
+  );
 
   const metaTags = `
     <title>${metadata.title}</title>

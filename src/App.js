@@ -112,14 +112,14 @@ function App() {
               />
             }
           />
-          {/* <Route
+          <Route
             path="/:username"
             element={<LayoutComponent children={<Home />} />}
           />
           <Route
             path="/#/:username"
             element={<LayoutComponent children={<Home />} />}
-          /> */}
+          />
           <Route
             path="/about"
             element={<LayoutComponent children={<About />} />}
@@ -141,14 +141,14 @@ function App() {
             element={<LayoutComponent children={<Experiences />} />}
           />
           <Route path="/admin/login" element={<Login />} />
-          {/* <Route
+          <Route
             path="create-portfolio/:indexNumber"
             element={<CreatePortfolio />}
-          /> */}
+          />
           <Route path="/admin/register" element={<Register />} />
           <Route path="/admin/verify" element={<VerifyOtp />} />
 
-          {/* <Route
+          <Route
             path="/admin/*"
             element={
               <LoginWrapper
@@ -164,7 +164,7 @@ function App() {
           <Route
             path="/:username"
             element={<LayoutComponent children={<Home />} />}
-          /> */}
+          />
         </Routes>
       </AppProvider>
     </HashRouter>
